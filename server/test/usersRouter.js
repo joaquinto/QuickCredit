@@ -375,7 +375,7 @@ describe('get reset password link', () => {
       .end((err, res) => {
         assert.equal((res.body.status), 200);
         assert.property((res.body), 'data');
-        assert.equal((res.body.data), 'check your email for a password reset link');
+        assert.equal((res.body.data.message), 'check your email for a password reset link');
         done();
       });
   });
