@@ -1,0 +1,277 @@
+path:
+  /auth/signup:
+    post:
+      tags:
+      - user
+      summary: Creates an account
+      description: On providing the valid inputs or parameter, an account is created for the user
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: user
+        description: User to be created
+        schema:
+          $ref: '#/definitions/user'
+      responses:
+        201: 
+          description: A new customer has been created successfully
+        404:
+          description: Not found
+        405:
+          description: An error occured relating to invalid inputs while creating a new customer
+        500:
+          description: Internal server error
+  /auth/signin:
+    post:
+      tags:
+      - user
+      summary: Signin to the website or application
+      description: On providing the valid inputs or parameter, the user will be granted access into the app
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: user
+        description: User to signin
+        schema:
+          $ref: '#/definitions/signin'
+      responses:
+        200: 
+          description: Signin successfully
+        404:
+          description: Not found
+        405:
+          description: An error occured relating to invalid inputs while signing a new user
+        500:
+          description: Internal server error
+  /users:
+    get:
+      tags:
+      - admin
+      summary: The admin can view the list of users in the database
+      description: The admin gets the list of all the users in the database
+      security:
+      - bearerAuth: []
+      produces:
+      - application/json
+      responses:
+        200: 
+          description: Successful operation
+        404:
+          description: Not found
+        405:
+          description: An error occured relating to invalid token in the header
+        500:
+          description: Internal server error
+  /users/{email}/verify:
+    patch:
+      tags:
+      - admin
+      summary: The admin verifies the user
+      description: After passing the correct parameter the admin verifies the user
+      security:
+      - bearerAuth: []
+      produces:
+      - application/json
+      parameters:
+      - name: email
+        in: path
+        description: user email
+        schema:
+          type: string
+          example: johnsnow@gmail.com
+          required: true
+      - in: body
+        name: verify
+        description: verifies the user
+        schema:
+          $ref: '#/definitions/verify'
+      responses:
+        200: 
+          description: Successful operation
+        404:
+          description: Not found
+        405:
+          description: An error occured relating to invalid parameter in the path
+        500:
+          description: Internal server error
+  /users/{email}:
+    delete:
+      tags:
+      - admin
+      summary: The admin can delete a user
+      description: After passing the correct parameter the admin can delete a user
+      security:
+      - bearerAuth: []
+      produces:
+      - application/json
+      parameters:
+      - name: email
+        in: path
+        description: user email
+        schema:
+          type: string
+          example: johnsnow@gmail.com
+          required: true
+      responses:
+        200: 
+          description: Successful operation
+        404:
+          description: Not found
+        405:
+          description: An error occured relating to invalid parameter in the path
+        500:
+          description: Internal server error
+  /reset-password:
+    post:
+      tags:
+      - user
+      summary: the user should be able to access request password route 
+      description: After passing the correct parameter the user should be able to get a reset password link
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: email
+        description: user email
+        schema:
+          $ref: '#/definitions/email'
+      responses:
+        200: 
+          description: Successful operation
+        404:
+          description: Not found
+        405:
+          description: An error occured relating to invalid parameter in the path
+        500:
+          description: Internal server error
+  /users/{email}/{token}/reset-password:
+    get:
+      tags:
+      - user
+      summary: the user should be able to access request password route 
+      description: After passing the correct parameter the user should be able to get a reset password link
+      produces:
+      - application/json
+      parameters:
+      - name: email
+        in: path       
+        description: user email
+        schema:
+          type: string
+          required: true
+          example: johnsnow@gmail.com
+      - name: token
+        in: path       
+        description: user signed token
+        schema:
+          type: string
+          required: true
+          example: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MzQ4MTE5MTIsImVtYWlsIjoiam9obnNub3dAZ21haWwuY29tIiwianRpIjoiYzU5OWQ5MmUtNjM1NC00ZjRhLWFjMzMtNThmYmM0MGVjNzUxIiwiaWF0IjoxNTU3NDM2NDk0LCJleHAiOjE1NTc0MzY4NTR9.PtqQk8klBHI_oeW1ai2JFSlO1ZyYkaz6gEzUwj4OppY
+      responses:
+        200: 
+          description: Successful operation
+        404:
+          description: Not found
+        405:
+          description: An error occured relating to invalid parameter in the path
+        500:
+          description: Internal server error
+    patch:
+      tags:
+      - user
+      summary: the user should be able to access request password route 
+      description: After passing the correct parameter the user should be able to get a reset password link
+      produces:
+      - application/json
+      parameters:
+      - name: email
+        in: path       
+        description: user email
+        schema:
+          type: string
+          required: true
+          example: johnsnow@gmail.com
+      - name: token
+        in: path       
+        description: user signed token
+        schema:
+          type: string
+          required: true
+          example: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MzQ4MTE5MTIsImVtYWlsIjoiam9obnNub3dAZ21haWwuY29tIiwianRpIjoiYzU5OWQ5MmUtNjM1NC00ZjRhLWFjMzMtNThmYmM0MGVjNzUxIiwiaWF0IjoxNTU3NDM2NDk0LCJleHAiOjE1NTc0MzY4NTR9.PtqQk8klBHI_oeW1ai2JFSlO1ZyYkaz6gEzUwj4OppY
+      - in: body
+        name: password
+        description: user password
+        schema:
+          $ref: '#/definitions/password'
+      responses:
+        200: 
+          description: Successful operation
+        404:
+          description: Not found
+        405:
+          description: An error occured relating to invalid parameter in the path
+        500:
+          description: Internal server error
+definitions:
+  user:
+    type: object
+    required:
+      - firstname
+      - lastname
+      - email
+      - password
+      - address
+    properties:
+      firstname:
+        type: string
+        example: Adam
+      lastname:
+        type: string
+        example: Peter
+      email:
+        type: string
+        example: adamjohn@gmail.com
+      password:
+        type: string
+        example: adamjohn
+      address:
+        type: string
+        example: no 45, san jose, new york
+  signin:
+    type: object
+    required: 
+      - email
+      - password
+    properties:
+      email:
+        type: string
+        example: adamjohn@gmail.com
+      password:
+        type: string
+        example: adamjohn
+  verify:
+    type: object
+    required:
+      - status
+    properties:
+      status:
+        type: string
+        example: verified
+  email:
+    type: object
+    required:
+      - email
+    properties:
+      email:
+        type: string
+        example: johnsnow@gmail.com
+  password:
+    type: object
+    required:
+      - password
+    properties:
+      password:
+        type: string
+        example: johnsnow
