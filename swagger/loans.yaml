@@ -1,0 +1,151 @@
+path:
+  /loans:
+    post:
+      tags:
+      - user
+      summary: creates a loan 
+      description: On providing the valid inputs or parameter, a loan is created for the user
+      security:
+      - bearerAuth: []
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: loan
+        description: The loan parameters to create a loan
+        schema:
+          $ref: '#/definitions/loan'
+      responses:
+        201: 
+          description: A new loan has been created successfully
+        404:
+          description: Not found
+        405:
+          description: An error occured relating to invalid inputs while creating a new customer
+        500:
+          description: Internal server error 
+    get:
+      tags:
+      - admin
+      summary: Get all the loans in the database
+      description: The admin gets all the loan in the database, he can even query for some specific loans. you can choose to pass in queries for status = approved and repaid = true or false
+      security:
+      - bearerAuth: []
+      produces:
+      - application/json
+      parameters:
+      - name: status
+        in: query
+        description: Assign a string value
+        schema:
+          type: string
+          example: approved
+      - name: repaid
+        in: query
+        description: Assign a boolean value
+        schema:
+          type: boolean
+          example: true
+      responses:
+        200: 
+          description: Successful operation
+        400:
+          description: No datato display
+        404:
+          description: Not found
+        405:
+          description: An error occured relating to invalid parameter in the path
+        500:
+          description: Internal server error    
+  /loans/{id}:
+    get:
+      tags:
+      - user
+      - admin
+      summary: Get a loan object using its id
+      description: Gets the users loan by its id
+      security:
+      - bearerAuth: []
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: loan id
+        schema:
+          type: int
+          example: 41051150
+          required: true
+      responses:
+        200: 
+          description: Successful operation
+        404:
+          description: Not found
+        405:
+          description: An error occured relating to invalid parameter in the path
+        500:
+          description: Internal server error
+    patch:
+      tags:
+      - admin
+      summary: Get a loan object using its id to approve or reject
+      description: Approve or reject the users loan by its id
+      security:
+      - bearerAuth: []
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: loan id
+        schema:
+          type: int
+          example: 41051150
+          required: true
+      - in: body
+        name: approve
+        description: Admin approves a loan application
+        schema:
+          $ref: '#/definitions/approved'
+      responses:
+        200: 
+          description: Successful operation
+        404:
+          description: Not found
+        405:
+          description: An error occured relating to invalid parameter in the path
+        500:
+          description: Internal server error
+definitions:
+  loan:
+    type: object
+    required:
+      - firstname
+      - lastname
+      - email
+      - tenor
+      - amount
+    properties:
+      firstname:
+        type: string
+        example: john
+      lastname:
+        type: string
+        example: gabriel
+      email:
+        type: string
+        example: johngabriel@gmail.com
+      tenor:
+        type: int
+        example: 5
+      amount:
+        type: int
+        example: 5000
+  approved:
+    type: object
+    required:
+      - status
+    properties:
+      status:
+        type: string
+        example: approved
