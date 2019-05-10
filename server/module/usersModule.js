@@ -73,7 +73,7 @@ export default {
     const [{ id, email, firstname }] = await userHelpers.getUserByEmail(userDb, userEmail);
     const token = nJwt.create({ id, email }, config.signingKey)
       .setExpiration(new Date().getTime() + (60 * 60 * 100)).compact();
-    const text = `Hello ${firstname}, \n \nYou have requested a new password for your Quick Credit account. \n \nClick the following link to automatically confirm your reset: \n \n http://localhost:3000/api/v1/users/${email}/${token}/reset-password\n \nThank you. \n \nQuick Credit Team`;
+    const text = `Hello ${firstname}, \n \nYou have requested a new password for your Quick Credit account. \n \nClick the following link to automatically confirm your reset: \n \n https://quickycredit.herokuapp.com/api/v1/users/${email}/${token}/reset-password\n \nThank you. \n \nQuick Credit Team`;
     emailNotification(emailFrom, email, subject, text);
     return { token, email };
   },
