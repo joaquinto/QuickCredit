@@ -100,7 +100,7 @@ You will need to have [POSTMAN](https://www.getpostman.com/downloads/) app insta
 
 1. On the terminal of your computer, navigate into the cloned repo's folder
 2. Click [npm](https://www.npmjs.com/get-npm) and [Node.js](https://nodejs.org/en/) to get npm and node respectively.
-3. Clone Banka repo `https://github.com/joaquinto/QuickCredit.git` on your local machine.
+3. Clone Quick Credit repo `https://github.com/joaquinto/QuickCredit.git` on your local machine.
 4. Run `$ npm install` to install All of Quick Credit's dependencies.
 5. Run `$ npm start` to power up the server.
 6. The procedure for using POSTMAN here is the same as when accessing the endpoint remotely except that you make use of http://localhost:3000 as the full URL's prefix in place of the app's URL on heroku
