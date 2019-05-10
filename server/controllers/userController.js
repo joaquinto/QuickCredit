@@ -42,7 +42,7 @@ export default {
   sendResetPasswordLink: (req, res) => {
     userModule.sendResetPassword(req)
       .then(() => {
-        res.status(200).json({ status: 200, data: 'check your email for a password reset link' });
+        res.status(200).json({ status: 200, data: { message: 'check your email for a password reset link', token: data.token, email: data.email } });
       }).catch(error => res.status(500).json({ status: 500, error: error.message }));
   },
 
