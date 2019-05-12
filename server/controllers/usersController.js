@@ -22,6 +22,13 @@ export default class UserController {
     userModule.getUsers()
       .then((data) => {
         res.status(200).json({ status: 200, data });
-      }).catch(error => res.status(500).json({ status: 500, error: error.message }));
+      });
+  }
+
+  static verifyUser(req, res) {
+    userModule.verifyUser(req)
+      .then((data) => {
+        res.status(200).json({ status: 200, data });
+      });
   }
 }

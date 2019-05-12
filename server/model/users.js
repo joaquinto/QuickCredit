@@ -18,4 +18,15 @@ export default class Users {
   static getUsers(users) {
     return users;
   }
+
+  static editUserStatusByEmail(users, email, status) {
+    const newUsers = users
+      .filter(user => (user.email !== email));
+    const newUser = users
+      .filter(user => (user.email === email));
+    newUser[0].status = status;
+    newUsers.push(newUser);
+    users = newUser;
+    return newUser;
+  }
 }

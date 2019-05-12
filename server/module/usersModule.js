@@ -50,4 +50,10 @@ export default class UsersModule {
     const users = await User.getUsers(userDb);
     return users;
   }
+
+  static async verifyUser(req) {
+    const { status } = req.body;
+    const users = User.editUserStatusByEmail(userDb, req.params.email, status);
+    return users;
+  }
 }
