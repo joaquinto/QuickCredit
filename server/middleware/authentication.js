@@ -53,4 +53,19 @@ export default class Authentication {
     }
     next();
   }
+
+  static checkPaidAmount(req, res, next) {
+    const paidAmount = req.body.paid_amount;
+    const [{ paymentInstallment, repaid }] = loans.getLoanById(loanDb, Number(req.params.id));
+    if (Number(paidAmount) !== Number(paymentInstallment)) {
+      res.status(400).json({
+        status: 400,
+        error: `Can not process this payment because the
+        amount paid is less than the required monthly installment payment`,
+      });
+    } else if (repaid === true) {
+      res.status(400).json({ status: 400, error: 'you can\'t post repayment for into a fully repaid loan' });
+    }
+    next();
+  }
 }

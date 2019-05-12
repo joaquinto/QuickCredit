@@ -20,4 +20,8 @@ export default class Utilities {
   static interest(amount) {
     return amount * 0.05;
   }
+
+  static balanceCalculator(loan, repayment) {
+    return loan.toFixed(2) - repayment.toFixed(2);
+  }
 }

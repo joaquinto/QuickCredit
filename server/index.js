@@ -5,6 +5,7 @@ import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
 import users from './router/usersRouter';
 import loans from './router/loansRouter';
+import repayments from './router/repaymentsRouter';
 import swaggerSpec from './configuration/swagger';
 
 const app = express();
@@ -22,6 +23,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/v1/', users);
 app.use('/api/v1/', loans);
+app.use('/api/v1/', repayments);
 
 app.use('/docs-api', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
