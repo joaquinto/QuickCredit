@@ -45,4 +45,9 @@ export default class UsersModule {
     }
     return { status: 405, error: message };
   }
+
+  static async getUsers() {
+    const users = await User.getUsers(userDb);
+    return users;
+  }
 }

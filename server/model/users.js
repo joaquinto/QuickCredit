@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 export default class Users {
   constructor(id, email, firstname, lastname, password, address, status, isAdmin) {
     this.id = id;
@@ -12,5 +13,9 @@ export default class Users {
 
   static getUserByEmail(users, email) {
     return users.filter(user => (user.email === email));
+  }
+
+  static getUsers(users) {
+    return users;
   }
 }
