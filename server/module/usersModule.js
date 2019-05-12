@@ -63,7 +63,7 @@ export default class UsersModule {
     const users = User.deleteUserByEmail(userDb, req.params.email);
     return users;
   }
-
+  
   static async sendResetPasswordLink(req) {
     const userEmail = req.body.email;
     const emailFrom = 'Quick Credit  <noreply@quickcredit.com>';
