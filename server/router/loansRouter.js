@@ -31,4 +31,11 @@ router.get('/loans/:id',
   authentication.isLoanExist,
   loansController.getLoanById);
 
+router.patch('/loans/:id',
+  tokenUtils.AuthenticateToken,
+  authentication.isAdmin,
+  singleValidator(loanIdDetails),
+  authentication.isLoanExist,
+  loansController.approveLoan);
+
 export default router;

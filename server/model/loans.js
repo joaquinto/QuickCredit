@@ -1,3 +1,5 @@
+import objectUtils from '../helpers/objectUtils';
+
 export default class Loans {
   constructor(id, firstname, lastname, email, createdOn, status, repaid,
     tenor, amount, paymentInstallment, balance, interest) {
@@ -27,5 +29,10 @@ export default class Loans {
 
   static getLoanById(loans, id) {
     return loans.filter(loan => (loan.id === id));
+  }
+
+  static editLoanStatusById(loans, id, status) {
+    const newLoan = objectUtils.loanManipulation(loans, id, status);
+    return newLoan;
   }
 }

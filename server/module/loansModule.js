@@ -55,4 +55,10 @@ export default class LoanModule {
     const loan = await Loans.getLoanById(loanDb, Number(req.params.id));
     return loan;
   }
+
+  static async approveLoan(req) {
+    const { status } = req.body;
+    const loan = await Loans.editLoanStatusById(loanDb, Number(req.params.id), status);
+    return loan;
+  }
 }

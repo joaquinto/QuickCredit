@@ -31,6 +31,13 @@ export default class LoanController {
     loanModule.getLoanById(req)
       .then((data) => {
         res.status(200).json({ status: 200, data });
-      }).catch(error => res.status(500).json({ status: 500, error: error.message }));
+      });
+  }
+
+  static approveLoan(req, res) {
+    loanModule.approveLoan(req)
+      .then((data) => {
+        res.status(200).json({ status: 200, data });
+      });
   }
 }
