@@ -1,0 +1,90 @@
+path:
+  /loans/{id}/repayment:
+    post:
+      tags:
+      - admin
+      summary: Admin posts repayments on behave of the user
+      description: Admin posts repayments
+      security:
+      - bearerAuth: []
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: The loan id
+        schema:
+          type: int
+          example: 41051150
+          required: true
+      - in: body
+        name: amount
+        description: The ammount the user paid as part of his or her monthly installment payment
+        schema:
+          $ref: '#/definitions/paidAmount'
+      responses:
+        201: 
+          description: A new repayment has been created successfully
+        404:
+          description: Not found
+        405:
+          description: An error occured relating to invalid inputs while creating a new customer
+        500:
+          description: Internal server error
+  /loans/{id}/repayments:
+    get:
+      tags:
+      - user
+      - admin
+      summary: Users can view their repayment history while admin also can view all repayment history of any loan
+      description: User views his loan repayment history while admin view all loan repayment history
+      security:
+      - bearerAuth: []
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: The loan id
+        schema:
+          type: int
+          example: 41051150
+        required: true
+      responses:
+        200: 
+          description: Successful operation
+        404:
+          description: Not found
+        405:
+          description: An error occured relating to invalid parameter in the path
+        500:
+          description: Internal server error
+  /repayments:
+    get:
+      tags:
+      - admin
+      summary: Admin can view all repayment history
+      description: Admin view all loan repayment history
+      security:
+      - bearerAuth: []
+      produces:
+      - application/json
+      responses:
+        200: 
+          description: Successful operation
+        404:
+          description: Not found
+        405:
+          description: An error occured relating to invalid parameter in the path
+        500:
+          description: Internal server error
+definitions:
+  paidAmount:
+    type: object
+    required:
+      - paid_amount
+    properties:
+      paid_amount:
+        type: int
+        example: 1050
+        required: true

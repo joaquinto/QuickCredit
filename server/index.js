@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express';
-import users from './server/router/usersRouter';
+import users from './router/usersRouter';
 import swaggerSpec from './configuration/swagger';
 
 const app = express();
@@ -21,6 +21,8 @@ app.get('/', (req, res) => {
 
 app.use('/api/v1/', users);
 
+app.use('/docs-api', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 app.use((err, req, res) => {
   console.log(err);
   if (err) {
@@ -31,9 +33,6 @@ app.use((err, req, res) => {
     res.send((500, err));
   }
 });
-
-
-app.use('/docs-api', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.listen(port, () => {
   console.log(`server running on port ${port}`);
