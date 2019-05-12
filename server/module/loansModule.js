@@ -39,4 +39,15 @@ export default class LoanModule {
       interest: loan.interest,
     };
   }
+
+  static async getAllLoans() {
+    const loans = await Loans.getLoans(loanDb);
+    return loans;
+  }
+
+  static async getAllConditionalLoans(req) {
+    const { status, repaid } = req.query;
+    const loans = await Loans.getConditionalLoans(loanDb, status, repaid);
+    return loans;
+  }
 }
