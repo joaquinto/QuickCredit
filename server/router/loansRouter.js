@@ -26,9 +26,9 @@ router.get('/loans',
 
 router.get('/loans/:id',
   tokenUtils.AuthenticateToken,
-  authentication.isAdmin,
   singleValidator(loanIdDetails),
   authentication.isLoanExist,
+  authentication.isOwnerOrAdmin,
   loansController.getLoanById);
 
 router.patch('/loans/:id',

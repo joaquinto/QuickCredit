@@ -79,3 +79,64 @@ describe('Create Repayments', () => {
       });
   });
 });
+
+describe('Get Repayments history for a loan', () => {
+  let userToken;
+  const clientToken = 'hbfjnkjeknjvjrnkvrmk';
+  before((done) => {
+    chai.request(app)
+      .post('/api/v1/auth/signin')
+      .send(data.signIn)
+      .end((err, res) => {
+        assert.equal((res.body.status), 200);
+        assert.property((res.body), 'status');
+        assert.property((res.body), 'data');
+        assert.property((res.body.data), 'token');
+        userToken = res.body.data.token;
+        done();
+      });
+  });
+
+  it('should throw an error for missing token', (done) => {
+    chai.request(app)
+      .get('/api/v1/loans/41051150/repayments')
+      .end((err, res) => {
+        assert.equal((res.body.status), 405);
+        assert.property((res.body), 'error');
+        done();
+      });
+  });
+
+  it('should throw an error for invalid loan id', (done) => {
+    chai.request(app)
+      .get('/api/v1/loans/410511650/repayments')
+      .set('Authorization', userToken)
+      .end((err, res) => {
+        assert.equal((res.body.status), 404);
+        assert.property((res.body), 'error');
+        done();
+      });
+  });
+
+  it('should throw an error for invalid token', (done) => {
+    chai.request(app)
+      .get('/api/v1/loans/41051150/repayments')
+      .set('Authorization', clientToken)
+      .end((err, res) => {
+        assert.equal((res.body.status), 405);
+        assert.property((res.body), 'error');
+        done();
+      });
+  });
+
+  it('should return a repeymant object', (done) => {
+    chai.request(app)
+      .get('/api/v1/loans/41051150/repayments')
+      .set('Authorization', userToken)
+      .end((err, res) => {
+        assert.equal((res.body.status), 200);
+        assert.property((res.body), 'data');
+        done();
+      });
+  });
+});
