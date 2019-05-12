@@ -41,4 +41,9 @@ router.delete('/users/:email',
   authentication.notAUser,
   userController.deleteUser);
 
+router.post('/reset-password',
+  validator(emailDetails),
+  authentication.notAUser,
+  userController.sendResetPasswordLink);
+
 export default router;

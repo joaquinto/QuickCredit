@@ -357,3 +357,49 @@ describe('delete user', () => {
       });
   });
 });
+
+describe('get reset password link', () => {
+  it('should return an error for invalid email format', (done) => {
+    chai.request(app)
+      .post('/api/v1/reset-password')
+      .send(data.invalidResetEmail)
+      .end((err, res) => {
+        assert.equal((res.body.status), 400);
+        assert.property((res.body), 'error');
+        done();
+      });
+  });
+
+  it('should return an error for missing email', (done) => {
+    chai.request(app)
+      .post('/api/v1/reset-password')
+      .end((err, res) => {
+        assert.equal((res.body.status), 400);
+        assert.property((res.body), 'error');
+        done();
+      });
+  });
+
+  it('should return an error for wrong email', (done) => {
+    chai.request(app)
+      .post('/api/v1/reset-password')
+      .send(data.notResetEmail)
+      .end((err, res) => {
+        assert.equal((res.body.status), 404);
+        assert.property((res.body), 'error');
+        done();
+      });
+  });
+
+  it('should return a user object', (done) => {
+    chai.request(app)
+      .post('/api/v1/reset-password')
+      .send(data.resetEmail)
+      .end((err, res) => {
+        assert.equal((res.body.status), 200);
+        assert.property((res.body), 'data');
+        assert.equal((res.body.data.message), 'check your email for a password reset link');
+        done();
+      });
+  });
+});

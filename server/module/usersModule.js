@@ -1,3 +1,5 @@
+import nJwt from 'njwt';
+import emailUtility from '../helpers/emailUtils';
 import utilities from '../helpers/utilities';
 import User from '../model/users';
 import userDb from '../storage/usersDb';
@@ -60,5 +62,17 @@ export default class UsersModule {
   static async deleteUser(req) {
     const users = User.deleteUserByEmail(userDb, req.params.email);
     return users;
+  }
+  
+  static async sendResetPasswordLink(req) {
+    const userEmail = req.body.email;
+    const emailFrom = 'Quick Credit  <noreply@quickcredit.com>';
+    const subject = 'Quick Credit Password Reset';
+    const [{ id, email, firstname }] = await User.getUserByEmail(userDb, userEmail);
+    const token = nJwt.create({ id, email }, config.signingKey)
+      .setExpiration(new Date().getTime() + (60 * 60 * 100)).compact();
+    const text = `Hello ${firstname}, \n \nYou have requested a new password for your Quick Credit account. \n \nClick the following link to automatically confirm your reset: \n \n https://quickycredit.herokuapp.com/api/v1/users/${email}/${token}/reset-password\n \nThank you. \n \nQuick Credit Team`;
+    emailUtility(emailFrom, email, subject, text);
+    return { token, email };
   }
 }
