@@ -4,6 +4,7 @@ import singleValidator from '../middleware/singleValidator';
 import signInDetails from '../validation/signInDetails';
 import signUpDetails from '../validation/signUpDetails';
 import emailDetails from '../validation/emailDetails';
+import passwordDetails from '../validation/passwordDetails';
 import verifyDetails from '../validation/verifyDetails';
 import userController from '../controllers/usersController';
 import authentication from '../middleware/authentication';
@@ -45,5 +46,18 @@ router.post('/reset-password',
   validator(emailDetails),
   authentication.notAUser,
   userController.sendResetPasswordLink);
+
+router.get('/users/:email/:token/reset-password',
+  tokenUtils.AuthenticateToken,
+  singleValidator(emailDetails),
+  authentication.notAUser,
+  userController.resetPasswordView);
+
+router.patch('/users/:email/:token/reset-password',
+  tokenUtils.AuthenticateToken,
+  singleValidator(emailDetails),
+  authentication.notAUser,
+  validator(passwordDetails),
+  userController.resetUserPassword);
 
 export default router;

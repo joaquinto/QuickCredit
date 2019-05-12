@@ -1,6 +1,6 @@
 import chai, { assert } from 'chai';
 import chaiHttp from 'chai-http';
-import app from '../../index';
+import app from '../index';
 import data from './testData';
 
 chai.use(chaiHttp);
@@ -399,6 +399,76 @@ describe('get reset password link', () => {
         assert.equal((res.body.status), 200);
         assert.property((res.body), 'data');
         assert.equal((res.body.data.message), 'check your email for a password reset link');
+        done();
+      });
+  });
+});
+
+describe('reset password', () => {
+  let userEmail;
+  let userToken;
+  before((done) => {
+    chai.request(app)
+      .post('/api/v1/reset-password')
+      .send(data.resetEmail)
+      .end((err, res) => {
+        const { email, token } = res.body.data;
+        userEmail = email;
+        userToken = token;
+        done();
+      });
+  });
+
+  it('should display successfully', (done) => {
+    chai.request(app)
+      .get(`/api/v1/users/${userEmail}/${userToken}/reset-password`)
+      .end((err, res) => {
+        assert.equal((res.body.status), 200);
+        assert.property((res.body), 'data');
+        assert.equal((res.body.data), 'This is the reset password view');
+        done();
+      });
+  });
+
+  it('should return an error for missing password', (done) => {
+    chai.request(app)
+      .patch(`/api/v1/users/${userEmail}/${userToken}/reset-password`)
+      .end((err, res) => {
+        assert.equal((res.body.status), 400);
+        assert.property((res.body), 'error');
+        done();
+      });
+  });
+
+  it('should return an error for wrong email in params', (done) => {
+    chai.request(app)
+      .patch(`/api/v1/users/johnsnow12@gmail.com/${userToken}/reset-password`)
+      .send(data.resetPassword)
+      .end((err, res) => {
+        assert.equal((res.body.status), 404);
+        assert.property((res.body), 'error');
+        done();
+      });
+  });
+
+  it('should return an error for wrong token in params', (done) => {
+    chai.request(app)
+      .patch(`/api/v1/users/${userEmail}/563643847374738/reset-password`)
+      .send(data.resetPassword)
+      .end((err, res) => {
+        assert.equal((res.body.status), 405);
+        assert.property((res.body), 'error');
+        done();
+      });
+  });
+
+  it('should return a user object', (done) => {
+    chai.request(app)
+      .patch(`/api/v1/users/${userEmail}/${userToken}/reset-password`)
+      .send(data.resetPassword)
+      .end((err, res) => {
+        assert.equal((res.body.status), 200);
+        assert.property((res.body), 'data');
         done();
       });
   });

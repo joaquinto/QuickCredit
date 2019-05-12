@@ -1,4 +1,6 @@
 /* eslint-disable no-param-reassign */
+import objectUtils from '../helpers/objectUtils';
+
 export default class Users {
   constructor(id, email, firstname, lastname, password, address, status, isAdmin) {
     this.id = id;
@@ -20,13 +22,7 @@ export default class Users {
   }
 
   static editUserStatusByEmail(users, email, status) {
-    const newUsers = users
-      .filter(user => (user.email !== email));
-    const newUser = users
-      .filter(user => (user.email === email));
-    newUser[0].status = status;
-    newUsers.push(newUser);
-    users = newUser;
+    const newUser = objectUtils.userManipulation(users, email, status);
     return newUser;
   }
 
@@ -34,5 +30,10 @@ export default class Users {
     users = users
       .filter(user => (user.email !== email));
     return users;
+  }
+
+  static resetUserPassword(users, email, password) {
+    const newUser = objectUtils.userManipulation(users, email, password);
+    return newUser;
   }
 }
