@@ -42,4 +42,9 @@ export default class RepaymentsModule {
       .getRepaymentsByLoanId(repaymentDb, Number(req.params.id));
     return repayments;
   }
+
+  static async getRepayments() {
+    const repayments = await Repayments.getRepayments(repaymentDb);
+    return repayments;
+  }
 }

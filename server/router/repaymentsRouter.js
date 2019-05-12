@@ -25,4 +25,10 @@ router.get('/loans/:id/repayments',
   authentication.isOwnerOrAdmin,
   repaymentsController.getRepaymentsByLoanId);
 
+router.get('/repayments',
+  tokenUtils.AuthenticateToken,
+  authentication.isAdmin,
+  authentication.isAccountVerified,
+  repaymentsController.getAllRepayments);
+
 export default router;

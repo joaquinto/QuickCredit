@@ -10,7 +10,14 @@ export default class Repayments {
   }
 
   static getRepaymentsByLoanId(repayments, loanId) {
-    return repayments
-      .filter(repayment => repayment.loanId === loanId);
+    return repayments.filter(repayment => repayment.loanId === loanId);
+  }
+
+  static getRepayments(repayments) {
+    return repayments;
+  }
+
+  static getRepaymentsById(repayments, id) {
+    return repayments.filter(repayment => repayment.id === id);
   }
 }
