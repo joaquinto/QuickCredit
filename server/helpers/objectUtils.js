@@ -20,6 +20,9 @@ export default class ObjectUtils {
       newLoan[0].status = manipulator;
     } else if (manipulator === 'balance') {
       newLoan[0].balance = manipulator;
+      if (Number(newLoan[0].balance) < Number(newLoan[0].paymentInstallment)) {
+        newLoan[0].repaid = true;
+      }
     }
     newLoans.push(newLoan);
     loans = newLoans;

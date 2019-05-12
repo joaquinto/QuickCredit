@@ -35,4 +35,9 @@ export default class Loans {
     const newLoan = objectUtils.loanManipulation(loans, id, status);
     return newLoan;
   }
+
+  static getNewBalance(loans, id, balance) {
+    const newLoan = objectUtils.loanManipulation(loans, id, balance);
+    return newLoan;
+  }
 }
