@@ -4,6 +4,7 @@ import tokenUtils from '../helpers/tokenUtils';
 import authentication from '../middleware/authentication';
 import loanDetails from '../validation/loanDetails';
 import loansController from '../controllers/loansController';
+import queryValidator from '../middleware/queryValidator';
 
 
 const router = express.Router();
@@ -14,5 +15,11 @@ router.post('/loans',
   authentication.isAccountVerified,
   validator(loanDetails),
   loansController.createLoan);
+
+router.get('/loans',
+  tokenUtils.AuthenticateToken,
+  authentication.isAdmin,
+  queryValidator,
+  loansController.getAllLoans);
 
 export default router;

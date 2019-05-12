@@ -114,3 +114,74 @@ describe('Create a loan', () => {
       });
   });
 });
+
+describe('Get all loans', () => {
+  let userToken;
+  before((done) => {
+    chai.request(app)
+      .post('/api/v1/auth/signin')
+      .send(data.signIn)
+      .end((err, res) => {
+        assert.equal((res.body.status), 200);
+        assert.property((res.body), 'status');
+        assert.property((res.body), 'data');
+        assert.property((res.body.data), 'token');
+        userToken = res.body.data.token;
+        done();
+      });
+  });
+
+  it('should throw an error for missing token', (done) => {
+    chai.request(app)
+      .get('/api/v1/loans')
+      .end((err, res) => {
+        assert.equal((res.body.status), 405);
+        assert.property((res.body), 'error');
+        done();
+      });
+  });
+
+  it('should return an array of loan objects', (done) => {
+    chai.request(app)
+      .get('/api/v1/loans')
+      .set('Authorization', userToken)
+      .end((err, res) => {
+        assert.equal((res.body.status), 200);
+        assert.property((res.body), 'data');
+        done();
+      });
+  });
+
+  it('should return an error for invalid query string', (done) => {
+    chai.request(app)
+      .get('/api/v1/loans?status=approved&repaid=goinghome')
+      .set('Authorization', userToken)
+      .end((err, res) => {
+        assert.equal((res.body.status), 400);
+        assert.property((res.body), 'error');
+        done();
+      });
+  });
+
+  it('should return an array of loan objects', (done) => {
+    chai.request(app)
+      .get('/api/v1/loans?status=approved&repaid=true')
+      .set('Authorization', userToken)
+      .end((err, res) => {
+        assert.equal((res.body.status), 400);
+        assert.property((res.body), 'error');
+        done();
+      });
+  });
+
+  it('should return an array of loan objects', (done) => {
+    chai.request(app)
+      .get('/api/v1/loans?status=approved&repaid=false')
+      .set('Authorization', userToken)
+      .end((err, res) => {
+        assert.equal((res.body.status), 200);
+        assert.property((res.body), 'data');
+        done();
+      });
+  });
+});

@@ -14,4 +14,14 @@ export default class Loans {
     this.balance = balance;
     this.interest = interest;
   }
+
+  static getLoans(loans) {
+    return loans;
+  }
+
+  static getConditionalLoans(loans, status, repaid) {
+    const newLoan = loans
+      .filter(loan => ((loan.status === status) && (loan.repaid === JSON.parse(repaid))));
+    return newLoan;
+  }
 }

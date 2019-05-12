@@ -29,5 +29,8 @@ checks:
 exclude_patterns:
   - node_modules/
   - server/test/
-  - index.js
+  - UI/
+  - server/storage/
+  - server/swagger/
+  - server/index.js
   - dist/

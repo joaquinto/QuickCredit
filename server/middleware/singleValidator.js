@@ -1,8 +1,9 @@
 import Joi from '@hapi/joi';
 
 const singleValidator = schema => async (req, res, next) => {
+  const parameters = req.params || req.query;
   try {
-    const result = await Joi.validate(req.params, schema, {
+    const result = await Joi.validate(parameters, schema, {
       abortEarly: false,
       allowUnknown: true,
     });
