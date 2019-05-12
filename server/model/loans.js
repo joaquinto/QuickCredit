@@ -24,4 +24,8 @@ export default class Loans {
       .filter(loan => ((loan.status === status) && (loan.repaid === JSON.parse(repaid))));
     return newLoan;
   }
+
+  static getLoanById(loans, id) {
+    return loans.filter(loan => (loan.id === id));
+  }
 }

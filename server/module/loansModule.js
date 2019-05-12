@@ -50,4 +50,9 @@ export default class LoanModule {
     const loans = await Loans.getConditionalLoans(loanDb, status, repaid);
     return loans;
   }
+
+  static async getLoanById(req) {
+    const loan = await Loans.getLoanById(loanDb, Number(req.params.id));
+    return loan;
+  }
 }

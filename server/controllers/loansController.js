@@ -26,4 +26,11 @@ export default class LoanController {
         });
     }
   }
+
+  static getLoanById(req, res) {
+    loanModule.getLoanById(req)
+      .then((data) => {
+        res.status(200).json({ status: 200, data });
+      }).catch(error => res.status(500).json({ status: 500, error: error.message }));
+  }
 }
