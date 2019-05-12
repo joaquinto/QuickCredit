@@ -182,3 +182,42 @@ describe('Signing In', () => {
       });
   });
 });
+
+describe('get all user', () => {
+  let userToken;
+  before((done) => {
+    chai.request(app)
+      .post('/api/v1/auth/signin')
+      .send(data.signIn)
+      .end((err, res) => {
+        assert.equal((res.body.status), 200);
+        assert.property((res.body), 'status');
+        assert.property((res.body), 'data');
+        assert.property((res.body.data), 'token');
+        userToken = res.body.data.token;
+        done();
+      });
+  });
+
+  it('should return an array of users object', (done) => {
+    chai.request(app)
+      .get('/api/v1/users')
+      .set('Authorization', userToken)
+      .end((err, res) => {
+        assert.equal((res.body.status), 200);
+        assert.property((res.body), 'data');
+        done();
+      });
+  });
+
+  it('should return status 200', (done) => {
+    chai.request(app)
+      .get('/')
+      .end((err, res) => {
+        assert.equal((res.body.status), 200);
+        assert.property((res.body), 'data');
+        assert.equal((res.body.data), 'welcome to Quick Credit');
+        done();
+      });
+  });
+});
