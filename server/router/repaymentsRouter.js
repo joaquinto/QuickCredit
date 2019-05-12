@@ -18,4 +18,11 @@ router.post('/loans/:id/repayment',
   authentication.checkPaidAmount,
   repaymentsController.createRepayment);
 
+router.get('/loans/:id/repayments',
+  tokenUtils.AuthenticateToken,
+  singleValidator(loanIdDetails),
+  authentication.isLoanExist,
+  authentication.isOwnerOrAdmin,
+  repaymentsController.getRepaymentsByLoanId);
+
 export default router;

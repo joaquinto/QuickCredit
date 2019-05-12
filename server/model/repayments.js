@@ -8,4 +8,9 @@ export default class Repayments {
     this.paidAmount = paidAmount;
     this.balance = balance;
   }
+
+  static getRepaymentsByLoanId(repayments, loanId) {
+    return repayments
+      .filter(repayment => repayment.loanId === loanId);
+  }
 }

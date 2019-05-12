@@ -68,4 +68,16 @@ export default class Authentication {
     }
     next();
   }
+
+  static isOwnerOrAdmin(req, res, next) {
+    const owner = req.decoded.email;
+    const [{ email }] = loans.getLoanById(loanDb, Number(req.params.id));
+    if (!req.decoded.admin) {
+      if (owner !== email) {
+        res.status(401).json({ status: 401, error: 'Access Denied ... Unauthorized Access' });
+      }
+      next();
+    }
+    next();
+  }
 }
