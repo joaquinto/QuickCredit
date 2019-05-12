@@ -221,3 +221,90 @@ describe('get all user', () => {
       });
   });
 });
+
+describe('verify user', () => {
+  let userToken;
+  before((done) => {
+    chai.request(app)
+      .post('/api/v1/auth/signin')
+      .send(data.signIn)
+      .end((err, res) => {
+        assert.equal((res.body.status), 200);
+        assert.property((res.body), 'status');
+        assert.property((res.body), 'data');
+        assert.property((res.body.data), 'token');
+        userToken = res.body.data.token;
+        done();
+      });
+  });
+
+  it('should return an error for missing token', (done) => {
+    chai.request(app)
+      .patch('/api/v1/users/johnwick@gmail.com/verify')
+      .send(data.verify)
+      .end((err, res) => {
+        assert.equal((res.body.status), 405);
+        assert.property((res.body), 'error');
+        done();
+      });
+  });
+
+  it('should return an error for invalid email', (done) => {
+    chai.request(app)
+      .patch('/api/v1/users/johnwickgmail.com/verify')
+      .set('Authorization', userToken)
+      .send(data.verify)
+      .end((err, res) => {
+        assert.equal((res.body.status), 400);
+        assert.property((res.body), 'error');
+        done();
+      });
+  });
+
+  it('should return an error for missing status', (done) => {
+    chai.request(app)
+      .patch('/api/v1/users/johnwick@gmail.com/verify')
+      .set('Authorization', userToken)
+      .end((err, res) => {
+        assert.equal((res.body.status), 400);
+        assert.property((res.body), 'error');
+        done();
+      });
+  });
+
+  it('should return an error is the body is not verified', (done) => {
+    chai.request(app)
+      .patch('/api/v1/users/johnwick@gmail.com/verify')
+      .set('Authorization', userToken)
+      .send(data.verifyError)
+      .end((err, res) => {
+        assert.equal((res.body.status), 400);
+        assert.property((res.body), 'error');
+        done();
+      });
+  });
+
+  it('should return an error for unknown user', (done) => {
+    chai.request(app)
+      .patch('/api/v1/users/johnwick12@gmail.com/verify')
+      .set('Authorization', userToken)
+      .send(data.verify)
+      .end((err, res) => {
+        assert.equal((res.body.status), 404);
+        assert.property((res.body), 'error');
+        done();
+      });
+  });
+
+  it('should return a user object', (done) => {
+    chai.request(app)
+      .patch('/api/v1/users/johnwick@gmail.com/verify')
+      .set('Authorization', userToken)
+      .send(data.verify)
+      .end((err, res) => {
+        assert.equal((res.body.status), 200);
+        assert.property((res.body), 'data');
+        done();
+      });
+  });
+});

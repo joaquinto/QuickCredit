@@ -12,8 +12,9 @@ export default class Authentication {
   }
 
   static notAUser(req, res, next) {
-    const { email } = req.body;
-    const user = users.getUserByEmail(userDb, email);
+    const { email } = req.params;
+    const value = email || req.body.email;
+    const user = users.getUserByEmail(userDb, value);
     if (user.length < 1) {
       res.status(404).json({ status: 404, error: 'User Not Found ...' });
     }
