@@ -234,3 +234,67 @@ describe('Get a single loan', () => {
       });
   });
 });
+
+describe('Approve or reject a loan loan', () => {
+  let userToken;
+  before((done) => {
+    chai.request(app)
+      .post('/api/v1/auth/signin')
+      .send(data.signIn)
+      .end((err, res) => {
+        assert.equal((res.body.status), 200);
+        assert.property((res.body), 'status');
+        assert.property((res.body), 'data');
+        assert.property((res.body.data), 'token');
+        userToken = res.body.data.token;
+        done();
+      });
+  });
+
+  it('should throw an error for missing token', (done) => {
+    chai.request(app)
+      .patch('/api/v1/loans/41051150')
+      .send(data.approve)
+      .end((err, res) => {
+        assert.equal((res.body.status), 405);
+        assert.property((res.body), 'error');
+        done();
+      });
+  });
+
+  it('should throw an error for invalid loan id', (done) => {
+    chai.request(app)
+      .patch('/api/v1/loans/410511540')
+      .set('Authorization', userToken)
+      .send(data.approve)
+      .end((err, res) => {
+        assert.equal((res.body.status), 404);
+        assert.property((res.body), 'error');
+        done();
+      });
+  });
+
+  it('should return a loan objects', (done) => {
+    chai.request(app)
+      .patch('/api/v1/loans/41051150')
+      .set('Authorization', userToken)
+      .send(data.approve)
+      .end((err, res) => {
+        assert.equal((res.body.status), 200);
+        assert.property((res.body), 'data');
+        done();
+      });
+  });
+
+  it('should return a loan objects', (done) => {
+    chai.request(app)
+      .patch('/api/v1/loans/41051150')
+      .set('Authorization', userToken)
+      .send(data.reject)
+      .end((err, res) => {
+        assert.equal((res.body.status), 200);
+        assert.property((res.body), 'data');
+        done();
+      });
+  });
+});
