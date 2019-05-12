@@ -1,11 +1,20 @@
 import express from 'express';
-import validation from '../middleware/validator';
+import validator from '../middleware/validator';
+import signInDetails from '../validation/signInDetails';
+import signUpDetails from '../validation/signUpDetails';
 import userController from '../controllers/usersController';
+import authentication from '../middleware/authentication';
 
 const router = express.Router();
 
 router.post('/auth/signup',
-  validation.signUpValidation,
+  validator(signUpDetails),
+  authentication.isUserExist,
   userController.signUp);
+
+router.post('/auth/signin',
+  validator(signInDetails),
+  authentication.notAUser,
+  userController.signIn);
 
 export default router;
