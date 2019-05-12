@@ -34,4 +34,11 @@ router.patch('/users/:email/verify',
   validator(verifyDetails),
   userController.verifyUser);
 
+router.delete('/users/:email',
+  tokenUtils.AuthenticateToken,
+  authentication.isAdmin,
+  singleValidator(emailDetails),
+  authentication.notAUser,
+  userController.deleteUser);
+
 export default router;

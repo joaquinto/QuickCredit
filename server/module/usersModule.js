@@ -56,4 +56,9 @@ export default class UsersModule {
     const users = User.editUserStatusByEmail(userDb, req.params.email, status);
     return users;
   }
+
+  static async deleteUser(req) {
+    const users = User.deleteUserByEmail(userDb, req.params.email);
+    return users;
+  }
 }

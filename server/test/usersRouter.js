@@ -308,3 +308,52 @@ describe('verify user', () => {
       });
   });
 });
+
+describe('delete user', () => {
+  let userToken;
+  before((done) => {
+    chai.request(app)
+      .post('/api/v1/auth/signin')
+      .send(data.signIn)
+      .end((err, res) => {
+        assert.equal((res.body.status), 200);
+        assert.property((res.body), 'status');
+        assert.property((res.body), 'data');
+        assert.property((res.body.data), 'token');
+        userToken = res.body.data.token;
+        done();
+      });
+  });
+
+  it('should return an error for missing token', (done) => {
+    chai.request(app)
+      .delete('/api/v1/users/johnwick@gmail.com')
+      .end((err, res) => {
+        assert.equal((res.body.status), 405);
+        assert.property((res.body), 'error');
+        done();
+      });
+  });
+
+  it('should return an error for invalid email', (done) => {
+    chai.request(app)
+      .delete('/api/v1/users/johnwickgmail.com')
+      .set('Authorization', userToken)
+      .end((err, res) => {
+        assert.equal((res.body.status), 400);
+        assert.property((res.body), 'error');
+        done();
+      });
+  });
+
+  it('should return an array of all the users object', (done) => {
+    chai.request(app)
+      .delete('/api/v1/users/johnwick@gmail.com')
+      .set('Authorization', userToken)
+      .end((err, res) => {
+        assert.equal((res.body.status), 200);
+        assert.property((res.body), 'data');
+        done();
+      });
+  });
+});
