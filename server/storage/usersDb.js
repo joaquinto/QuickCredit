@@ -1,4 +1,4 @@
-const quickCreditUsers = [
+const Users = [
   {
     id: 49098877,
     firstname: 'jonathan',
@@ -31,4 +31,4 @@ const quickCreditUsers = [
   },
 ];
 
-export default quickCreditUsers;
+export default Users;
