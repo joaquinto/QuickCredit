@@ -29,4 +29,10 @@ export default class Users {
     users = newUser;
     return newUser;
   }
+
+  static deleteUserByEmail(users, email) {
+    users = users
+      .filter(user => (user.email !== email));
+    return users;
+  }
 }
