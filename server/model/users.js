@@ -13,6 +13,10 @@ export default class Users {
     this.isAdmin = isAdmin;
   }
 
+  static getUserById(users, id) {
+    return users.filter(user => (user.id === id));
+  }
+
   static getUserByEmail(users, email) {
     return users.filter(user => (user.email === email));
   }
