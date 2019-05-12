@@ -1,4 +1,4 @@
-export default {
+const data = {
   signIn: {
     email: 'roejoeodj12@gmail.com',
     password: 'king2012',
@@ -130,3 +130,5 @@ export default {
     password: 'jonny2019',
   },
 };
+
+export default data;
