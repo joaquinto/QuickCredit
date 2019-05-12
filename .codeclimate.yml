@@ -28,6 +28,6 @@ checks:
       threshold: 4
 exclude_patterns:
   - node_modules/
-  - server/test.js
+  - server/test/
   - index.js
   - dist/

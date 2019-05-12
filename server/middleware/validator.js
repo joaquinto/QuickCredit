@@ -1,24 +1,17 @@
 import Joi from '@hapi/joi';
 
-class Validator {
-  static signUpValidation(req, res, next) {
-    const schema = Joi.object().keys({
-      firstname: Joi.string().regex(/^[A-Za-z]+$/).min(2).max(35)
-        .required(),
-      lastname: Joi.string().regex(/^[A-Za-z]+$/).min(2).max(35)
-        .required(),
-      email: Joi.string().email({ mindomainSegments: 2 }).required(),
-      password: Joi.string().min(6).required(),
-      address: Joi.string().min(10).required(),
+const validator = schema => async (req, res, next) => {
+  try {
+    const result = await Joi.validate(req.body, schema, {
+      abortEarly: false,
+      allowUnknown: true,
     });
-
-    const { error } = Joi.validate(req.body, schema);
-    if (error !== null) {
-      const { details: [{ message }] } = error;
-      res.status(405).json({ status: 405, error: message });
-    }
+    req.body = result;
     next();
+  } catch (error) {
+    const errors = error.details.map(item => item.message);
+    res.status(400).send({ status: 400, error: errors });
   }
-}
+};
 
-export default Validator;
+export default validator;

@@ -9,4 +9,8 @@ export default class Users {
     this.status = status;
     this.isAdmin = isAdmin;
   }
+
+  static getUserByEmail(users, email) {
+    return users.filter(user => (user.email === email));
+  }
 }

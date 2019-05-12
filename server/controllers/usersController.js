@@ -5,6 +5,16 @@ export default class UserController {
     userModule.signUpUser(req, next)
       .then((data) => {
         res.status(201).json({ status: 201, data });
-      }).catch(error => res.status(500).json({ status: 500, error: error.message }));
+      });
+  }
+
+  static signIn(req, res) {
+    userModule.signInUser(req)
+      .then((data) => {
+        if (data.error) {
+          res.status(405).json(data);
+        }
+        res.status(200).json({ status: 200, data });
+      });
   }
 }
