@@ -12,4 +12,12 @@ export default class Utilities {
     const unique = serial;
     return unique;
   }
+
+  static paymentInstallment(amount, interest, tenor) {
+    return (amount + interest) / tenor;
+  }
+
+  static interest(amount) {
+    return amount * 0.05;
+  }
 }

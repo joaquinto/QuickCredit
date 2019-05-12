@@ -27,4 +27,19 @@ export default class Authentication {
     }
     next();
   }
+
+  static isClient(req, res, next) {
+    if (req.decoded.admin) {
+      res.status(401).json({ status: 401, error: 'Access Denied ... Unauthorized Access' });
+    }
+    next();
+  }
+
+  static isAccountVerified(req, res, next) {
+    const [{ status }] = users.getUserById(userDb, req.decoded.id);
+    if (status !== 'verified') {
+      res.status(401).json({ status: 401, error: 'Access Denied ... Unauthorized Access' });
+    }
+    next();
+  }
 }
