@@ -27,15 +27,12 @@ app.use('/api/v1/', repayments);
 
 app.use('/docs-api', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-app.use((err, req, res) => {
-  console.log(err);
-  if (err) {
-    res.locals.message = err.message;
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
+app.use('*', (req, res) => {
+  res.status(404).json({ status: 404, error: 'Page not found' });
+});
 
-    res.status(err.status || 500);
-    res.send((500, err));
-  }
+app.use((err, req, res) => {
+  res.status(500).json({ status: 500, error: err.message });
 });
 
 app.listen(port, () => {
