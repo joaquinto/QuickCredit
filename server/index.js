@@ -27,8 +27,8 @@ app.use('/api/v1/', repayments);
 
 app.use('/docs-api', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-app.use((req, res) => {
-  res.status(404).json({ status: 404, error: 'Error 404, Page not found ....' });
+app.use('*', (req, res) => {
+  res.status(404).json({ status: 404, error: 'Page not found' });
 });
 
 app.use((err, req, res) => {
