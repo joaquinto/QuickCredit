@@ -243,7 +243,7 @@ describe('verify user', () => {
       .patch('/api/v1/users/johnwick@gmail.com/verify')
       .send(data.verify)
       .end((err, res) => {
-        assert.equal((res.body.status), 405);
+        assert.equal((res.body.status), 401);
         assert.property((res.body), 'error');
         done();
       });
@@ -329,7 +329,7 @@ describe('delete user', () => {
     chai.request(app)
       .delete('/api/v1/users/johnwick@gmail.com')
       .end((err, res) => {
-        assert.equal((res.body.status), 405);
+        assert.equal((res.body.status), 401);
         assert.property((res.body), 'error');
         done();
       });
@@ -398,7 +398,7 @@ describe('get reset password link', () => {
       .end((err, res) => {
         assert.equal((res.body.status), 200);
         assert.property((res.body), 'data');
-        assert.equal((res.body.data.message), 'check your email for a password reset link');
+        assert.equal((res.body.message), 'check your email for a password reset link');
         done();
       });
   });
@@ -456,7 +456,7 @@ describe('reset password', () => {
       .patch(`/api/v1/users/${userEmail}/563643847374738/reset-password`)
       .send(data.resetPassword)
       .end((err, res) => {
-        assert.equal((res.body.status), 405);
+        assert.equal((res.body.status), 403);
         assert.property((res.body), 'error');
         done();
       });

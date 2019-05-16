@@ -11,11 +11,11 @@ export default class Token {
   static AuthenticateToken(req, res, next) {
     const token = req.headers.authorization || req.params.token;
     if (!token) {
-      res.status(405).json({ status: 405, error: 'Access Denied ... No token provided' });
+      res.status(405).json({ status: 401, error: 'Access Denied ... No token provided' });
     } else {
       nJwt.verify(token, config.signingKey, (err, verified) => {
         if (err) {
-          res.status(405).json({ status: 405, error: `Access Denied ... Token invalid: ${err}` });
+          res.status(405).json({ status: 403, error: `Access Denied ... Token invalid: ${err}` });
         } else {
           req.decoded = verified.body;
           next();

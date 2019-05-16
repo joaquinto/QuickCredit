@@ -29,8 +29,8 @@ describe('Create a loan', () => {
       .end((err, res) => {
         assert.equal((res.body.status), 400);
         assert.property((res.body), 'error');
-        done();
       });
+    done();
   });
 
   it('should throw an error for missing lastname', (done) => {
@@ -86,7 +86,7 @@ describe('Create a loan', () => {
       .post('/api/v1/loans')
       .send(data.loan)
       .end((err, res) => {
-        assert.equal((res.body.status), 405);
+        assert.equal((res.body.status), 401);
         assert.property((res.body), 'error');
         done();
       });
@@ -95,8 +95,9 @@ describe('Create a loan', () => {
   it('should throw an error for missing loan object', (done) => {
     chai.request(app)
       .post('/api/v1/loans')
+      .set('Authorization', userToken)
       .end((err, res) => {
-        assert.equal((res.body.status), 405);
+        assert.equal((res.body.status), 400);
         assert.property((res.body), 'error');
         done();
       });
@@ -135,7 +136,7 @@ describe('Get all loans', () => {
     chai.request(app)
       .get('/api/v1/loans')
       .end((err, res) => {
-        assert.equal((res.body.status), 405);
+        assert.equal((res.body.status), 401);
         assert.property((res.body), 'error');
         done();
       });
@@ -206,7 +207,7 @@ describe('Get a single loan', () => {
     chai.request(app)
       .get('/api/v1/loans/41051150')
       .end((err, res) => {
-        assert.equal((res.body.status), 405);
+        assert.equal((res.body.status), 401);
         assert.property((res.body), 'error');
         done();
       });
@@ -256,7 +257,7 @@ describe('Approve or reject a loan loan', () => {
       .patch('/api/v1/loans/41051150')
       .send(data.approve)
       .end((err, res) => {
-        assert.equal((res.body.status), 405);
+        assert.equal((res.body.status), 401);
         assert.property((res.body), 'error');
         done();
       });

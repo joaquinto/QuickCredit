@@ -37,7 +37,7 @@ describe('Create Repayments', () => {
       .post('/api/v1/loans/41051150/repayment')
       .send(data.paidAmount)
       .end((err, res) => {
-        assert.equal((res.body.status), 405);
+        assert.equal((res.body.status), 401);
         assert.property((res.body), 'error');
         done();
       });
@@ -101,7 +101,7 @@ describe('Get Repayments history for a loan', () => {
     chai.request(app)
       .get('/api/v1/loans/41051150/repayments')
       .end((err, res) => {
-        assert.equal((res.body.status), 405);
+        assert.equal((res.body.status), 401);
         assert.property((res.body), 'error');
         done();
       });
@@ -123,7 +123,7 @@ describe('Get Repayments history for a loan', () => {
       .get('/api/v1/loans/41051150/repayments')
       .set('Authorization', clientToken)
       .end((err, res) => {
-        assert.equal((res.body.status), 405);
+        assert.equal((res.body.status), 403);
         assert.property((res.body), 'error');
         done();
       });
@@ -162,7 +162,7 @@ describe('Get all Repayments', () => {
     chai.request(app)
       .get('/api/v1/repayments')
       .end((err, res) => {
-        assert.equal((res.body.status), 405);
+        assert.equal((res.body.status), 401);
         assert.property((res.body), 'error');
         done();
       });
@@ -173,7 +173,7 @@ describe('Get all Repayments', () => {
       .get('/api/v1/repayments')
       .set('Authorization', clientToken)
       .end((err, res) => {
-        assert.equal((res.body.status), 405);
+        assert.equal((res.body.status), 403);
         assert.property((res.body), 'error');
         done();
       });

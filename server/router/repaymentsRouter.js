@@ -7,28 +7,35 @@ import singleValidator from '../middleware/singleValidator';
 import paidAmountDetails from '../validation/paidAmountDetails';
 import repaymentsController from '../controllers/repaymentsController';
 
+const { AuthenticateToken } = tokenUtils;
+const {
+  isAccountVerified,
+  isAdmin, isOwnerOrAdmin, isLoanExist,
+  checkPaidAmount,
+} = authentication;
+
 const router = express.Router();
 
 router.post('/loans/:id/repayment',
-  tokenUtils.AuthenticateToken,
-  authentication.isAdmin,
+  AuthenticateToken,
+  isAdmin,
   singleValidator(loanIdDetails),
-  authentication.isLoanExist,
+  isLoanExist,
   validator(paidAmountDetails),
-  authentication.checkPaidAmount,
+  checkPaidAmount,
   repaymentsController.createRepayment);
 
 router.get('/loans/:id/repayments',
-  tokenUtils.AuthenticateToken,
+  AuthenticateToken,
   singleValidator(loanIdDetails),
-  authentication.isLoanExist,
-  authentication.isOwnerOrAdmin,
+  isLoanExist,
+  isOwnerOrAdmin,
   repaymentsController.getRepaymentsByLoanId);
 
 router.get('/repayments',
-  tokenUtils.AuthenticateToken,
-  authentication.isAdmin,
-  authentication.isAccountVerified,
+  AuthenticateToken,
+  isAdmin,
+  isAccountVerified,
   repaymentsController.getAllRepayments);
 
 export default router;
