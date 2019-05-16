@@ -7,125 +7,120 @@
   font-family: 'Montserrat';
 }
 
+body {
+  overflow-x: hidden;
+}
+
 .container {
-  display: grid;
-  grid-template-columns: 16em 1fr;
-  grid-template-rows: 3em 1fr 2em;
-  grid-template-areas: 
-    'side-nav main-nav'
-    'side-nav main-content'
-    'side-nav footer';
+  display: flex;
+  flex-direction: column;
 }
 
 .header {
-  grid-area: main-nav;
-  background: blue;
-  line-height: 1em;
-  padding: 0.5em 1em;
   display: flex;
   justify-content: space-between;
+  line-height: 1.2em;
+  background: blue;
+  padding: 0.2em;
+  width: 100%;
+  box-shadow: 1px 1px 2px 1px rgba(0,0,0, 0.4), 3px 3px 4px 2px rgba(0,0,0,0.2);
   align-items: center;
 }
 
 .menu-btn {
   color: #fff;
-  font-size: 1.5em;
-  font-weight: 600;
+  font-size: 1.2em;
+  font-weight: 400;
   cursor: pointer;
 }
 
 .identity {
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+}
+
+.pix {
+  width: 2em;
+  height: 2em;
+}
+
+.user-name {
+  display: none;
 }
 
 .profile-img {
-  width: 2.5em;
-  height: 2.5em;
+  width: 2em;
+  height: 2em;                            
   border: 0.1em solid #fff;
   border-radius: 50%;
   overflow: hidden;
 }
 
-.user-name {
-  color: #fff;
-  font-weight: 700;
-  margin-left: 1em;
-}
-
-.pix {
-  width: 2.5em;
-  height: 2.5em;
-}
-
 .fa-sign-out-alt {
+  margin-left: 0.5em;
   color: #fff;
-  margin-left: 1em;
-  cursor: pointer;
+  margin-right: 0.3em;
 }
 
 .side-nav {
-  grid-area: side-nav;
-  background: #000080;
-  display: flex;
-  height: 100vh;
-  flex-direction: column;
+  width: 70%;
+  box-shadow: 1px 0px 2px 1px rgba(0,0,0, 0.4), 3px 0px 4px 2px rgba(0,0,0,0.2);
+  display: none;
   align-items: center;
-  padding: 0.6em;
-}
-
-.side-nav-1 {
-  display: none;
-}
-
-.exit-btn {
-  display: none;
+  position: absolute;
+  z-index: 1;
+  top: 2.4em;
+  transition: display 3s ease-in 1s;
+  flex-direction: column;
+  background: #0010cc;
+  height: 100vh;
 }
 
 .logo {
+  width: 100%;
   display: flex;
-  align-items: center;
 }
 
-.lg a{
+.lg a {
+  font-size: 1em;
   color: #fff;
-  font-weight: 800;
-  font-size: 1.5em;
+  margin-left: 0.4em;
   text-decoration: none;
+  font-weight: 800;
 }
 
-.lg-1 a{
-  display: none;
-  color: #fff;
-  font-weight: 800;
-  font-size: 1.5em;
-  text-decoration: none;
+
+
+.navi-list a, .dashi-nav-list a {
+  font-weight: 700;
 }
 
 .profile-img-one {
-  width: 8em;
-  height: 8em;
+  display: flex;
+  justify-content: center;
+  width: 5em;
+  height: 5em;
+  align-items: center;
   margin-top: 2em;
   position: relative;
   border: 0.2em solid #fff;
-  border-radius: 50%;
   overflow: hidden;
 }
 
 .pix-one {
-  width: 8em;
-  height: 8em;
+  width: 5em;
+  height: 5em;
 }
 
 .side-name {
   color: #fff;
-  font-size: 1.2em;
+  font-size: 0.9em;
   font-weight: 600;
   margin: 0.7em 0em 0.2em 0em;
 }
 
 .side-email {
+  font-size: 0.8em;
   color: #fff;
 }
 
@@ -157,10 +152,10 @@
 .dashi-span {
   display: flex;
   background: #fff;
+  box-shadow: 1px 1px 2px 1px rgba(0,0,0, 0.4), 3px 3px 4px 2px rgba(0,0,0,0.2);
   padding: 0.6em;
   margin-top: 0.6em;  
   display: flex;
-  border-radius: 0.2em;
   align-items: center;
   cursor: pointer;
 }
@@ -184,7 +179,8 @@
 
 .navi:hover {
   background: #fff;
-  border-radius: 0.2em;
+  font-weight: 800;
+  box-shadow: 1px 1px 2px 1px rgba(0,0,0, 0.4), 3px 3px 4px 2px rgba(0,0,0,0.2);
 }
 
 .navi:hover .navi-list {
@@ -219,10 +215,28 @@
   color: blue;
 }
 
-.main-content {
-  grid-area: main-content;
+.main-content-tranc {
+  display: flex;
+  height: 100%;
   background: #d3d3d3; 
-  padding: 0.6em; 
+  padding: 0.4em;
+  margin-bottom: 1.4em; 
+}
+
+.main-content {
+  display: flex;
+  height: 90.7vh;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: #d3d3d3; 
+  padding: 0.3em; 
+}
+
+.action-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .transaction {
@@ -230,15 +244,17 @@
   height: 100%;
   display: flex;
   background: #fff;
+  justify-content: center;
   flex-direction: column;
-  border-radius: 0.2em;
-  padding: 0.8em;
+  box-shadow: 1px 1px 2px 1px rgba(0,0,0, 0.4), 3px 3px 4px 2px rgba(0,0,0,0.2);
+  /* padding: 0.8em; */
 }
 
 .section-heading {
   display: flex;
   width: 100%;
-  margin-bottom: 1em;
+  margin-top: 0.6em;
+  margin-bottom: 0.5em;
   justify-content: center; 
 }
 
@@ -255,19 +271,43 @@
   justify-content: center;
 }
 
+.history, .table-container, 
+.loan-label, .loan-head, .input
+.loan-btn {
+  font-size: 1em;
+}
+
+.loan {
+  margin: 4em 0em;
+}
+
+.loan-label {
+  color: blue;
+  font-size: 1em;
+  font-weight: 500;
+}
+
+.first-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1em;
+  cursor: pointer;
+}
+
 .loan-form {
   display: flex;
   flex-direction: column;
-  width: 30em;
+  width: 15em;
   border: 0.2em solid blue;
-  padding: 1em;
+  padding: 0.8em;
 }
 
 .first-can {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: flex-start;
   padding: 0.6em;
-  align-items: center;
 }
 
 .loan-label {
@@ -276,8 +316,8 @@
   font-weight: 500;
 }
 .input {
-  width: 14em;
-  font-size: 1.2em;
+  width: 100%;
+  font-size: 1em;
   padding: 0.3em;
 }
 
@@ -293,7 +333,7 @@
   padding: 0.6em 2.5em;
   background: blue;
   color: #fff;
-  border-radius: 0.2em;
+  box-shadow: 1px 1px 2px 1px rgba(0,0,0, 0.4), 3px 3px 4px 2px rgba(0,0,0,0.2);
   font-weight: 500;
 }
 
@@ -341,65 +381,124 @@ thead {
   width: 11.2em;
 }
 
-.table-header {
-  overflow: auto;
-}
-
-.table-container {
-  display: flex;
-  width: 100%;
-  height: 24em;
-  flex-direction: column;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-.table-container::-webkit-scrollbar-track, 
-.table-header::-webkit-scrollbar-track {
-	box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	background-color: #F5F5F5;
-	border-radius: 10px;
-}
-
-.table-container::-webkit-scrollbar, 
-.table-header::-webkit-scrollbar {
-	width: 10px;
-	background-color: #F5F5F5;
-}
-
-.table-container::-webkit-scrollbar-thumb,
-.table-header::-webkit-scrollbar-thumb {
-	border-radius: 10px;
-	background: blue;
-}
-
-table {
-  width: auto;
-}
-
-tr {
-  text-align: center;
-}
-
-th, tr, td {
-  padding: 0.9em 0.6em;
-  text-align: center;
-}
 
 .loan {
   width: 100%;
   height: 100%;
   display: flex;
+  box-shadow: 1px 1px 2px 1px rgba(0,0,0, 0.4), 3px 3px 4px 2px rgba(0,0,0,0.2);
   background: #fff;
   flex-direction: column;
-  border-radius: 0.2em;
   padding: 0.8em;
+}
+
+.card-main-container {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  padding: 0.9em;
+}
+
+.card {
+  display: none;
+  width: 100%;
+  box-shadow: 1px 1px 2px 1px rgba(0,0,0, 0.4), 3px 3px 4px 2px rgba(0,0,0,0.2);
+  color: White;
+  justify-content: space-between;
+  padding: 0.7em;
+  font-weight: 800;
+  background: #0010cc;
+  font-size: 1.2em;
+  margin-bottom: 0.8em;
+}
+
+.card-sn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.card-date {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-amount {
+  display: flex;
+  /* width: 9em; */
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-tenor {
+  display: flex;
+  /* width: 7em */
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-installment {
+  display: flex;
+  /* width: 10em; */
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-balance {
+  display: flex;
+  /* width: 9em; */
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-repaid {
+  display: flex;
+  /* width: 4em; */
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+.card-items {
+  display: flex;
+  width: 100%;
+  padding: 1em;
+  font-size: 1em;
+  cursor: pointer;
+  margin-bottom: 0.6em;
+}
+
+.card-items-heading {
+  color: blue;
+  font-size: 0.7em;
+  font-weight: 700;
+}
+
+.card-items:hover {
+  box-shadow: 1px 1px 2px 1px rgba(0,0,0, 0.4), 3px 3px 4px 2px rgba(0,0,0,0.2);
+}
+
+.card-details {
+  display:flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: space-between;
 }
 
 .dashboard {
   width: 100%;
   height: 100%;
   display: flex;
+  margin-bottom: 1.5em;
   flex-direction: column;
   border-radius: 0.2em;
   padding: 0em;
@@ -407,19 +506,29 @@ th, tr, td {
 
 .analytics {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 0.6em;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 0.44em;
 }
 
 .requested, .repaid, .balance {
+  box-shadow: 1px 1px 2px 1px rgba(0,0,0, 0.4), 3px 3px 4px 2px rgba(0,0,0,0.2);
   display: flex;
-  width: calc((100%/3) - 10px);
+  width: 100%;
   flex-direction: column;
   align-items: center;
   text-align: center;
   background: #fff;
   padding: 1em;
   border-radius: 0.2em;
+}
+
+.requested {
+  margin-bottom: 0.6em;
+}
+
+.repaid {
+  margin-bottom: 0.6em;
 }
 
 .ana {
@@ -440,7 +549,7 @@ th, tr, td {
   margin-top: 0.4em;
   justify-content: center;
   align-items: center;
-  font-size: 2em;
+  font-size: 1em;
   color: blue;
   font-weight: 500;
 }
@@ -451,25 +560,28 @@ th, tr, td {
 
 .user-details {
   display: flex;
+  box-shadow: 1px 1px 2px 1px rgba(0,0,0, 0.4), 3px 3px 4px 2px rgba(0,0,0,0.2);
   background: #fff;
   flex-direction: column;
-  border-radius: 0.2em;
-  padding: 0.9em;
+  padding: 0.2em;
 }
 
 .top-content {
   display: flex;
+  flex-direction: column;
   width: 100%;
   align-items: center;
   justify-content: space-between;
 }
-
 .approv-btn {
   padding: 0.7em 1.5em;
   color: #fff;
+  display: flex;
+  justify-content: center;
   text-decoration: none;
-  border-radius: 0.2em;
-  font-weight: 600;
+  font-weight: 400;
+  margin-top: 0.3em;
+  box-shadow: 1px 1px 2px 1px rgba(0,0,0, 0.4), 3px 3px 4px 2px rgba(0,0,0,0.2);
   background: blue;
   cursor: pointer;
 }
@@ -477,12 +589,14 @@ th, tr, td {
 .approv-btn-1 {
   padding: 0.7em 1.5em;
   color: #fff;
+  display: flex;
+  justify-content: center;
   text-decoration: none;
-  border-radius: 0.2em;
-  font-weight: 600;
-  margin-left: 0.6em;
+  font-weight: 400;
+  box-shadow: 1px 1px 2px 1px rgba(0,0,0, 0.4), 3px 3px 4px 2px rgba(0,0,0,0.2);
   background: #000080;
   cursor: pointer;
+  margin-top: 0.3em;
 }
 
 .verified {
@@ -490,6 +604,7 @@ th, tr, td {
   color: greenyellow;
   font-size: 1.5em;
   font-weight: 700;
+  margin-top: 0.3em;
   align-items: center;
 
 }
@@ -498,28 +613,45 @@ th, tr, td {
   margin-left: 0.2em;
 }
 
+.ana {
+  font-size: 1em;
+}
+
+.main-details {
+  display: flex;
+  flex-direction: column;
+}
+
 .fm-name {
   display: flex;
+  flex-direction: column;
   padding: 0.6em;
 }
 
 .detn {
-  font-size: 1.5em;
+  font-size: 1em;
 }
 
 .detn-1 {
-  font-size: 1.5em;
+  font-size: 1em;
+  display: flex;
+  justify-content: start;
   margin-left: 0.6em;
 }
+
 
 .main-details {
   margin-top: 1em;
 }
 
 .footer {
-  grid-area: footer;
-  background: blue;
+  background: #0010cc;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 0.15em;
   display: flex;
+  box-shadow: 1px -1px 2px 1px rgba(0,0,0, 0.4), 3px -3px 4px 2px rgba(0,0,0,0.2);
   align-items: center;
 }
 
@@ -528,241 +660,25 @@ th, tr, td {
   margin-left: 1em;
 }
 
-@media only screen and (min-width: 260px) {
-  .container {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .header {
-    display: flex;
-    justify-content: space-between;
-    line-height: 1.2em;
-    background: blue;
-    padding: 0.2em;
-    width: 100%;
-  }
-
-  .menu-btn {
-    color: #fff;
-    font-size: 1.2em;
-    font-weight: 400;
-    cursor: pointer;
-  }
-
-  .profile-img {
-    width: 2em;
-    height: 2em;
-    border: 0.1em solid #fff;
-    border-radius: 50%;
-    overflow: hidden;
-  }
-  
-  .pix {
-    width: 2em;
-    height: 2em;
-  }
-
-  .user-name {
-    display: none;
-  }
-
+@media only screen and (min-width: 300px) {
   .side-nav {
-    display: none;
+    width: 70%;
   }
-  
-  .side-nav-1 {
-    display: none;
-    position: absolute;
-    width: 100%;
-    top: 0;
-    padding: 0.2em;
-    background: #000080;
-    height: 100vh;
-    flex-direction: column;
-    align-items: center;
-    padding: 0.6em;
-    z-index: 2;
+}
+
+@media only screen and (min-width: 400px) {
+  .side-nav {
+    width: 53%;
   }
 
-  .exit-btn {
-    display: flex;
-    position: absolute;
-    color: #fff;
-    top: 0.1em;
-    right: 0.3em;
-    font-size: 1.5em;
-    font-weight: 500;
-    transform: rotate(45deg);
-    cursor: pointer;
-  }
-
-  .logo-1 {
-    display: flex;
-    align-items: center;
-    margin-top: 0.8em;
+  .card-items {
+    font-size: 1.1em;
   }
 
   .main-content {
-    display: flex;
-    flex-direction: column;
-    padding: 0.3em;
+    height: 92vh;
   }
 
-  .dashboard {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1.5em;
-  }
-
-  .analytics {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .user-details {
-    display: flex;
-    flex-direction: column;
-    padding: 0.2em;
-  }
-
-  .top-content {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .action-btn {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .approv-btn {
-    padding: 0.7em 1.5em;
-    border-radius: 0.2em;
-    font-weight: 400;
-    margin-top: 0.3em;
-  }
-
-  .approv-btn-1 {
-    display: flex;
-    justify-content: center;
-    padding: 0.7em 1.5em;
-    border-radius: 0.2em;
-    font-weight: 400;
-    margin-top: 0.3em;
-  }
-
-  .verified {
-    margin-top: 0.3em;
-  }
-
-  .requested {
-    display: flex;
-    width: 100%;
-    margin-bottom: 0.6em;
-  }
-
-  .repaid {
-    display: flex;
-    width: 100%;
-    margin-bottom: 0.6em;
-  }
-
-  .balance {
-    display: flex;
-    width: 100%;
-  }
-
-  .lytics {
-    font-size: 1em;
-  }
-
-  .ana {
-    font-size: 1em;
-  }
-  
-  .main-details {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .fm-name {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .detn {
-    font-size: 1em;
-  }
-
-  .detn-1 {
-    font-size: 1em;
-    display: flex;
-    justify-content: start;
-  }
-
-  .table-container {
-    overflow: auto;
-  }
-
-  .history, .table-container, 
-  .loan-label, .loan-head, .input
-  .loan-btn {
-    font-size: 1em;
-  }
-
-  .loan {
-    margin: 4.9em 0em;
-  }
-
-  .loan-form {
-    width: 15em;
-    border: 0.2em solid blue;
-    padding: 0.3em;
-  }
-  
-  .first-can {
-    display: flex;
-    flex-direction: column;
-    padding: 0.6em;
-    align-items: flex-start;
-  }
-  
-  .loan-label {
-    color: blue;
-    font-size: 1em;
-    font-weight: 500;
-  }
-  .input {
-    width: 100%;
-    font-size: 1em;
-    padding: 0.3em;
-  }
-  
-  .first-action {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 1em;
-    cursor: pointer;
-  }
-
-  .transaction {
-    margin: 1.4em 0em;
-  }
-
-  .footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    padding: 0.15em;
-  }
-
-} 
-
-@media only screen and (min-width: 400px) {
   .action-btn {
     display: flex;
     width: 100%;
@@ -778,7 +694,7 @@ th, tr, td {
   .loan-form {
     width: 20em;
     border: 0.2em solid blue;
-    padding: 0.3em;
+    padding: 0.8em;
   }
   
   .first-can {
@@ -808,12 +724,30 @@ th, tr, td {
   }
 }
 
+@media only screen and (min-width: 500px) {
+  .side-nav {
+    width: 42%;
+  }
+
+  .card-items {
+    font-size: 1.2em;
+  }
+
+  .card-items-heading {
+    font-size: 1em;
+  }
+}
+
 @media only screen and (min-width: 600px) {
   
   .requested {
     display: flex;
     width: 100%;
     margin-right: 0.3em;
+  }
+
+  .side-nav {
+    width: 35%;
   }
 
   .repaid {
@@ -852,6 +786,7 @@ th, tr, td {
 
   .main-content {
     padding: 0em 0.6em;
+    height: 93vh;
   }
 
   .user-details {
@@ -862,14 +797,27 @@ th, tr, td {
     overflow: auto;
   }
 
+  .fm-name {
+    flex-direction: row;
+    font-size: 1.2em;
+  }
+
   .loan {
+    display: flex;
+    align-items: center;
+    width: 95%;
+    justify-content: center;
     margin: 5.2em 0em;
+  }
+
+  .section-heading {
+    margin-top: 0.8em;
   }
 
   .loan-form {
     width: 25em;
     border: 0.2em solid blue;
-    padding: 0.3em;
+    padding: 0.8em;
   }
   
   .first-can {
@@ -898,382 +846,97 @@ th, tr, td {
     cursor: pointer;
   }
 
-  .transaction {
-    margin: 2em 0em;
+  .card-items {
+    font-size: 1.3em;
+  }
+}
+
+@media only screen and (min-width: 750px) {
+  .side-nav {
+    width: 28%;
   }
 }
 
 @media only screen and (min-width: 800px) {
-  .container {
-    display: grid;
-    grid-template-columns: 8% 1fr;
-  } 
+
+  .card-items-heading {
+    display: none;
+  }
+
+  .card-details {
+    flex-direction: row;
+    font-size: 0.8em;
+  }
+
+  .card {
+    display: flex;
+  }
+
+  .card-sn {
+    width: 5em;
+  }
+  
+  .card-date {
+    width: 7em;
+  }
+  
+  .card-amount {
+    width: 9em;
+  }
+  
+  .card-tenor {
+    width: 7em
+  }
+  
+  .card-installment {
+    width: 10em;
+  }
+  
+  .card-balance {
+    width: 9em;
+  }
+  
+  .card-repaid {
+    width: 4em;
+  }
 
   .side-nav {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    height: 100vh;
-    padding: 0.5em 0em;
-  }
-
-  .user-name {
-    display: flex;
-  }
- 
-  .identity {
-    display: flex;
-    width: 100%;
-    justify-content: flex-end;
-  }
-
-  .menu-btn {
-    display: none;
-  }
-
-  .logo {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-  }
-
-  .lg {
-    display: none;
-  }
-
-  .lg-1 a{
-    display: flex;
-    width: 100%;
-    justify-content: center;
-  }
-
-  .profile-img-one {
-    width: 3em;
-    height: 3em;
-  }
-
-  .pix-one {
-    width: 3em;
-    height: 3em;
-  }
-
-  .side-name, .side-email {
-    display: none;
-  }
-
-  .dashi-span {
-    display: flex;
-    background: #fff;
-    padding: 0.6em;
-    margin-top: 0.6em;  
-    display: flex;
-    border-radius: 0em;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-  }
-
-  .navi {
-    justify-content: center;
-  }
-
-  .navi:hover {
-    background: #fff;
-    border-radius: 0em;
-  }
-
-  .navi-list, .dashi-nav-list {
-    display: none;
+    width: 26%;
   }
 
   .main-content {
+    margin-bottom: -0.9em;
+  }
+
+  .main-content-tranc {
+    /* height: 160vh; */
     padding: 0.6em;
-  }
+    /* padding-bottom: 3em; */
 
-  .analytics {
-    margin-top: 0em;
-  }
-
-  .main-details {
-    margin-bottom: 0em;
-  }
-
-  .fm-name {
-    display: flex;
-    flex-direction: row;
-    font-size: 1.3em;
-  }
-
-  .dashboard {
-    margin-bottom: 0em;
-  }
-
-  .loan {
-    margin: 0em;
-  }
-
-  .transaction {
-    margin: 0em;
-  }
-
-  .footer {
-    position: unset;
-    bottom: 0;
-    width: 100%;
-    padding: 0.15em;
+    
   }
 
 }
 
 @media only screen and (min-width: 1062px) {
-  .container {
-    display: grid;
-    grid-template-columns: 16em 1fr;
-    grid-template-rows: 3em 1fr 2em;
-    grid-template-areas: 
-      'side-nav main-nav'
-      'side-nav main-content'
-      'side-nav footer';
-  }
-  
-  .header {
-    grid-area: main-nav;
-    background: blue;
-    line-height: 1em;
-    padding: 0.5em 1em;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .user-name {
-    display: flex;
-  }
- 
-  .identity {
-    display: flex;
-    width: 100%;
-    justify-content: flex-end;
-  }
-
-  .navi-list, .dashi-nav-list {
-    display: flex;
-  }
-
-  .menu-btn {
-    display: none;
-  }
-
-  .logo {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-  }
-
-  .lg {
-    display: flex;
-  }
-
-  .lg-1 a{
-    display: flex;
-    width: 100%;
-    justify-content: center;
-  }
-  
-  .menu-btn {
-    color: #fff;
-    font-size: 1.5em;
-    font-weight: 600;
-    cursor: pointer;
-  }
-  
-  .profile-img {
-    width: 2.5em;
-    height: 2.5em;
-    border: 0.1em solid #fff;
-    border-radius: 50%;
-    overflow: hidden;
-  }
-  
-  .pix {
-    width: 2.5em;
-    height: 2.5em;
-  }
-  
-  .fa-sign-out-alt {
-    color: #fff;
-    margin-left: 1em;
-    cursor: pointer;
-  }
   
   .side-nav {
-    grid-area: side-nav;
-    background: #000080;
-    display: flex;
-    height: 100vh;
-    flex-direction: column;
-    align-items: center;
-    padding: 0.6em;
+    width: 20%;
   }
-  
-  .lg a{
-    display: flex;
-    color: #fff;
-    font-weight: 800;
-    font-size: 1.5em;
-    text-decoration: none;
-  }
-  
-  .lg-1 a{
-    display: none;
-    color: #fff;
-    font-weight: 800;
-    font-size: 1.5em;
-    text-decoration: none;
-  }
-  
-  .profile-img-one {
-    width: 8em;
-    height: 8em;
-    margin-top: 2em;
-    position: relative;
-    border: 0.2em solid #fff;
-    border-radius: 50%;
-    overflow: hidden;
-  }
-  
-  .pix-one {
-    width: 8em;
-    height: 8em;
-  }
-  
-  .side-name {
-    display: flex;
-    color: #fff;
-    font-size: 1.2em;
-    font-weight: 600;
-    margin: 0.7em 0em 0.2em 0em;
-  }
-  
-  .side-email {
-    display: flex;
-    color: #fff;
-  }
-  
-  .navigation {
-    display: flex;
-    flex-direction: column;
-    margin-top: 1em;
-    align-items: flex-start;
-    width: 100%;
-  }
-  
-  .navi {
-    width:100%;
-    padding: 0.6em;
-    margin-top: 0.6em;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    cursor: pointer;
-  }
-  
-  .navi-list {
-    color: #fff;
-    text-transform: uppercase;
-    font-size: 0.9em;
-    margin-left: 0.6em;
-    font-weight: 500;
-    text-decoration: none;
-  }
-  
-  .dashi-span {
-    display: flex;
-    background: #fff;
-    padding: 0.6em;
-    margin-top: 0.6em;  
-    display: flex;
-    border-radius: 0.2em;
-    width: 100%;
-    justify-content: flex-start;
-    align-items: center;
-    cursor: pointer;
-  }
-  
-  .dashi-nav-list {
-    color: blue;
-    text-transform: uppercase;
-    font-size: 0.9em;
-    margin-left: 0.6em;
-    font-weight: 500;
-    text-decoration: none;
-  }
-  
-  .dashi-nav-icon {
-    color: blue;
-  }
-  
-  .navi-icon {
-    color: #fff;
-  }
-  
-  .navi:hover {
-    background: #fff;
-    border-radius: 0.2em;
-  }
-  
-  .navi:hover .navi-list {
-    color: blue;
-  }
-  
-  .navi:hover .icofont-notebook {
-    color: blue;
-  }
-  
-  .navi:hover .icofont-dashboard {
-    color: blue;
-  }
-  
-  .navi:hover .fa-tachometer-alt {
-    color: blue;
-  }
-  
-  .navi:hover .fa-users {
-    color: blue;
-  }
-  
-  .navi:hover .fa-history {
-    color: blue;
-  }
-  
-  .navi:hover .fa-handshake {
-    color: blue;
-  }
-  
-  .navi:hover .fa-tasks {
-    color: blue;
-  }
-  
   .main-content {
-    grid-area: main-content;
     background: #d3d3d3; 
-    padding: 0.6em; 
-  }
-  
-  .transaction {
-    width: 100%;
-    height: 100%;
+    padding: 0.6em;
     display: flex;
-    background: #fff;
-    flex-direction: column;
-    border-radius: 0.2em;
-    padding: 0.8em;
+    align-items: center;
+    justify-content: center;
+    height: 93vh;
   }
   
+   
   .section-heading {
     display: flex;
     width: 100%;
-    margin-bottom: 1em;
+    margin-bottom: 0.5em;
     justify-content: center; 
   }
   
@@ -1329,7 +992,7 @@ th, tr, td {
     padding: 0.6em 2.5em;
     background: blue;
     color: #fff;
-    border-radius: 0.2em;
+    box-shadow: 1px 1px 2px 1px rgba(0,0,0, 0.4), 3px 3px 4px 2px rgba(0,0,0,0.2);
     font-weight: 500;
   }
   
@@ -1461,6 +1124,10 @@ th, tr, td {
     height: 7em;
   }
   
+  .loan {
+    width: 90%;
+  }
+  
   .ana {
     display: flex;
     font-size: 1em;
@@ -1551,7 +1218,6 @@ th, tr, td {
   }
   
   .footer {
-    grid-area: footer;
     background: blue;
     display: flex;
     align-items: center;

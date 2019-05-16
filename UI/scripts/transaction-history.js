@@ -1,19 +1,27 @@
 const logOut = document.querySelector('.fa-sign-out-alt');
-const exit = document.querySelector('.exit-btn');
-const navigation = document.querySelector('.side-nav-1');
+const navigation = document.querySelector('.side-nav');
 const body = document.querySelector('body');
 const menu = document.querySelector('.menu-btn');
 const dashboard = document.querySelector('.dash');
 const loan = document.querySelector('.loa');
 const history = document.querySelector('.his');
 
+let clicks = 0;
+
 logOut.addEventListener('click', () => {
   window.location.href = '../pages/login.html';
 });
 
 menu.addEventListener('click', () => {
-  navigation.style.display = 'flex';
-  body.style.overflow = 'hidden';
+  clicks += 1;
+  console.log(clicks);
+  if ((clicks % 2) === 0) {
+    navigation.style.display = 'none';
+    body.style.overflow = 'visible';
+  } else {
+    navigation.style.display = 'flex';
+    body.style.overflow = 'hidden';
+  }
 });
 
 dashboard.addEventListener('click', () => {
@@ -35,10 +43,4 @@ history.addEventListener('click', () => {
   setTimeout(() => {
     window.location.href = '../pages/transaction-history.html';
   }, 500);
-});
-
-
-exit.addEventListener('click', () => {
-  navigation.style.display = 'none';
-  body.style.overflow = 'visible';
 });

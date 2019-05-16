@@ -10,53 +10,59 @@ import userController from '../controllers/usersController';
 import authentication from '../middleware/authentication';
 import tokenUtils from '../helpers/tokenUtils';
 
+const { AuthenticateToken } = tokenUtils;
+const {
+  isUserExist,
+  isAdmin, notAUser,
+} = authentication;
+
 const router = express.Router();
 
 router.post('/auth/signup',
   validator(signUpDetails),
-  authentication.isUserExist,
+  isUserExist,
   userController.signUp);
 
 router.post('/auth/signin',
   validator(signInDetails),
-  authentication.notAUser,
+  notAUser,
   userController.signIn);
 
 router.get('/users',
-  tokenUtils.AuthenticateToken,
-  authentication.isAdmin,
+  AuthenticateToken,
+  isAdmin,
   userController.getUsers);
 
 router.patch('/users/:email/verify',
-  tokenUtils.AuthenticateToken,
-  authentication.isAdmin,
+  AuthenticateToken,
+  isAdmin,
   singleValidator(emailDetails),
-  authentication.notAUser,
+  notAUser,
   validator(verifyDetails),
   userController.verifyUser);
 
 router.delete('/users/:email',
-  tokenUtils.AuthenticateToken,
-  authentication.isAdmin,
+  AuthenticateToken,
+  isAdmin,
   singleValidator(emailDetails),
   authentication.notAUser,
   userController.deleteUser);
 
 router.post('/reset-password',
   validator(emailDetails),
-  authentication.notAUser,
+  notAUser,
   userController.sendResetPasswordLink);
 
 router.get('/users/:email/:token/reset-password',
-  tokenUtils.AuthenticateToken,
+  AuthenticateToken,
   singleValidator(emailDetails),
-  authentication.notAUser,
+  notAUser,
   userController.resetPasswordView);
 
 router.patch('/users/:email/:token/reset-password',
-  tokenUtils.AuthenticateToken,
+  AuthenticateToken,
   singleValidator(emailDetails),
-  authentication.notAUser,
+  notAUser,
   validator(passwordDetails),
   userController.resetUserPassword);
 

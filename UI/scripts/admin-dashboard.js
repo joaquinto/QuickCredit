@@ -1,23 +1,52 @@
 const clients = document.querySelector('.clients');
 const close = document.querySelector('.close');
-const table = document.getElementById("tableId");
 const logOut = document.querySelector('.fa-sign-out-alt');
-const exit = document.querySelector('.exit-btn');
-const navigation = document.querySelector('.side-nav-1');
+const navigation = document.querySelector('.side-nav');
 const body = document.querySelector('body');
 const menu = document.querySelector('.menu-btn');
 const dashboard = document.querySelector('.dash');
 const loanApplication = document.querySelector('.loa');
 const currentLoan = document.querySelector('.cur');
 const repaidLoans = document.querySelector('.rep');
+let clicks = 0;
 
 logOut.addEventListener('click', () => {
   window.location.href = '../pages/login.html';
 });
 
 menu.addEventListener('click', () => {
-  navigation.style.display = 'flex';
-  body.style.overflow = 'hidden';
+  clicks += 1;
+  console.log(clicks);
+  if ((clicks % 2) === 0) {
+    navigation.style.display = 'none';
+    body.style.overflow = 'visible';
+  } else {
+    navigation.style.display = 'flex';
+    body.style.overflow = 'hidden';
+  }
+});
+
+const initiaalizeClickFunction = () => {
+  // eslint-disable-next-line no-plusplus
+  for (let i = 1; i < 7; i++) {
+    const card = document.querySelector(`.card-items-${i}`);
+    card.addEventListener('click', () => {
+      window.scrollTo(0, 0);
+      clients.style.display = 'flex';
+      body.style.overflow = 'hidden';
+    });
+  }
+};
+
+
+// card.addEventListener('click', () => {
+//   clients.style.display = 'flex';
+//   body.style.overflow = 'hidden';
+// });
+
+close.addEventListener('click', () => {
+  clients.style.display = 'none';
+  body.style.overflow = 'visible';
 });
 
 dashboard.addEventListener('click', () => {
@@ -48,21 +77,4 @@ repaidLoans.addEventListener('click', () => {
   }, 500);
 });
 
-exit.addEventListener('click', () => {
-  navigation.style.display = 'none';
-  body.style.overflow = 'visible';
-});
-
-
-table.addEventListener('click', () => {
-  const row = table.getElementsByTagName('tr');
-  for (let i = 0; i < row.length; i++) {
-    row[i].addEventListener('click', () => {
-      clients.style.display = 'flex';
-    });
-  }
-});
-
-close.addEventListener('click', () => {
-  clients.style.display = 'none';
-});
+initiaalizeClickFunction();

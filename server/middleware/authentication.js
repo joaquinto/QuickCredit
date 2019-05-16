@@ -8,7 +8,7 @@ export default class Authentication {
     const { email } = req.body;
     const user = users.getUserByEmail(userDb, email);
     if (user.length > 0) {
-      res.status(401).json({ status: 401, error: 'User already exist' });
+      res.status(401).json({ status: 409, error: 'User already exist' });
     }
     next();
   }
@@ -18,7 +18,7 @@ export default class Authentication {
     const value = email || req.body.email;
     const user = users.getUserByEmail(userDb, value);
     if (user.length < 1) {
-      res.status(404).json({ status: 404, error: 'User Not Found ...' });
+      res.status(404).json({ status: 404, error: 'User Not Found' });
     }
     next();
   }
@@ -65,6 +65,14 @@ export default class Authentication {
       });
     } else if (repaid === true) {
       res.status(400).json({ status: 400, error: 'you can\'t post repayment for into a fully repaid loan' });
+    }
+    next();
+  }
+
+  static checkIsLoanApproved(req, res, next) {
+    const [{ status }] = loans.getLoanById(loanDb, Number(req.params.id));
+    if (status === 'approved') {
+      res.status().json({ status: 409, error: 'Loan has been approved already' });
     }
     next();
   }
