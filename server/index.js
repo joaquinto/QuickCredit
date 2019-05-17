@@ -21,14 +21,15 @@ app.get('/', (req, res) => {
   res.status(200).json({ status: 200, data: 'welcome to Quick Credit' });
 });
 
-app.use('/api/v1/', users);
-app.use('/api/v1/', loans);
-app.use('/api/v1/', repayments);
+app.use('/api/v1', users);
+app.use('/api/v1', loans);
+app.use('/api/v1', repayments);
 
 app.use('/docs-api', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-app.use('*', (req, res) => {
+app.use('*', (req, res, next) => {
   res.status(404).json({ status: 404, error: 'Page not found' });
+  next();
 });
 
 app.use((err, req, res) => {

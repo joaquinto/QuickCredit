@@ -100,7 +100,6 @@ export default class Authentication {
       if (owner !== email) {
         res.status(401).json({ status: 401, error: 'Access Denied ... Unauthorized Access' });
       }
-      next();
     }
     next();
   }
