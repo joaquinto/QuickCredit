@@ -86,7 +86,7 @@ describe('Create a loan', () => {
       .post('/api/v1/loans')
       .send(data.loan)
       .end((err, res) => {
-        assert.equal((res.body.status), 401);
+        assert.equal((res.body.status), 403);
         assert.property((res.body), 'error');
         done();
       });
@@ -136,7 +136,7 @@ describe('Get all loans', () => {
     chai.request(app)
       .get('/api/v1/loans')
       .end((err, res) => {
-        assert.equal((res.body.status), 401);
+        assert.equal((res.body.status), 403);
         assert.property((res.body), 'error');
         done();
       });
@@ -158,7 +158,7 @@ describe('Get all loans', () => {
       .get('/api/v1/loans?status=approved&repaid=goinghome')
       .set('Authorization', userToken)
       .end((err, res) => {
-        assert.equal((res.body.status), 400);
+        assert.equal((res.body.status), 404);
         assert.property((res.body), 'error');
         done();
       });
@@ -169,7 +169,7 @@ describe('Get all loans', () => {
       .get('/api/v1/loans?status=approved&repaid=true')
       .set('Authorization', userToken)
       .end((err, res) => {
-        assert.equal((res.body.status), 400);
+        assert.equal((res.body.status), 404);
         assert.property((res.body), 'error');
         done();
       });
@@ -207,7 +207,7 @@ describe('Get a single loan', () => {
     chai.request(app)
       .get('/api/v1/loans/41051150')
       .end((err, res) => {
-        assert.equal((res.body.status), 401);
+        assert.equal((res.body.status), 403);
         assert.property((res.body), 'error');
         done();
       });
@@ -254,10 +254,10 @@ describe('Approve or reject a loan loan', () => {
 
   it('should throw an error for missing token', (done) => {
     chai.request(app)
-      .patch('/api/v1/loans/41051150')
+      .patch('/api/v1/loans/77686022')
       .send(data.approve)
       .end((err, res) => {
-        assert.equal((res.body.status), 401);
+        assert.equal((res.body.status), 403);
         assert.property((res.body), 'error');
         done();
       });
@@ -275,11 +275,11 @@ describe('Approve or reject a loan loan', () => {
       });
   });
 
-  it('should return a loan objects', (done) => {
+  it('should return a loan objects for rejected', (done) => {
     chai.request(app)
-      .patch('/api/v1/loans/41051150')
+      .patch('/api/v1/loans/77686022')
       .set('Authorization', userToken)
-      .send(data.approve)
+      .send(data.reject)
       .end((err, res) => {
         assert.equal((res.body.status), 200);
         assert.property((res.body), 'data');
@@ -287,11 +287,11 @@ describe('Approve or reject a loan loan', () => {
       });
   });
 
-  it('should return a loan objects', (done) => {
+  it('should return a loan objects approved', (done) => {
     chai.request(app)
-      .patch('/api/v1/loans/41051150')
+      .patch('/api/v1/loans/77686022')
       .set('Authorization', userToken)
-      .send(data.reject)
+      .send(data.approve)
       .end((err, res) => {
         assert.equal((res.body.status), 200);
         assert.property((res.body), 'data');

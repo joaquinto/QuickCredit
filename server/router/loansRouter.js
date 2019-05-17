@@ -1,48 +1,50 @@
 import express from 'express';
 import validator from '../middleware/validator';
-import tokenUtils from '../helpers/tokenUtils';
 import authentication from '../middleware/authentication';
 import loanDetails from '../validation/loanDetails';
 import loanIdDetails from '../validation/loanIdDetails';
 import singleValidator from '../middleware/singleValidator';
 import loansController from '../controllers/loansController';
 import queryValidator from '../middleware/queryValidator';
+import jwtTokenUtils from '../helpers/jwtTokenUtils';
+import approvedOrRejectDetails from '../validation/approvedOrRejectDetails';
 
-const { AuthenticateToken } = tokenUtils;
+const { verifyToken } = jwtTokenUtils;
 const {
   isClient, isAccountVerified,
   isAdmin, isOwnerOrAdmin, isLoanExist,
-  // checkIsLoanApproved,
+  checkIsLoanApproved,
 } = authentication;
 
 const router = express.Router();
 
 router.post('/loans',
-  AuthenticateToken,
+  verifyToken,
   isClient,
   isAccountVerified,
-  // checkIsLoanApproved,
   validator(loanDetails),
   loansController.createLoan);
 
 router.get('/loans',
-  AuthenticateToken,
+  verifyToken,
   isAdmin,
   queryValidator,
   loansController.getAllLoans);
 
 router.get('/loans/:id',
-  AuthenticateToken,
+  verifyToken,
   singleValidator(loanIdDetails),
   isLoanExist,
   isOwnerOrAdmin,
   loansController.getLoanById);
 
 router.patch('/loans/:id',
-  AuthenticateToken,
+  verifyToken,
   isAdmin,
   singleValidator(loanIdDetails),
   isLoanExist,
+  checkIsLoanApproved,
+  validator(approvedOrRejectDetails),
   loansController.approveLoan);
 
 export default router;
