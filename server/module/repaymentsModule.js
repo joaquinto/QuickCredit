@@ -16,7 +16,9 @@ export default class RepaymentsModule {
     const paidAmount = req.body.paid_amount;
     const loanBalance = utilities.balanceCalculator(Number(balance), Number(paidAmount));
 
-    await Loans.getNewBalance(loanDb, Number(req.params.id), loanBalance.toFixed(2));
+    const bal = await Loans.getNewBalance(loanDb, Number(req.params.id),
+      Number(loanBalance));
+    console.log(bal);
 
     const emailFrom = 'Quick Credit  <noreply@quickcredit.com>';
     const subject = 'Loan Repayment Transaction Notification';

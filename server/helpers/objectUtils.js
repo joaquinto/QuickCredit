@@ -16,10 +16,10 @@ export default class ObjectUtils {
   static loanManipulation(loans, id, manipulator) {
     const newLoans = loans.filter(loan => (loan.id !== id));
     const newLoan = loans.filter(loan => (loan.id === id));
-    if ((manipulator === 'approved') || (manipulator === 'rejected')) {
+    if (typeof (manipulator) === 'string') {
       newLoan[0].status = manipulator;
-    } else if (manipulator === 'balance') {
-      newLoan[0].balance = manipulator;
+    } else {
+      newLoan[0].balance = manipulator.toFixed(2);
       if (Number(newLoan[0].balance) < Number(newLoan[0].paymentInstallment)) {
         newLoan[0].repaid = true;
       }

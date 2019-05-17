@@ -210,6 +210,27 @@ describe('get all user', () => {
       });
   });
 
+  it('should return an error for no token provided', (done) => {
+    chai.request(app)
+      .get('/api/v1/users')
+      .end((err, res) => {
+        assert.equal((res.body.status), 403);
+        assert.property((res.body), 'error');
+        done();
+      });
+  });
+
+  it('should return an error for invalid token', (done) => {
+    chai.request(app)
+      .get('/api/v1/users')
+      .set('Authorization', 'jhgyguguhi')
+      .end((err, res) => {
+        assert.equal((res.body.status), 401);
+        assert.property((res.body), 'error');
+        done();
+      });
+  });
+
   it('should return status 200', (done) => {
     chai.request(app)
       .get('/')
@@ -217,6 +238,16 @@ describe('get all user', () => {
         assert.equal((res.body.status), 200);
         assert.property((res.body), 'data');
         assert.equal((res.body.data), 'welcome to Quick Credit');
+        done();
+      });
+  });
+
+  it('should return status 200', (done) => {
+    chai.request(app)
+      .get('/jjjfrgfjrn')
+      .end((err, res) => {
+        assert.equal((res.body.status), 404);
+        assert.property((res.body), 'error');
         done();
       });
   });
@@ -243,7 +274,7 @@ describe('verify user', () => {
       .patch('/api/v1/users/johnwick@gmail.com/verify')
       .send(data.verify)
       .end((err, res) => {
-        assert.equal((res.body.status), 401);
+        assert.equal((res.body.status), 403);
         assert.property((res.body), 'error');
         done();
       });
@@ -298,7 +329,7 @@ describe('verify user', () => {
 
   it('should return a user object', (done) => {
     chai.request(app)
-      .patch('/api/v1/users/johnwick@gmail.com/verify')
+      .patch('/api/v1/users/johnsnow@gmail.com/verify')
       .set('Authorization', userToken)
       .send(data.verify)
       .end((err, res) => {
@@ -329,7 +360,7 @@ describe('delete user', () => {
     chai.request(app)
       .delete('/api/v1/users/johnwick@gmail.com')
       .end((err, res) => {
-        assert.equal((res.body.status), 401);
+        assert.equal((res.body.status), 403);
         assert.property((res.body), 'error');
         done();
       });
@@ -456,7 +487,7 @@ describe('reset password', () => {
       .patch(`/api/v1/users/${userEmail}/563643847374738/reset-password`)
       .send(data.resetPassword)
       .end((err, res) => {
-        assert.equal((res.body.status), 403);
+        assert.equal((res.body.status), 401);
         assert.property((res.body), 'error');
         done();
       });

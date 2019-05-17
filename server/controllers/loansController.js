@@ -15,7 +15,7 @@ export default class LoanController {
       loanModule.getAllConditionalLoans(req)
         .then((data) => {
           if (data.length < 1) {
-            res.status(400).json({ status: 400, error: 'No data to display' });
+            res.status(404).json({ status: 404, error: 'No data to display' });
           }
           res.status(200).json({ status: 200, data, message: 'This operation was successful' });
         });

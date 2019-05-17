@@ -45,6 +45,14 @@ export default class Authentication {
     next();
   }
 
+  static checkIsAccountVerified(req, res, next) {
+    const [{ status }] = users.getUserByEmail(userDb, req.params.email);
+    if (status === 'verified') {
+      res.status(409).json({ status: 409, error: 'This account has been verified already' });
+    }
+    next();
+  }
+
   static isLoanExist(req, res, next) {
     const { id } = req.params;
     const loan = loans.getLoanById(loanDb, Number(id));
@@ -64,7 +72,7 @@ export default class Authentication {
         amount paid is less than the required monthly installment payment`,
       });
     } else if (repaid === true) {
-      res.status(400).json({ status: 400, error: 'you can\'t post repayment for into a fully repaid loan' });
+      res.status(409).json({ status: 409, error: 'you can\'t post repayment for into a fully repaid loan' });
     }
     next();
   }
@@ -72,7 +80,15 @@ export default class Authentication {
   static checkIsLoanApproved(req, res, next) {
     const [{ status }] = loans.getLoanById(loanDb, Number(req.params.id));
     if (status === 'approved') {
-      res.status().json({ status: 409, error: 'Loan has been approved already' });
+      res.status(409).json({ status: 409, error: 'Loan has been approved already' });
+    }
+    next();
+  }
+
+  static checkIsLoanRepaid(req, res, next) {
+    const [{ repaid }] = loans.getLoanById(loanDb, Number(req.params.id));
+    if (repaid === true) {
+      res.status(409).json({ status: 409, error: 'Loan has been fully repaid' });
     }
     next();
   }

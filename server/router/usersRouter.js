@@ -8,11 +8,12 @@ import passwordDetails from '../validation/passwordDetails';
 import verifyDetails from '../validation/verifyDetails';
 import userController from '../controllers/usersController';
 import authentication from '../middleware/authentication';
-import tokenUtils from '../helpers/tokenUtils';
+import jwtTokenUtils from '../helpers/jwtTokenUtils';
 
-const { AuthenticateToken } = tokenUtils;
+const { verifyToken } = jwtTokenUtils;
 const {
   isUserExist,
+  checkIsAccountVerified,
   isAdmin, notAUser,
 } = authentication;
 
@@ -29,20 +30,21 @@ router.post('/auth/signin',
   userController.signIn);
 
 router.get('/users',
-  AuthenticateToken,
+  verifyToken,
   isAdmin,
   userController.getUsers);
 
 router.patch('/users/:email/verify',
-  AuthenticateToken,
+  verifyToken,
   isAdmin,
   singleValidator(emailDetails),
   notAUser,
+  checkIsAccountVerified,
   validator(verifyDetails),
   userController.verifyUser);
 
 router.delete('/users/:email',
-  AuthenticateToken,
+  verifyToken,
   isAdmin,
   singleValidator(emailDetails),
   authentication.notAUser,
@@ -54,13 +56,13 @@ router.post('/reset-password',
   userController.sendResetPasswordLink);
 
 router.get('/users/:email/:token/reset-password',
-  AuthenticateToken,
+  verifyToken,
   singleValidator(emailDetails),
   notAUser,
   userController.resetPasswordView);
 
 router.patch('/users/:email/:token/reset-password',
-  AuthenticateToken,
+  verifyToken,
   singleValidator(emailDetails),
   notAUser,
   validator(passwordDetails),

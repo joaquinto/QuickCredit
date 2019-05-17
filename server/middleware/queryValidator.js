@@ -12,7 +12,7 @@ const queryValidator = (req, res, next) => {
     const { error } = Joi.validate(req.query, schema);
     if (error !== null) {
       const { details: [{ message }] } = error;
-      res.status(400).json({ status: 400, error: message });
+      res.status(404).json({ status: 404, error: message });
     }
     next();
   } else {

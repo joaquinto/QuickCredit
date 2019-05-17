@@ -1,11 +1,11 @@
-import nJwt from 'njwt';
 import emailUtility from '../helpers/emailUtils';
 import utilities from '../helpers/utilities';
 import User from '../model/users';
 import userDb from '../storage/usersDb';
-import tokenUtils from '../helpers/tokenUtils';
-import config from '../config/secretKey';
+import jwtTokenUtils from '../helpers/jwtTokenUtils';
 import passwordUtils from '../helpers/passwordUtils';
+
+const { signToken } = jwtTokenUtils;
 
 export default class UsersModule {
   static async signUpUser(req, next) {
@@ -17,7 +17,8 @@ export default class UsersModule {
     const address = req.body.address.toLowerCase();
     const status = 'unverified';
     const isAdmin = false;
-    const tokens = tokenUtils.signToken(id, email, isAdmin, config.signingKey);
+
+    const tokens = signToken(id, email, isAdmin);
 
     const user = await new User(id, email, firstname, lastname,
       password, address, status, isAdmin);
@@ -42,7 +43,7 @@ export default class UsersModule {
     const [Users] = await User.getUserByEmail(userDb, email);
     const isMatch = await passwordUtils.comparePassword(password, Users.password);
     if (isMatch) {
-      const tokens = tokenUtils.signToken(Users.id, Users.email, Users.isAdmin, config.signingKey);
+      const tokens = signToken(Users.id, Users.email, Users.isAdmin);
       return { token: tokens, Users };
     }
     return { status: 405, error: message };
@@ -69,8 +70,7 @@ export default class UsersModule {
     const emailFrom = 'Quick Credit  <noreply@quickcredit.com>';
     const subject = 'Quick Credit Password Reset';
     const [{ id, email, firstname }] = await User.getUserByEmail(userDb, userEmail);
-    const token = nJwt.create({ id, email }, config.signingKey)
-      .setExpiration(new Date().getTime() + (60 * 60 * 100)).compact();
+    const token = signToken(id, email, firstname);
     const text = `Hello ${firstname}, \n \nYou have requested a new password for your Quick Credit account. \n \nClick the following link to automatically confirm your reset: \n \n https://quickycredit.herokuapp.com/api/v1/users/${email}/${token}/reset-password\n \nThank you. \n \nQuick Credit Team`;
     emailUtility(emailFrom, email, subject, text);
     return { token, email };
