@@ -27,6 +27,11 @@ export default class Loans {
     return newLoan;
   }
 
+  static getLoanByEmail(loans, email) {
+    const newLoan = loans.filter(loan => (loan.email === email));
+    return newLoan;
+  }
+
   static getLoanById(loans, id) {
     return loans.filter(loan => (loan.id === id));
   }

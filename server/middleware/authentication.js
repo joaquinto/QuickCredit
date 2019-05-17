@@ -104,4 +104,16 @@ export default class Authentication {
     }
     next();
   }
+
+  static isLoanFullyRepaid(req, res, next) {
+    const loan = loans.getLoanByEmail(loanDb, req.decoded.email);
+    if (loan.length > 0) {
+      const index = loan.length - 1;
+      const { repaid } = loan[index];
+      if (!repaid) {
+        res.status(401).json({ status: 401, error: 'You must pay up your current loan before applying for another loan' });
+      }
+    }
+    next();
+  }
 }
