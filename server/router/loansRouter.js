@@ -13,7 +13,7 @@ const { verifyToken } = jwtTokenUtils;
 const {
   isClient, isAccountVerified,
   isAdmin, isOwnerOrAdmin, isLoanExist,
-  checkIsLoanApproved,
+  checkIsLoanApproved, isLoanFullyRepaid,
 } = authentication;
 
 const router = express.Router();
@@ -22,6 +22,7 @@ router.post('/loans',
   verifyToken,
   isClient,
   isAccountVerified,
+  isLoanFullyRepaid,
   validator(loanDetails),
   loansController.createLoan);
 

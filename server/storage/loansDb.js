@@ -20,7 +20,7 @@ const Loans = [
     email: 'johngabriel@gmail.com',
     createdOn: '2019-05-04T15:29:26.964Z',
     status: 'pending',
-    repaid: false,
+    repaid: true,
     tenor: 7,
     amount: '50000.00',
     paymentInstallment: '7500.00',
