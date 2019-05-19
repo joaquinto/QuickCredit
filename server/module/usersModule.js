@@ -7,19 +7,6 @@ import passwordUtils from '../helpers/passwordUtils';
 const { signToken } = jwtTokenUtils;
 
 export default class UsersModule {
-  static async signInUser(req) {
-    const message = 'User password does not match';
-    const email = req.body.email.toLowerCase();
-    const password = req.body.password.toLowerCase();
-    const [Users] = await User.getUserByEmail(userDb, email);
-    const isMatch = await passwordUtils.comparePassword(password, Users.password);
-    if (isMatch) {
-      const tokens = signToken(Users.id, Users.email, Users.isAdmin);
-      return { token: tokens, Users };
-    }
-    return { status: 405, error: message };
-  }
-
   static async getUsers() {
     const users = await User.getUsers(userDb);
     return users;

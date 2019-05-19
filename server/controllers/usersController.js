@@ -5,15 +5,14 @@ import db from '../db/index';
 import user from '../model/users';
 
 const { query } = db;
-const { createUser } = user;
+const { createUser, findUserByEmail } = user;
 const { signToken } = jwtTokenUtils;
 
 export default class UserController {
   static async signUp(req, res, next) {
-    const firstname = req.body.firstname.toLowerCase();
-    const lastname = req.body.lastname.toLowerCase();
+    const { firstname, lastname } = req.body;
     const email = req.body.email.toLowerCase();
-    const password = await passwordUtils.hashPassword(req.body.password, next);
+    const password = await passwordUtils.hashPassword(req.body.password.toLowerCase(), next);
     const address = req.body.address.toLowerCase();
     const status = 'unverified';
     const isAdmin = false;
@@ -28,7 +27,6 @@ export default class UserController {
         lastname: rows[0].last_name,
         email: rows[0].email,
         address: rows[0].address,
-        password: rows[0].password,
         status: rows[0].status,
         isAdmin: rows[0].is_admin,
       };
@@ -38,14 +36,32 @@ export default class UserController {
     }
   }
 
-  static signIn(req, res) {
-    userModule.signInUser(req)
-      .then((data) => {
-        if (data.error) {
-          res.status(405).json(data);
-        }
-        res.status(200).json({ status: 200, data, message: 'User signed in successfully' });
-      });
+  static async signIn(req, res, next) {
+    const message = 'User password does not match';
+    const email = req.body.email.toLowerCase();
+    const password = req.body.password.toLowerCase();
+    try {
+      const { rows } = await query(findUserByEmail, [email]);
+      const isMatch = await passwordUtils.comparePassword(password, rows[0].password);
+      if (isMatch) {
+        const tokens = signToken(rows[0].id, rows[0].email, rows[0].is_admin);
+        const response = {
+          token: tokens,
+          id: rows[0].id,
+          firstname: rows[0].first_name,
+          lastname: rows[0].last_name,
+          email: rows[0].email,
+          address: rows[0].address,
+          status: rows[0].status,
+          isAdmin: rows[0].is_admin,
+        };
+        res.status(200).json({ status: 200, message: 'Logged in successfully', response });
+      } else {
+        res.status(405).json({ status: 405, error: message });
+      }
+    } catch (error) {
+      next(error);
+    }
   }
 
   static getUsers(req, res) {
