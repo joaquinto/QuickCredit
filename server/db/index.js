@@ -9,13 +9,15 @@ const pool = new Pool({
 
 export default class Query {
   static async query(queryStrings, values) {
+    let result = '';
     const client = await pool.connect();
     try {
-      await client.query(queryStrings, values);
+      result = await client.query(queryStrings, values);
     } catch (error) {
-      console.log(error);
+      console.log(error.detail);
     } finally {
       client.release();
     }
+    return result;
   }
 }

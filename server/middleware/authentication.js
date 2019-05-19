@@ -1,16 +1,24 @@
 import userDb from '../storage/usersDb';
+import db from '../db/index';
 import loanDb from '../storage/loansDb';
 import users from '../model/users';
 import loans from '../model/loans';
 
+const { query } = db;
+const { findUser } = users;
 export default class Authentication {
-  static isUserExist(req, res, next) {
+  static async isUserExist(req, res, next) {
     const { email } = req.body;
-    const user = users.getUserByEmail(userDb, email);
-    if (user.length > 0) {
-      res.status(401).json({ status: 409, error: 'User already exist' });
+    const value = [email];
+    try {
+      const { rows } = await query(findUser, value);
+      if (rows.length > 0) {
+        res.status(409).json({ status: 409, error: 'User already exist' });
+      }
+      next();
+    } catch (error) {
+      console.log(error);
     }
-    next();
   }
 
   static notAUser(req, res, next) {
@@ -116,15 +124,16 @@ export default class Authentication {
     next();
   }
 
-  static isLoanFullyRepaid(req, res, next) {
-    const loan = loans.getLoanByEmail(loanDb, req.decoded.email);
-    if (loan.length > 0) {
-      const index = loan.length - 1;
-      const { repaid } = loan[index];
-      if (!repaid) {
-        res.status(401).json({ status: 401, error: 'You must pay up your current loan before applying for another loan' });
-      }
-    }
-    next();
-  }
+  // static isLoanFullyRepaid(req, res, next) {
+  //   const loan = loans.getLoanByEmail(loanDb, req.decoded.email);
+  //   if (loan.length > 0) {
+  //     const index = loan.length - 1;
+  //     const { repaid } = loan[index];
+  //     if (!repaid) {
+  // eslint-disable-next-line max-len
+  //       res.status(401).json({ status: 401, error: 'You must pay up your current loan before applying for another loan' });
+  //     }
+  //   }
+  //   next();
+  // }
 }
