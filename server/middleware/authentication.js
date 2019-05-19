@@ -6,7 +6,7 @@ import loans from '../model/loans';
 
 const { query } = db;
 const { findUserByEmail } = users;
-const { getLoanByUserId } = loans;
+const { getLoanByUserId, getLoanById } = loans;
 export default class Authentication {
   static async isUserExist(req, res, next) {
     const { email } = req.body;
@@ -66,13 +66,17 @@ export default class Authentication {
     next();
   }
 
-  static isLoanExist(req, res, next) {
+  static async isLoanExist(req, res, next) {
     const { id } = req.params;
-    const loan = loans.getLoanById(loanDb, Number(id));
-    if (loan.length < 1) {
-      res.status(404).json({ status: 404, error: 'Loan does not exist' });
-    }
-    next();
+    try {
+      const { rows } = await query(getLoanById, [id]);
+      if (rows.length < 1) {
+        res.status(404).json({ status: 404, error: 'Loan does not exist' });
+      }
+      next();
+    } catch (error) {
+      next(error);
+    }    
   }
 
   static checkPaidAmount(req, res, next) {
@@ -106,15 +110,23 @@ export default class Authentication {
     next();
   }
 
-  static isOwnerOrAdmin(req, res, next) {
+  static async isOwnerOrAdmin(req, res, next) {
     const owner = req.decoded.email;
-    const [{ email }] = loans.getLoanById(loanDb, Number(req.params.id));
-    if (!req.decoded.admin) {
-      if (owner !== email) {
-        res.status(401).json({ status: 401, error: 'Access Denied ... Unauthorized Access' });
+    try {
+      const { rows } = await query(getLoanById, [req.params.id]);
+      const [{ email }] = rows;
+      console.log(email);
+      console.log('>>>>>>>>>>>', owner);
+      if (!req.decoded.admin) {
+        if (owner !== email) {
+          res.status(401).json({ status: 401, error: 'Access Denied ... Unauthorized Access' });
+        }
       }
+      console.log('>>>>>>>>> passed');
+      next();
+    } catch (error) {
+      next(error);
     }
-    next();
   }
 
   static async isLoanFullyRepaid(req, res, next) {
