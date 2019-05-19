@@ -4,7 +4,7 @@ import loans from '../model/loans';
 import db from '../db/index';
 
 const { query } = db;
-const { createLoan, getAllLoans } = loans;
+const { createLoan, getAllLoans, getLoanById } = loans;
 
 export default class LoanController {
   static async createLoan(req, res, next) {
@@ -72,11 +72,13 @@ export default class LoanController {
   //   }
   // }
 
-  static getLoanById(req, res) {
-    loanModule.getLoanById(req)
-      .then((data) => {
-        res.status(200).json({ status: 200, data, message: 'This operation was successful' });
-      });
+  static async getLoanById(req, res, next) {
+    try {
+      const { rows } = await query(getLoanById, [req.params.id]);
+      res.status(200).json({ status: 200, message: 'retrieved loan successfully', data: rows[0] });
+    } catch (error) {
+      next(error);
+    }
   }
 
   static approveLoan(req, res) {
