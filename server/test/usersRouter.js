@@ -174,9 +174,9 @@ describe('Signing In', () => {
         assert.property((res.body.data.Users), 'status');
         assert.property((res.body.data.Users), 'isAdmin');
         assert.equal((res.body.data.Users.id), 49098877);
-        assert.equal((res.body.data.Users.firstname), 'jonathan');
-        assert.equal((res.body.data.Users.lastname), 'odjegba');
-        assert.equal((res.body.data.Users.email), 'roejoeodj12@gmail.com');
+        assert.equal((res.body.data.Users.firstname), 'Granda');
+        assert.equal((res.body.data.Users.lastname), 'Lex');
+        assert.equal((res.body.data.Users.email), 'johnlex@gmail.com');
         assert.equal((res.body.data.Users.status), 'verified');
         done();
       });
