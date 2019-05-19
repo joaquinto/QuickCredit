@@ -25,11 +25,22 @@ const createTable = {
     balance NUMERIC(15, 2) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users (id)
   )`,
+  repaymentTable: `CREATE TABLE IF NOT EXISTS repayments(
+    id SERIAL,
+    loan_id INTEGER NOT NULL,
+    created_on TIMESTAMP NOT NULL,
+    amount NUMERIC(15, 2) NOT NULL,
+    monthly_installment NUMERIC(15, 2) NOT NULL,
+    paid_amount NUMERIC(15, 2) NOT NULL,
+    balance NUMERIC(15, 2) NOT NULL,
+    FOREIGN KEY (loan_id) REFERENCES loans (id)
+  )`,
 };
 
 const dropTable = {
   dropUserTable: 'DROP TABLE IF EXISTS users CASCADE',
   dropLoanTable: 'DROP TABLE IF EXISTS loans CASCADE',
+  dropRepaymentsTable: 'DROP TABLE IF EXISTS repayments CASCADE',
 };
 
 const hashedPassword = '$2a$10$7prDMxmaa232jRPZm2ZdFeQK4xa.xaFTVPk8GLj1aznpONJ7CKF6G';

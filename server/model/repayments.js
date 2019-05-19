@@ -1,23 +1,29 @@
-export default class Repayments {
-  constructor(id, createdOn, loanId, amount, monthlyInstallment, paidAmount, balance) {
-    this.id = id;
-    this.createdOn = createdOn;
-    this.loanId = loanId;
-    this.amount = amount;
-    this.monthlyInstallment = monthlyInstallment;
-    this.paidAmount = paidAmount;
-    this.balance = balance;
-  }
+const repaymentQueries = {
+  getRepaymentsByLoanId: 'SELECT * FROM repayments WHERE loan_id = $1',
+};
 
-  static getRepaymentsByLoanId(repayments, loanId) {
-    return repayments.filter(repayment => repayment.loanId === loanId);
-  }
+export default repaymentQueries;
 
-  static getRepayments(repayments) {
-    return repayments;
-  }
+// export default class Repayments {
+//   constructor(id, createdOn, loanId, amount, monthlyInstallment, paidAmount, balance) {
+//     this.id = id;
+//     this.createdOn = createdOn;
+//     this.loanId = loanId;
+//     this.amount = amount;
+//     this.monthlyInstallment = monthlyInstallment;
+//     this.paidAmount = paidAmount;
+//     this.balance = balance;
+//   }
 
-  static getRepaymentsById(repayments, id) {
-    return repayments.filter(repayment => repayment.id === id);
-  }
-}
+//   static getRepaymentsByLoanId(repayments, loanId) {
+//     return repayments.filter(repayment => repayment.loanId === loanId);
+//   }
+
+//   static getRepayments(repayments) {
+//     return repayments;
+//   }
+
+//   static getRepaymentsById(repayments, id) {
+//     return repayments.filter(repayment => repayment.id === id);
+//   }
+// }
