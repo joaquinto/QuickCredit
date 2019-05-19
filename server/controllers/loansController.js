@@ -4,7 +4,9 @@ import loans from '../model/loans';
 import db from '../db/index';
 
 const { query } = db;
-const { createLoan, getAllLoans, getLoanById } = loans;
+const {
+  createLoan, getAllLoans, getLoanById, getConditionalLoans,
+} = loans;
 
 export default class LoanController {
   static async createLoan(req, res, next) {
@@ -45,32 +47,22 @@ export default class LoanController {
   }
 
   static async getAllLoans(req, res, next) {
+    const { status, repaid } = req.query;
     try {
-      const { rows } = await query(getAllLoans);
-      res.status(200).json({ status: 200, message: 'retrieved all loans successfully', data: rows });
+      if ((status !== undefined) && (repaid !== undefined)) {
+        const { rows } = await query(getConditionalLoans, [status, repaid]);
+        if (rows.length < 1) {
+          res.status(404).json({ status: 404, error: 'No loan to display' });
+        }
+        res.status(200).json({ status: 200, message: 'conditional loans was retrieved successfully', data: rows });
+      } else {
+        const { rows } = await query(getAllLoans);
+        res.status(200).json({ status: 200, message: 'retrieved all loans successfully', data: rows });
+      }
     } catch (error) {
       next(error);
     }
   }
-
-  // static getAllLoans(req, res) {
-  //   const { status } = req.query;
-  //   const { repaid } = req.query;
-  //   if ((status !== undefined) && (repaid !== undefined)) {
-  //     loanModule.getAllConditionalLoans(req)
-  //       .then((data) => {
-  //         if (data.length < 1) {
-  //           res.status(404).json({ status: 404, error: 'No data to display' });
-  //         }
-  //         res.status(200).json({ status: 200, data, message: 'This operation was successful' });
-  //       });
-  //   } else {
-  //     loanModule.getAllLoans()
-  //       .then((data) => {
-  //         res.status(200).json({ status: 200, data, message: 'This operation was successful' });
-  //       });
-  //   }
-  // }
 
   static async getLoanById(req, res, next) {
     try {

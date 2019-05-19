@@ -12,6 +12,8 @@ const loanQueries = {
 
   getAllLoans: 'SELECT * FROM loans',
 
+  getConditionalLoans: 'SELECT * FROM loans WHERE status = $1 AND repaid = $2',
+
 };
 
 export default loanQueries;
