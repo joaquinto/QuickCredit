@@ -4,7 +4,7 @@ import loans from '../model/loans';
 import db from '../db/index';
 
 const { query } = db;
-const { createLoan } = loans;
+const { createLoan, getAllLoans } = loans;
 
 export default class LoanController {
   static async createLoan(req, res, next) {
@@ -44,24 +44,33 @@ export default class LoanController {
     }
   }
 
-  static getAllLoans(req, res) {
-    const { status } = req.query;
-    const { repaid } = req.query;
-    if ((status !== undefined) && (repaid !== undefined)) {
-      loanModule.getAllConditionalLoans(req)
-        .then((data) => {
-          if (data.length < 1) {
-            res.status(404).json({ status: 404, error: 'No data to display' });
-          }
-          res.status(200).json({ status: 200, data, message: 'This operation was successful' });
-        });
-    } else {
-      loanModule.getAllLoans()
-        .then((data) => {
-          res.status(200).json({ status: 200, data, message: 'This operation was successful' });
-        });
+  static async getAllLoans(req, res, next) {
+    try {
+      const { rows } = await query(getAllLoans);
+      res.status(200).json({ status: 200, message: 'retrieved all loans successfully', data: rows });
+    } catch (error) {
+      next(error);
     }
   }
+
+  // static getAllLoans(req, res) {
+  //   const { status } = req.query;
+  //   const { repaid } = req.query;
+  //   if ((status !== undefined) && (repaid !== undefined)) {
+  //     loanModule.getAllConditionalLoans(req)
+  //       .then((data) => {
+  //         if (data.length < 1) {
+  //           res.status(404).json({ status: 404, error: 'No data to display' });
+  //         }
+  //         res.status(200).json({ status: 200, data, message: 'This operation was successful' });
+  //       });
+  //   } else {
+  //     loanModule.getAllLoans()
+  //       .then((data) => {
+  //         res.status(200).json({ status: 200, data, message: 'This operation was successful' });
+  //       });
+  //   }
+  // }
 
   static getLoanById(req, res) {
     loanModule.getLoanById(req)
