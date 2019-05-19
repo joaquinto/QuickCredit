@@ -5,13 +5,13 @@ import users from '../model/users';
 import loans from '../model/loans';
 
 const { query } = db;
-const { findUser } = users;
+const { findUserByEmail } = users;
 export default class Authentication {
   static async isUserExist(req, res, next) {
     const { email } = req.body;
     const value = [email];
     try {
-      const { rows } = await query(findUser, value);
+      const { rows } = await query(findUserByEmail, value);
       if (rows.length > 0) {
         res.status(409).json({ status: 409, error: 'User already exist' });
       }
@@ -21,14 +21,18 @@ export default class Authentication {
     }
   }
 
-  static notAUser(req, res, next) {
+  static async notAUser(req, res, next) {
     const { email } = req.params;
     const value = email || req.body.email;
-    const user = users.getUserByEmail(userDb, value);
-    if (user.length < 1) {
-      res.status(404).json({ status: 404, error: 'User Not Found' });
+    try {
+      const { rows } = await query(findUserByEmail, [value]);
+      if (rows.length < 0) {
+        res.status(404).json({ status: 404, error: 'User Not Found' });
+      }
+      next();
+    } catch (error) {
+      console.log(error);
     }
-    next();
   }
 
   static isAdmin(req, res, next) {
