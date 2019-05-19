@@ -2,6 +2,6 @@
 
 /.nyc_output
 
-/.env
-
 /dist
+
+/.env

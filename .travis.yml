@@ -5,6 +5,9 @@ language: node_js
 node_js: 
   - "8.10.0"
 
+services:
+  - postgresql
+
 notifications:
   email: false
 
@@ -16,12 +19,17 @@ env:
     - SECRET_KEY=QUICKCREDIT
     - CC_TEST_REPORTER_ID=e55b27528b2ab483e09882417ef8ef583bee62b18b2b571dd1dd04bf94ffa4dc
     - NODE_ENV=test
+    - SECRET_KEY=testtesttest
+    - DATABASE_URL=postgres://postgres@127.0.0.1:5432/quick_credit
     
 before_script:
   - yarn global add nyc
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
+  - psql -c 'create database quick_credit;' -U postgres
+  - npm run refresh
+
 script:
  - npm run coveralls
  - npm run coverage

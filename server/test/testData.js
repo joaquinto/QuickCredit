@@ -1,10 +1,10 @@
 const data = {
   signIn: {
-    email: 'roejoeodj12@gmail.com',
-    password: 'king2012',
+    email: 'johnlex@gmail.com',
+    password: 'john2019',
   },
   signInWithWrongPassword: {
-    email: 'roejoeodj12@gmail.com',
+    email: 'johnlex@gmail.com',
     password: 'king20125',
   },
   client: {
@@ -15,14 +15,14 @@ const data = {
     password: 'king2012',
   },
   missingPassword: {
-    email: 'roejoeodj12@gmail.com',
+    email: 'johnlex@gmail.com',
   },
   invalidEmail: {
     email: 'bjbdbjndmn',
-    password: 'king2012',
+    password: 'john2019',
   },
   invalidPassword: {
-    email: 'roejoeodj12@gmail.com',
+    email: 'johnlex@gmail.com',
     password: 76544,
   },
   missingFirstname: {
