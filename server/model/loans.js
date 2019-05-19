@@ -11,6 +11,7 @@ const loanQueries = {
   getLoanById: 'SELECT * FROM loans WHERE id = $1',
 
   getAllLoans: 'SELECT * FROM loans',
+
 };
 
 export default loanQueries;
