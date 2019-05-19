@@ -16,6 +16,7 @@ install:
 
 env:
   global:
+    - SECRET_KEY=QUICKCREDIT
     - CC_TEST_REPORTER_ID=e55b27528b2ab483e09882417ef8ef583bee62b18b2b571dd1dd04bf94ffa4dc
     - NODE_ENV=test
     - SECRET_KEY=testtesttest

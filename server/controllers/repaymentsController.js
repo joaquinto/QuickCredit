@@ -5,20 +5,20 @@ export default class RepaymentController {
     repaymentsModule.createRepayment(req)
       .then((data) => {
         res.status(201).json({ status: 201, data, message: 'Repayment created successfully' });
-      });
+      }).catch(e => console.log(e));
   }
 
   static getRepaymentsByLoanId(req, res) {
     repaymentsModule.getRepaymentByLoanId(req)
       .then((data) => {
         res.status(200).json({ status: 200, data, message: 'Operation performed successfully' });
-      });
+      }).catch(e => console.log(e));
   }
 
   static getAllRepayments(req, res) {
     repaymentsModule.getRepayments()
       .then((data) => {
         res.status(200).json({ status: 200, data, message: 'Operation performed successfully' });
-      });
+      }).catch(e => console.log(e));
   }
 }
