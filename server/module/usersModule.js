@@ -1,5 +1,4 @@
 import emailUtility from '../helpers/emailUtils';
-import utilities from '../helpers/utilities';
 import User from '../model/users';
 import userDb from '../storage/usersDb';
 import jwtTokenUtils from '../helpers/jwtTokenUtils';
@@ -8,34 +7,6 @@ import passwordUtils from '../helpers/passwordUtils';
 const { signToken } = jwtTokenUtils;
 
 export default class UsersModule {
-  static async signUpUser(req, next) {
-    const id = Number(utilities.idGenerator());
-    const firstname = req.body.firstname.toLowerCase();
-    const lastname = req.body.lastname.toLowerCase();
-    const email = req.body.email.toLowerCase();
-    const password = await passwordUtils.hashPassword(req.body.password, next);
-    const address = req.body.address.toLowerCase();
-    const status = 'unverified';
-    const isAdmin = false;
-
-    const tokens = signToken(id, email, isAdmin);
-
-    const user = await new User(id, email, firstname, lastname,
-      password, address, status, isAdmin);
-    userDb.push(user);
-    return {
-      token: tokens,
-      id: user.id,
-      firstname: user.firstname,
-      lastname: user.lastname,
-      email: user.email,
-      address: user.address,
-      password: user.password,
-      status: user.status,
-      isAdmin: user.isAdmin,
-    };
-  }
-
   static async signInUser(req) {
     const message = 'User password does not match';
     const email = req.body.email.toLowerCase();

@@ -1,11 +1,41 @@
 import userModule from '../module/usersModule';
+import jwtTokenUtils from '../helpers/jwtTokenUtils';
+import passwordUtils from '../helpers/passwordUtils';
+import db from '../db/index';
+import user from '../model/users';
+
+const { query } = db;
+const { createUser } = user;
+const { signToken } = jwtTokenUtils;
 
 export default class UserController {
-  static signUp(req, res, next) {
-    userModule.signUpUser(req, next)
-      .then((data) => {
-        res.status(201).json({ status: 201, data, message: 'User created successfully' });
-      });
+  static async signUp(req, res, next) {
+    const firstname = req.body.firstname.toLowerCase();
+    const lastname = req.body.lastname.toLowerCase();
+    const email = req.body.email.toLowerCase();
+    const password = await passwordUtils.hashPassword(req.body.password, next);
+    const address = req.body.address.toLowerCase();
+    const status = 'unverified';
+    const isAdmin = false;
+    const values = [firstname, lastname, email, password, address, status, isAdmin];
+    try {
+      const { rows } = await query(createUser, values);
+      const tokens = await signToken(rows[0].id, rows[0].email, rows[0].is_admin);
+      const response = {
+        token: tokens,
+        id: rows[0].id,
+        firstname: rows[0].first_name,
+        lastname: rows[0].last_name,
+        email: rows[0].email,
+        address: rows[0].address,
+        password: rows[0].password,
+        status: rows[0].status,
+        isAdmin: rows[0].is_admin,
+      };
+      res.status(201).json({ status: 201, message: 'User created successfully', response });
+    } catch (error) {
+      next(error);
+    }
   }
 
   static signIn(req, res) {
