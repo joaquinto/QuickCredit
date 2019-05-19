@@ -14,50 +14,11 @@ const loanQueries = {
 
   getConditionalLoans: 'SELECT * FROM loans WHERE status = $1 AND repaid = $2',
 
+  approveLoan: 'UPDATE loans SET status = $1 WHERE id = $2 RETURNING *',
+
 };
 
 export default loanQueries;
-
-// export default class Loans {
-//   constructor(id, firstname, lastname, email, createdOn, status, repaid,
-//     tenor, amount, paymentInstallment, balance, interest) {
-//     this.id = id;
-//     this.firstname = firstname;
-//     this.lastname = lastname;
-//     this.email = email;
-//     this.createdOn = createdOn;
-//     this.status = status;
-//     this.repaid = repaid;
-//     this.tenor = tenor;
-//     this.amount = amount;
-//     this.paymentInstallment = paymentInstallment;
-//     this.balance = balance;
-//     this.interest = interest;
-//   }
-
-//   static getLoans(loans) {
-//     return loans;
-//   }
-
-//   static getConditionalLoans(loans, status, repaid) {
-//     const newLoan = loans
-//       .filter(loan => ((loan.status === status) && (loan.repaid === JSON.parse(repaid))));
-//     return newLoan;
-//   }
-
-//   static getLoanByEmail(loans, email) {
-//     const newLoan = loans.filter(loan => (loan.email === email));
-//     return newLoan;
-//   }
-
-//   static getLoanById(loans, id) {
-//     return loans.filter(loan => (loan.id === id));
-//   }
-
-//   static editLoanStatusById(loans, id, status) {
-//     const newLoan = objectUtils.loanManipulation(loans, id, status);
-//     return newLoan;
-//   }
 
 //   static getNewBalance(loans, id, balance) {
 //     const newLoan = objectUtils.loanManipulation(loans, id, balance);
