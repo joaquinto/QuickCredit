@@ -11,7 +11,7 @@ import approvedOrRejectDetails from '../validation/approvedOrRejectDetails';
 
 const { verifyToken } = jwtTokenUtils;
 const {
-  isClient, isAccountVerified,
+  isClient,
   isAdmin, isOwnerOrAdmin, isLoanExist,
   checkIsLoanApproved, isLoanFullyRepaid,
 } = authentication;
@@ -21,7 +21,6 @@ const router = express.Router();
 router.post('/loans',
   verifyToken,
   isClient,
-  isAccountVerified,
   isLoanFullyRepaid,
   validator(loanDetails),
   loansController.createLoan);
