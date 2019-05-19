@@ -5,7 +5,7 @@ import db from '../db/index';
 import user from '../model/users';
 
 const { query } = db;
-const { createUser, findUserByEmail } = user;
+const { createUser, findUserByEmail, verifyUser } = user;
 const { signToken } = jwtTokenUtils;
 
 export default class UserController {
@@ -71,11 +71,15 @@ export default class UserController {
       });
   }
 
-  static verifyUser(req, res) {
-    userModule.verifyUser(req)
-      .then((data) => {
-        res.status(200).json({ status: 200, data, message: 'User verified successfully' });
-      });
+  static async verifyUser(req, res, next) {
+    const { status } = req.body;
+    try {
+      const { rows } = await query(verifyUser, [status, req.params.email]);
+      console.log('>>>>>>>>>', rows[0]);
+      res.status(200).json({ status: 200, message: 'User has been verified successfully', data: rows[0] });
+    } catch (error) {
+      next(error);
+    }
   }
 
   static deleteUser(req, res) {

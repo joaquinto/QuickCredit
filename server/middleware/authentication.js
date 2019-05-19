@@ -58,12 +58,17 @@ export default class Authentication {
     next();
   }
 
-  static checkIsAccountVerified(req, res, next) {
-    const [{ status }] = users.getUserByEmail(userDb, req.params.email);
-    if (status === 'verified') {
-      res.status(409).json({ status: 409, error: 'This account has been verified already' });
-    }
-    next();
+  static async checkIsAccountVerified(req, res, next) {
+    try {
+      const { rows } = await query(findUserByEmail, [req.params.email]);
+      const [{ status }] =  rows;
+      if (status === 'verified') {
+        res.status(409).json({ status: 409, error: 'This account has been verified already' });
+      }
+      next();
+    } catch (error) {
+      next(error);
+    }    
   }
 
   static async isLoanExist(req, res, next) {
