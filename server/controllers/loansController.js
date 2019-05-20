@@ -1,11 +1,11 @@
-import loanModule from '../module/loansModule';
 import utilities from '../helpers/utilities';
 import loans from '../model/loans';
 import db from '../db/index';
 
 const { query } = db;
 const {
-  createLoan, getAllLoans, getLoanById, getConditionalLoans,
+  createLoan, getAllLoans, getLoanById,
+  getConditionalLoans, approveLoan,
 } = loans;
 
 export default class LoanController {
@@ -73,10 +73,13 @@ export default class LoanController {
     }
   }
 
-  static approveLoan(req, res) {
-    loanModule.approveLoan(req)
-      .then((data) => {
-        res.status(200).json({ status: 200, data, message: 'Loan was approved successfully' });
-      });
+  static async approveLoan(req, res, next) {
+    const { status } = req.body;
+    try {
+      const { rows } = await query(approveLoan, [status, req.params.id]);
+      res.status(200).json({ status: 200, message: 'Loan was approved successfully', data: rows[0] });
+    } catch (error) {
+      next(error);
+    }
   }
 }

@@ -99,12 +99,17 @@ export default class Authentication {
     next();
   }
 
-  static checkIsLoanApproved(req, res, next) {
-    const [{ status }] = loans.getLoanById(loanDb, Number(req.params.id));
-    if (status === 'approved') {
-      res.status(409).json({ status: 409, error: 'Loan has been approved already' });
-    }
-    next();
+  static async checkIsLoanApproved(req, res, next) {
+    try {
+      const { rows } = await query(getLoanById, [req.params.id]);
+      const [{ status }] = rows;
+      if (status === 'approved') {
+        res.status(409).json({ status: 409, error: 'Loan has been approved already' });
+      }
+      next();
+    } catch (error) {
+      next(error);
+    }    
   }
 
   static checkIsLoanRepaid(req, res, next) {
@@ -121,13 +126,11 @@ export default class Authentication {
       const { rows } = await query(getLoanById, [req.params.id]);
       const [{ email }] = rows;
       console.log(email);
-      console.log('>>>>>>>>>>>', owner);
       if (!req.decoded.admin) {
         if (owner !== email) {
           res.status(401).json({ status: 401, error: 'Access Denied ... Unauthorized Access' });
         }
       }
-      console.log('>>>>>>>>> passed');
       next();
     } catch (error) {
       next(error);
