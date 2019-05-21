@@ -7,6 +7,8 @@ const userQueries = {
   findUserByEmail: `SELECT * FROM users WHERE email = $1`,
 
   verifyUser: `UPDATE users SET status = $1 WHERE email = $2 RETURNING *`,
+
+  findUserById: `SELECT * FROM users WHERE id = $1`,
 };
 
 export default userQueries;

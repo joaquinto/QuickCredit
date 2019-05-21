@@ -1,11 +1,11 @@
 import express from 'express';
 import validator from '../middleware/validator';
-import authentication from '../middleware/authentication';
 import loanIdDetails from '../validation/loanIdDetails';
 import singleValidator from '../middleware/singleValidator';
 import paidAmountDetails from '../validation/paidAmountDetails';
 import repaymentsController from '../controllers/repaymentsController';
 import jwtTokenUtils from '../helpers/jwtTokenUtils';
+import authentication from '../middleware/authentication';
 
 const { verifyToken } = jwtTokenUtils;
 const {
@@ -21,6 +21,7 @@ router.post('/loans/:id/repayment',
   verifyToken,
   isAdmin,
   singleValidator(loanIdDetails),
+  isAccountVerified,
   isLoanExist,
   checkIsLoanRepaid,
   validator(paidAmountDetails),

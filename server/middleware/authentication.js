@@ -1,18 +1,17 @@
-import userDb from '../storage/usersDb';
+/* eslint-disable camelcase */
 import db from '../db/index';
-import loanDb from '../storage/loansDb';
 import users from '../model/users';
 import loans from '../model/loans';
 
 const { query } = db;
-const { findUserByEmail } = users;
-const { getLoanByUserId, getLoanById } = loans;
+const { findUserByEmail, findUserById } = users;
+const { getLoanByUserId, getLoanById, updateRepaid } = loans;
+
 export default class Authentication {
   static async isUserExist(req, res, next) {
     const { email } = req.body;
-    const value = [email];
     try {
-      const { rows } = await query(findUserByEmail, value);
+      const { rows } = await query(findUserByEmail, [email]);
       if (rows.length > 0) {
         res.status(409).json({ status: 409, error: 'User already exist' });
       }
@@ -50,25 +49,43 @@ export default class Authentication {
     next();
   }
 
-  static isAccountVerified(req, res, next) {
-    const [{ status }] = users.getUserById(userDb, req.decoded.id);
-    if (status !== 'verified') {
-      res.status(401).json({ status: 401, error: 'Access Denied ... Unauthorized Access' });
+  static async isAccountVerified(req, res, next) {
+    try {
+      const { rows } = await query(findUserById, [req.decoded.id]);
+      const [{ status }] = rows;
+      if (status !== 'verified') {
+        res.status(401).json({ status: 401, error: 'Access Denied ... Unauthorized Access' });
+      }
+      next();
+    } catch (error) {
+      next(error);
     }
-    next();
   }
 
   static async checkIsAccountVerified(req, res, next) {
     try {
       const { rows } = await query(findUserByEmail, [req.params.email]);
-      const [{ status }] =  rows;
+      const [{ status }] = rows;
       if (status === 'verified') {
         res.status(409).json({ status: 409, error: 'This account has been verified already' });
       }
       next();
     } catch (error) {
       next(error);
-    }    
+    }
+  }
+
+  static async userNotVerified(req, res, next) {
+    try {
+      const { rows } = await query(findUserByEmail, [req.params.email]);
+      const [{ status }] = rows;
+      if (status !== 'verified') {
+        res.status(409).json({ status: 409, error: 'This user is not verified, please verify this user before performing any other operation' });
+      }
+      next();
+    } catch (error) {
+      next(error);
+    }
   }
 
   static async isLoanExist(req, res, next) {
@@ -81,22 +98,32 @@ export default class Authentication {
       next();
     } catch (error) {
       next(error);
-    }    
+    }
   }
 
-  static checkPaidAmount(req, res, next) {
+  static async checkPaidAmount(req, res, next) {
     const paidAmount = req.body.paid_amount;
-    const [{ paymentInstallment, repaid }] = loans.getLoanById(loanDb, Number(req.params.id));
-    if (Number(paidAmount) !== Number(paymentInstallment)) {
-      res.status(400).json({
-        status: 400,
-        error: `Can not process this payment because the
-        amount paid is less than the required monthly installment payment`,
-      });
-    } else if (repaid === true) {
-      res.status(409).json({ status: 409, error: 'you can\'t post repayment for into a fully repaid loan' });
+    try {
+      const { rows } = await query(getLoanById, [req.params.id]);
+      // eslint-disable-next-line camelcase
+      const [{ payment_installment }] = rows;
+      console.log(paidAmount, payment_installment);
+      if (Number(paidAmount) !== Number(payment_installment)) {
+        req.checkedBalance = false;
+        console.log('>>>>>>>>>', req.checkedBalance);
+        res.status(400).json({
+          status: 400,
+          error: `Can not process this payment because the
+          amount paid is less than the required monthly installment payment`,
+        });
+      } else {
+        req.checkedBalance = true;
+        req.loan = rows;
+      }
+      next();
+    } catch (error) {
+      next(error);
     }
-    next();
   }
 
   static async checkIsLoanApproved(req, res, next) {
@@ -109,15 +136,32 @@ export default class Authentication {
       next();
     } catch (error) {
       next(error);
-    }    
+    }
   }
 
-  static checkIsLoanRepaid(req, res, next) {
-    const [{ repaid }] = loans.getLoanById(loanDb, Number(req.params.id));
-    if (repaid === true) {
-      res.status(409).json({ status: 409, error: 'Loan has been fully repaid' });
+  static async checkIsLoanRepaid(req, res, next) {
+    try {
+      const { rows } = await query(getLoanById, [req.params.id]);
+      const [{ repaid }] = rows;
+      if (repaid === true) {
+        res.status(409).json({ status: 409, error: 'Loan has been fully repaid' });
+      }
+      next();
+    } catch (error) {
+      next(error);
     }
-    next();
+  }
+
+  static async updateRepayment(req, res, next) {
+    try {
+      const { rows } = await query(getLoanById, [req.params.id]);
+      const [{ balance, payment_installment }] = rows;
+      if (Number(balance) < Number(payment_installment)) {
+        await query(updateRepaid, [true, req.params.id]);
+      }
+    } catch (error) {
+      next(error);
+    }
   }
 
   static async isOwnerOrAdmin(req, res, next) {
@@ -125,7 +169,6 @@ export default class Authentication {
     try {
       const { rows } = await query(getLoanById, [req.params.id]);
       const [{ email }] = rows;
-      console.log(email);
       if (!req.decoded.admin) {
         if (owner !== email) {
           res.status(401).json({ status: 401, error: 'Access Denied ... Unauthorized Access' });
@@ -139,7 +182,7 @@ export default class Authentication {
 
   static async isLoanFullyRepaid(req, res, next) {
     try {
-      const { rows } =  await query(getLoanByUserId, [req.decoded.id]);
+      const { rows } = await query(getLoanByUserId, [req.decoded.id]);
       if (rows.length > 0) {
         const index = rows.length - 1;
         const { repaid, status } = rows[index];

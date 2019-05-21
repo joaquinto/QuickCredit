@@ -1,16 +1,42 @@
-import repaymentsModule from '../module/repaymentsModule';
+/* eslint-disable camelcase */
 import db from '../db/index';
+import loan from '../model/loans';
+import utilities from '../helpers/utilities';
 import repayments from '../model/repayments';
+import authentication from '../middleware/authentication';
 
+const {
+  sendRepaymentNotification, response, postRepayment, balanceCalculator,
+} = utilities;
+const { updateRepayment } = authentication;
 const { query } = db;
-const { getRepaymentsByLoanId } = repayments;
+// eslint-disable-next-line no-unused-vars
+const { getLoanById, updateBalance } = loan;
+const { getRepaymentsByLoanId, postRepayments } = repayments;
 
 export default class RepaymentController {
-  static createRepayment(req, res) {
-    repaymentsModule.createRepayment(req)
-      .then((data) => {
-        res.status(201).json({ status: 201, data, message: 'Repayment created successfully' });
-      }).catch(e => console.log(e));
+  static async createRepayment(req, res, next) {
+    if (req.checkedBalance === false) {
+      console.log('error happened');
+    } else {
+      try {
+        const [{
+          id, first_name, email, amount, balance, payment_installment,
+        }] = req.loan;
+        const createdOn = new Date();
+        const paidAmount = req.body.paid_amount;
+        const loanBalance = balanceCalculator(Number(balance), Number(paidAmount));
+        const value = [id, createdOn, amount, payment_installment,
+          paidAmount, loanBalance];
+        const result = await postRepayment(postRepayments, value, next);
+        sendRepaymentNotification(first_name, email, paidAmount, loanBalance);
+        await query(updateBalance, [loanBalance, req.params.id]);
+        await updateRepayment(req, next);
+        res.status(201).json({ status: 201, message: 'Repayment created successfully', data: response(result) });
+      } catch (error) {
+        next(error);
+      }
+    }
   }
 
   static async getRepaymentsByLoanId(req, res, next) {
@@ -26,10 +52,10 @@ export default class RepaymentController {
     }
   }
 
-  static getAllRepayments(req, res) {
-    repaymentsModule.getRepayments()
-      .then((data) => {
-        res.status(200).json({ status: 200, data, message: 'Operation performed successfully' });
-      }).catch(e => console.log(e));
-  }
+  // static getAllRepayments(req, res) {
+  //   repaymentsModule.getRepayments()
+  //     .then((data) => {
+  //       res.status(200).json({ status: 200, data, message: 'Operation performed successfully' });
+  //     }).catch(e => console.log(e));
+  // }
 }

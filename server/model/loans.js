@@ -12,6 +12,10 @@ const loanQueries = {
 
   getAllLoans: 'SELECT * FROM loans',
 
+  updateBalance: 'UPDATE loans SET balance = $1 WHERE id = $2 RETURNING *',
+
+  updateRepaid: 'UPDATE loans SET repaid = $1 WHERE id = $2 RETURNING *',
+
   getConditionalLoans: 'SELECT * FROM loans WHERE status = $1 AND repaid = $2',
 
   approveLoan: 'UPDATE loans SET status = $1 WHERE id = $2 RETURNING *',
@@ -19,9 +23,3 @@ const loanQueries = {
 };
 
 export default loanQueries;
-
-//   static getNewBalance(loans, id, balance) {
-//     const newLoan = objectUtils.loanManipulation(loans, id, balance);
-//     return newLoan;
-//   }
-// }
