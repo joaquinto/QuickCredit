@@ -1,4 +1,4 @@
-import userModule from '../module/usersModule';
+/* eslint-disable max-len */
 import jwtTokenUtils from '../helpers/jwtTokenUtils';
 import passwordUtils from '../helpers/passwordUtils';
 import db from '../db/index';
@@ -64,46 +64,45 @@ export default class UserController {
     }
   }
 
-  static getUsers(req, res) {
-    userModule.getUsers()
-      .then((data) => {
-        res.status(200).json({ status: 200, data, message: 'The operation you performed was successful' });
-      });
-  }
+  // static getUsers(req, res) {
+  //   userModule.getUsers()
+  //     .then((data) => {
+  //       res.status(200).json({ status: 200, data, message: 'The operation you performed was successful' });
+  //     });
+  // }
 
   static async verifyUser(req, res, next) {
     const { status } = req.body;
     try {
       const { rows } = await query(verifyUser, [status, req.params.email]);
-      console.log('>>>>>>>>>', rows[0]);
       res.status(200).json({ status: 200, message: 'User has been verified successfully', data: rows[0] });
     } catch (error) {
       next(error);
     }
   }
 
-  static deleteUser(req, res) {
-    userModule.deleteUser(req)
-      .then((data) => {
-        res.status(200).json({ status: 200, data, message: 'User deleted successfully' });
-      });
-  }
+  // static deleteUser(req, res) {
+  //   userModule.deleteUser(req)
+  //     .then((data) => {
+  //       res.status(200).json({ status: 200, data, message: 'User deleted successfully' });
+  //     });
+  // }
 
-  static sendResetPasswordLink(req, res) {
-    userModule.sendResetPasswordLink(req)
-      .then((data) => {
-        res.status(200).json({ status: 200, data: { token: data.token, email: data.email }, message: 'check your email for a password reset link' });
-      });
-  }
+  // static sendResetPasswordLink(req, res) {
+  //   userModule.sendResetPasswordLink(req)
+  //     .then((data) => {
+  //       res.status(200).json({ status: 200, data: { token: data.token, email: data.email }, message: 'check your email for a password reset link' });
+  //     });
+  // }
 
-  static resetPasswordView(req, res) {
-    res.status(200).json({ status: 200, data: 'This is the reset password view', message: 'This operation was successful' });
-  }
+  // static resetPasswordView(req, res) {
+  //   res.status(200).json({ status: 200, data: 'This is the reset password view', message: 'This operation was successful' });
+  // }
 
-  static resetUserPassword(req, res) {
-    userModule.resetUserPassword(req)
-      .then((data) => {
-        res.status(200).json({ status: 200, data, message: 'Password reset successfully' });
-      });
-  }
+  // static resetUserPassword(req, res) {
+  //   userModule.resetUserPassword(req)
+  //     .then((data) => {
+  //       res.status(200).json({ status: 200, data, message: 'Password reset successfully' });
+  //     });
+  // }
 }
