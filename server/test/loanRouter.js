@@ -7,295 +7,223 @@ chai.use(chaiHttp);
 
 describe('Create a loan', () => {
   let userToken;
-  before((done) => {
-    chai.request(app)
+  beforeEach(async () => {
+    const res = await chai.request(app)
       .post('/api/v1/auth/signin')
-      .send(data.client)
-      .end((err, res) => {
-        assert.equal((res.body.status), 200);
-        assert.property((res.body), 'status');
-        assert.property((res.body), 'data');
-        assert.property((res.body.data), 'token');
-        userToken = res.body.data.token;
-        done();
-      });
+      .send(data.client);
+    assert.equal((res.body.status), 200);
+    assert.property((res.body), 'status');
+    assert.property((res.body), 'data');
+    assert.property((res.body.data), 'token');
+    userToken = res.body.data.token;
   });
 
-  it('should throw an error for missing firstname', (done) => {
-    chai.request(app)
+  it('should throw an error for missing firstname', async () => {
+    const res = await chai.request(app)
       .post('/api/v1/loans')
       .set('Authorization', userToken)
-      .send(data.loanMissingFirstname)
-      .end((err, res) => {
-        assert.equal((res.body.status), 400);
-        assert.property((res.body), 'error');
-      });
-    done();
+      .send(data.loanMissingFirstname);
+    assert.equal((res.body.status), 400);
+    assert.property((res.body), 'error');
   });
 
-  it('should throw an error for missing lastname', (done) => {
-    chai.request(app)
+  it('should throw an error for missing lastname', async () => {
+    const res = await chai.request(app)
       .post('/api/v1/loans')
       .set('Authorization', userToken)
-      .send(data.loanMissingLastname)
-      .end((err, res) => {
-        assert.equal((res.body.status), 400);
-        assert.property((res.body), 'error');
-        done();
-      });
+      .send(data.loanMissingLastname);
+    assert.equal((res.body.status), 400);
+    assert.property((res.body), 'error');
   });
 
-  it('should throw an error for missing email', (done) => {
-    chai.request(app)
+  it('should throw an error for missing email', async () => {
+    const res = await chai.request(app)
       .post('/api/v1/loans')
       .set('Authorization', userToken)
-      .send(data.loanMissingEmail)
-      .end((err, res) => {
-        assert.equal((res.body.status), 400);
-        assert.property((res.body), 'error');
-        done();
-      });
+      .send(data.loanMissingEmail);
+    assert.equal((res.body.status), 400);
+    assert.property((res.body), 'error');
   });
 
-  it('should throw an error for missing tenor', (done) => {
-    chai.request(app)
+  it('should throw an error for missing tenor', async () => {
+    const res = await chai.request(app)
       .post('/api/v1/loans')
       .set('Authorization', userToken)
-      .send(data.loanMissingTenor)
-      .end((err, res) => {
-        assert.equal((res.body.status), 400);
-        assert.property((res.body), 'error');
-        done();
-      });
+      .send(data.loanMissingTenor);
+    assert.equal((res.body.status), 400);
+    assert.property((res.body), 'error');
   });
 
-  it('should throw an error for missing amount', (done) => {
-    chai.request(app)
+  it('should throw an error for missing amount', async () => {
+    const res = await chai.request(app)
       .post('/api/v1/loans')
       .set('Authorization', userToken)
-      .send(data.loanMissingAmount)
-      .end((err, res) => {
-        assert.equal((res.body.status), 400);
-        assert.property((res.body), 'error');
-        done();
-      });
+      .send(data.loanMissingAmount);
+    assert.equal((res.body.status), 400);
+    assert.property((res.body), 'error');
   });
 
-  it('should throw an error for missing token', (done) => {
-    chai.request(app)
+  it('should throw an error for missing token', async () => {
+    const res = await chai.request(app)
       .post('/api/v1/loans')
-      .send(data.loan)
-      .end((err, res) => {
-        assert.equal((res.body.status), 403);
-        assert.property((res.body), 'error');
-        done();
-      });
+      .send(data.loan);
+    assert.equal((res.body.status), 403);
+    assert.property((res.body), 'error');
   });
 
-  it('should throw an error for missing loan object', (done) => {
-    chai.request(app)
+  it('should throw an error for missing loan object', async () => {
+    const res = await chai.request(app)
       .post('/api/v1/loans')
-      .set('Authorization', userToken)
-      .end((err, res) => {
-        assert.equal((res.body.status), 400);
-        assert.property((res.body), 'error');
-        done();
-      });
+      .set('Authorization', userToken);
+    assert.equal((res.body.status), 400);
+    assert.property((res.body), 'error');
   });
 
-  it('should return a loan object', (done) => {
-    chai.request(app)
+  it('should return a loan object', async () => {
+    const res = await chai.request(app)
       .post('/api/v1/loans')
       .set('Authorization', userToken)
-      .send(data.loan)
-      .end((err, res) => {
-        assert.equal((res.body.status), 201);
-        assert.property((res.body), 'data');
-        done();
-      });
+      .send(data.loan);
+    assert.equal((res.body.status), 201);
+    assert.property((res.body), 'data');
   });
 });
 
 describe('Get all loans', () => {
   let userToken;
-  before((done) => {
-    chai.request(app)
+  beforeEach(async () => {
+    const res = await chai.request(app)
       .post('/api/v1/auth/signin')
-      .send(data.signIn)
-      .end((err, res) => {
-        assert.equal((res.body.status), 200);
-        assert.property((res.body), 'status');
-        assert.property((res.body), 'data');
-        assert.property((res.body.data), 'token');
-        userToken = res.body.data.token;
-        done();
-      });
+      .send(data.signIn);
+    assert.equal((res.body.status), 200);
+    assert.property((res.body), 'status');
+    assert.property((res.body), 'data');
+    assert.property((res.body.data), 'token');
+    userToken = res.body.data.token;
   });
 
-  it('should throw an error for missing token', (done) => {
-    chai.request(app)
+  it('should throw an error for missing token', async () => {
+    const res = await chai.request(app)
+      .get('/api/v1/loans');
+    assert.equal((res.body.status), 403);
+    assert.property((res.body), 'error');
+  });
+
+  it('should return an array of loan objects', async () => {
+    const res = await chai.request(app)
       .get('/api/v1/loans')
-      .end((err, res) => {
-        assert.equal((res.body.status), 403);
-        assert.property((res.body), 'error');
-        done();
-      });
+      .set('Authorization', userToken);
+    assert.equal((res.body.status), 200);
+    assert.property((res.body), 'data');
   });
 
-  it('should return an array of loan objects', (done) => {
-    chai.request(app)
-      .get('/api/v1/loans')
-      .set('Authorization', userToken)
-      .end((err, res) => {
-        assert.equal((res.body.status), 200);
-        assert.property((res.body), 'data');
-        done();
-      });
-  });
-
-  it('should return an error for invalid query string', (done) => {
-    chai.request(app)
+  it('should return an error for invalid query string', async () => {
+    const res = await chai.request(app)
       .get('/api/v1/loans?status=approved&repaid=goinghome')
-      .set('Authorization', userToken)
-      .end((err, res) => {
-        assert.equal((res.body.status), 404);
-        assert.property((res.body), 'error');
-        done();
-      });
+      .set('Authorization', userToken);
+    assert.equal((res.body.status), 404);
+    assert.property((res.body), 'error');
   });
 
-  it('should return an array of loan objects', (done) => {
-    chai.request(app)
+  it('should return an array of loan objects', async () => {
+    const res = await chai.request(app)
       .get('/api/v1/loans?status=approved&repaid=true')
-      .set('Authorization', userToken)
-      .end((err, res) => {
-        assert.equal((res.body.status), 404);
-        assert.property((res.body), 'error');
-        done();
-      });
+      .set('Authorization', userToken);
+    assert.equal((res.body.status), 404);
+    assert.property((res.body), 'error');
   });
 
-  it('should return an array of loan objects', (done) => {
-    chai.request(app)
+  it('should return an array of loan objects', async () => {
+    const res = await chai.request(app)
       .get('/api/v1/loans?status=approved&repaid=false')
-      .set('Authorization', userToken)
-      .end((err, res) => {
-        assert.equal((res.body.status), 200);
-        assert.property((res.body), 'data');
-        done();
-      });
+      .set('Authorization', userToken);
+    assert.equal((res.body.status), 404);
+    assert.property((res.body), 'error');
   });
 });
 
 describe('Get a single loan', () => {
   let userToken;
-  before((done) => {
-    chai.request(app)
+  beforeEach(async () => {
+    const res = await chai.request(app)
       .post('/api/v1/auth/signin')
-      .send(data.signIn)
-      .end((err, res) => {
-        assert.equal((res.body.status), 200);
-        assert.property((res.body), 'status');
-        assert.property((res.body), 'data');
-        assert.property((res.body.data), 'token');
-        userToken = res.body.data.token;
-        done();
-      });
+      .send(data.signIn);
+    assert.equal((res.body.status), 200);
+    assert.property((res.body), 'status');
+    assert.property((res.body), 'data');
+    assert.property((res.body.data), 'token');
+    userToken = res.body.data.token;
   });
 
-  it('should throw an error for missing token', (done) => {
-    chai.request(app)
-      .get('/api/v1/loans/41051150')
-      .end((err, res) => {
-        assert.equal((res.body.status), 403);
-        assert.property((res.body), 'error');
-        done();
-      });
+  it('should throw an error for missing token', async () => {
+    const res = await chai.request(app)
+      .get('/api/v1/loans/1');
+    assert.equal((res.body.status), 403);
+    assert.property((res.body), 'error');
   });
 
-  it('should throw an error for invalid loan id', (done) => {
-    chai.request(app)
-      .get('/api/v1/loans/410511540')
-      .set('Authorization', userToken)
-      .end((err, res) => {
-        assert.equal((res.body.status), 404);
-        assert.property((res.body), 'error');
-        done();
-      });
+  it('should throw an error for invalid loan id', async () => {
+    const res = await chai.request(app)
+      .get('/api/v1/loans/143')
+      .set('Authorization', userToken);
+    assert.equal((res.body.status), 404);
+    assert.property((res.body), 'error');
   });
 
-  it('should return a loan objects', (done) => {
-    chai.request(app)
-      .get('/api/v1/loans/41051150')
-      .set('Authorization', userToken)
-      .end((err, res) => {
-        assert.equal((res.body.status), 200);
-        assert.property((res.body), 'data');
-        done();
-      });
+  it('should return a loan objects', async () => {
+    const res = await chai.request(app)
+      .get('/api/v1/loans/1')
+      .set('Authorization', userToken);
+    assert.equal((res.body.status), 200);
+    assert.property((res.body), 'data');
   });
 });
 
 describe('Approve or reject a loan loan', () => {
   let userToken;
-  before((done) => {
-    chai.request(app)
+  beforeEach(async () => {
+    const res = await chai.request(app)
       .post('/api/v1/auth/signin')
-      .send(data.signIn)
-      .end((err, res) => {
-        assert.equal((res.body.status), 200);
-        assert.property((res.body), 'status');
-        assert.property((res.body), 'data');
-        assert.property((res.body.data), 'token');
-        userToken = res.body.data.token;
-        done();
-      });
+      .send(data.signIn);
+    assert.equal((res.body.status), 200);
+    assert.property((res.body), 'status');
+    assert.property((res.body), 'data');
+    assert.property((res.body.data), 'token');
+    userToken = res.body.data.token;
   });
 
-  it('should throw an error for missing token', (done) => {
-    chai.request(app)
-      .patch('/api/v1/loans/77686022')
-      .send(data.approve)
-      .end((err, res) => {
-        assert.equal((res.body.status), 403);
-        assert.property((res.body), 'error');
-        done();
-      });
+  it('should throw an error for missing token', async () => {
+    const res = await chai.request(app)
+      .patch('/api/v1/loans/1')
+      .send(data.approve);
+    assert.equal((res.body.status), 403);
+    assert.property((res.body), 'error');
   });
 
-  it('should throw an error for invalid loan id', (done) => {
-    chai.request(app)
-      .patch('/api/v1/loans/410511540')
+  it('should throw an error for invalid loan id', async () => {
+    const res = await chai.request(app)
+      .patch('/api/v1/loans/1')
       .set('Authorization', userToken)
-      .send(data.approve)
-      .end((err, res) => {
-        assert.equal((res.body.status), 404);
-        assert.property((res.body), 'error');
-        done();
-      });
+      .send(data.reject);
+    assert.equal((res.body.status), 200);
+    assert.property((res.body), 'data');
   });
 
-  it('should return a loan objects for rejected', (done) => {
-    chai.request(app)
-      .patch('/api/v1/loans/77686022')
+  it('should return a loan objects for rejected', async () => {
+    const res = await chai.request(app)
+      .patch('/api/v1/loans/1')
       .set('Authorization', userToken)
-      .send(data.reject)
-      .end((err, res) => {
-        assert.equal((res.body.status), 200);
-        assert.property((res.body), 'data');
-        done();
-      });
+      .send(data.reject);
+    assert.equal((res.body.status), 200);
+    assert.property((res.body), 'data');
   });
 
-  it('should return a loan objects approved', (done) => {
-    chai.request(app)
-      .patch('/api/v1/loans/77686022')
+  it('should return a loan objects approved', async () => {
+    const res = await chai.request(app)
+      .patch('/api/v1/loans/1')
       .set('Authorization', userToken)
-      .send(data.approve)
-      .end((err, res) => {
-        assert.equal((res.body.status), 200);
-        assert.property((res.body), 'data');
-        done();
-      });
+      .send(data.approve);
+    assert.equal((res.body.status), 200);
+    assert.property((res.body), 'data');
   });
 });

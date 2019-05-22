@@ -1,14 +1,14 @@
 
 .navi:hover .icofont-money {
-  color: blue;
+  color: rgb(24, 118, 211);
 }
 
 .navi:hover .fa-history {
-  color: blue;
+  color: rgb(24, 118, 211);
 }
 
 .navi:hover .fa-users {
-  color: blue;
+  color: rgb(24, 118, 211);
 }
 
 .main-content {
@@ -25,7 +25,7 @@
 }
 
 .history, .loan-head {
-  color: blue;
+  color: rgb(24, 118, 211);
 }
 
 .main-loan-content {
@@ -41,7 +41,7 @@
   display: flex;
   flex-direction: column;
   width: 30em;
-  border: 0.2em solid blue;
+  border: 0.2em solid rgb(24, 118, 211);
   padding: 1em;
 }
 
@@ -53,7 +53,7 @@
 }
 
 .loan-label {
-  color: blue;
+  color: rgb(24, 118, 211);
   font-size: 1.5em;
   font-weight: 500;
 }
@@ -73,9 +73,8 @@
 
 .loan-btn {
   padding: 0.6em 2.5em;
-  background: blue;
+  background: rgb(24, 118, 211);
   color: #fff;
-  border-radius: 0.2em;
   font-weight: 500;
 }
 
@@ -86,7 +85,7 @@
 }
 
 .table,.th, .tr {
-  background: blue;
+  background: rgb(24, 118, 211);
   color: #fff;
   font-weight: 700; 
 }
@@ -126,7 +125,7 @@
 }
 
 .table-container tr:hover {
-  background: blue;
+  background: rgb(24, 118, 211);
   cursor: pointer;
   border: none;
   color: #fff;
@@ -161,7 +160,7 @@
 .table-header::-webkit-scrollbar-track
 {
 	border-radius: 10px;
-	background: blue;
+	background: rgb(24, 118, 211);
 } 
 
 table {
@@ -180,7 +179,6 @@ th, tr, td {
   display: flex;
   background: #fff;
   flex-direction: column;
-  border-radius: 0.2em;
   padding: 0.8em;
 }
 
@@ -189,7 +187,6 @@ th, tr, td {
   height: 100%;
   display: flex;
   flex-direction: column;
-  border-radius: 0.2em;
   padding: 0em;
 }
 
@@ -207,19 +204,18 @@ th, tr, td {
   text-align: center;
   background: #fff;
   padding: 1em;
-  border-radius: 0.2em;
 }
 
 .ana {
   display: flex;
   font-size: 1.3em;
   font-weight: 700;
-  color: blue;
+  color: rgb(24, 118, 211);
   align-items: center;
 }
 
 .applied, .fa-dollar-sign, .fa-money-bill-alt {
-  color: blue;
+  color: rgb(24, 118, 211);
   margin-right: 0.4em;
 }
 
@@ -229,7 +225,7 @@ th, tr, td {
   justify-content: center;
   align-items: center;
   font-size: 2em;
-  color: blue;
+  color: rgb(24, 118, 211);
   font-weight: 500;
 }
 
@@ -241,7 +237,6 @@ th, tr, td {
   display: flex;
   background: #fff;
   flex-direction: column;
-  border-radius: 0.2em;
   padding: 0.9em;
 }
 
@@ -256,9 +251,8 @@ th, tr, td {
   padding: 0.7em 1.5em;
   color: #fff;
   text-decoration: none;
-  border-radius: 0.2em;
   font-weight: 600;
-  background: blue;
+  background: rgb(24, 118, 211);
   cursor: pointer;
 }
 
@@ -266,10 +260,9 @@ th, tr, td {
   padding: 0.7em 1.5em;
   color: #fff;
   text-decoration: none;
-  border-radius: 0.2em;
   font-weight: 600;
   margin-left: 0.6em;
-  background: #000080;
+  background: rgb(24, 118, 211);
   cursor: pointer;
 }
 
@@ -323,9 +316,8 @@ th, tr, td {
   position: relative;
   display: flex;
   flex-direction: column;
-  color: blue;
+  color: rgb(24, 118, 211);
   background: #fff;
-  border-radius: 0.3em
 }
 
 .card-head {
@@ -333,7 +325,7 @@ th, tr, td {
   width: 100%;
   height: 10em;
   overflow: hidden;
-  background: rgba(0,0,255,0.4)
+  background: rgb(24, 118, 211);
 }
 
 .user-back {
@@ -346,11 +338,9 @@ th, tr, td {
 .card-body {
   width: 100%;
   height: 100%;
-  background: blue;
+  background: rgb(24, 118, 211);
   display: flex;
   flex-direction: column;
-  border-bottom-left-radius: 0.3em;
-  border-bottom-right-radius: 0.3em;
 }
 
 .user-profile {
@@ -372,7 +362,6 @@ th, tr, td {
   align-items: center;
   justify-content: center;
   border: 0.2em solid #fff;
-  border-radius: 50%;
   overflow: hidden;
 }
 
@@ -414,7 +403,7 @@ th, tr, td {
 
 .verify-btn {
   background: white;
-  color: blue;
+  color: rgb(24, 118, 211);
   padding: 0.5em 2em;
   font-size: 1.2em;
   box-shadow: 1px 1px 2px 1px rgba(0,0,0, 0.4), 3px 3px 4px 2px rgba(0,0,0,0.2);
@@ -495,7 +484,7 @@ th, tr, td {
 
 .footer {
   grid-area: footer;
-  background: blue;
+  background: rgb(24, 118, 211);
   display: flex;
   align-items: center;
 }
@@ -515,7 +504,7 @@ th, tr, td {
     display: flex;
     justify-content: space-between;
     line-height: 1.2em;
-    background: blue;
+    background: rgb(24, 118, 211);
     padding: 0.2em;
     width: 100%;
   }
@@ -531,7 +520,6 @@ th, tr, td {
     width: 2em;
     height: 2em;
     border: 0.1em solid #fff;
-    border-radius: 50%;
     overflow: hidden;
   }
   
@@ -554,7 +542,7 @@ th, tr, td {
     width: 100%;
     top: 0;
     padding: 0.2em;
-    background: #000080;
+    background: rgb(24, 118, 211);
     height: 100vh;
     flex-direction: column;
     align-items: center;
@@ -617,7 +605,6 @@ th, tr, td {
 
   .approv-btn {
     padding: 0.7em 1.5em;
-    border-radius: 0.2em;
     font-weight: 400;
     margin-top: 0.3em;
   }
@@ -626,7 +613,6 @@ th, tr, td {
     display: flex;
     justify-content: center;
     padding: 0.7em 1.5em;
-    border-radius: 0.2em;
     font-weight: 400;
     margin-top: 0.3em;
   }
@@ -746,7 +732,7 @@ th, tr, td {
 
   .loan-form {
     width: 20em;
-    border: 0.2em solid blue;
+    border: 0.2em solid rgb(24, 118, 211);
     padding: 0.3em;
   }
   
@@ -758,7 +744,7 @@ th, tr, td {
   }
   
   .loan-label {
-    color: blue;
+    color: rgb(24, 118, 211);
     font-size: 1em;
     font-weight: 500;
   }
@@ -825,7 +811,7 @@ th, tr, td {
 
   .loan-form {
     width: 25em;
-    border: 0.2em solid blue;
+    border: 0.2em solid rgb(24, 118, 211);
     padding: 0.3em;
   }
   
@@ -837,7 +823,7 @@ th, tr, td {
   }
   
   .loan-label {
-    color: blue;
+    color: rgb(24, 118, 211);
     font-size: 1em;
     font-weight: 500;
   }
@@ -903,9 +889,8 @@ th, tr, td {
     position: relative;
     display: flex;
     flex-direction: column;
-    color: blue;
+    color: rgb(24, 118, 211);
     background: #fff;
-    border-radius: 0.3em
   }
 
 }
@@ -916,9 +901,8 @@ th, tr, td {
     padding: 0.7em 1.5em;
     color: #fff;
     text-decoration: none;
-    border-radius: 0.2em;
     font-weight: 600;
-    background: blue;
+    background: rgb(24, 118, 211);
     cursor: pointer;
   }
 
@@ -928,19 +912,17 @@ th, tr, td {
     position: relative;
     display: flex;
     flex-direction: column;
-    color: blue;
+    color: rgb(24, 118, 211);
     background: #fff;
-    border-radius: 0.3em
   }
   
   .approv-btn-1 {
     padding: 0.7em 1.5em;
     color: #fff;
     text-decoration: none;
-    border-radius: 0.2em;
     font-weight: 600;
     margin-left: 0.6em;
-    background: #000080;
+    background: rgb(24, 118, 211);
     cursor: pointer;
   }
   
@@ -976,9 +958,8 @@ th, tr, td {
     position: relative;
     display: flex;
     flex-direction: column;
-    color: blue;
+    color: rgb(24, 118, 211);
     background: #fff;
-    border-radius: 0.3em
   }
   
   .footer-note {
