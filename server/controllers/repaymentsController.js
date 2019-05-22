@@ -12,7 +12,7 @@ const { updateRepayment } = authentication;
 const { query } = db;
 // eslint-disable-next-line no-unused-vars
 const { updateBalance } = loan;
-const { getRepaymentsByLoanId, postRepayments } = repayments;
+const { getRepaymentsByLoanId, postRepayments, getRepayments } = repayments;
 
 export default class RepaymentController {
   static async createRepayment(req, res, next) {
@@ -52,10 +52,12 @@ export default class RepaymentController {
     }
   }
 
-  // static getAllRepayments(req, res) {
-  //   repaymentsModule.getRepayments()
-  //     .then((data) => {
-  //       res.status(200).json({ status: 200, data, message: 'Operation performed successfully' });
-  //     }).catch(e => console.log(e));
-  // }
+  static async getAllRepayments(req, res, next) {
+    try {
+      const { rows } = await query(getRepayments);
+      res.status(200).json({ status: 200, message: 'Repayments has been fetched successfully', data: rows });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
