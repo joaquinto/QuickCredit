@@ -11,7 +11,7 @@ const {
 const { updateRepayment } = authentication;
 const { query } = db;
 // eslint-disable-next-line no-unused-vars
-const { getLoanById, updateBalance } = loan;
+const { updateBalance } = loan;
 const { getRepaymentsByLoanId, postRepayments } = repayments;
 
 export default class RepaymentController {

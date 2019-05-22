@@ -11,8 +11,7 @@ import approvedOrRejectDetails from '../validation/approvedOrRejectDetails';
 
 const { verifyToken } = jwtTokenUtils;
 const {
-  isClient,
-  isAdmin, isOwnerOrAdmin, isLoanExist,
+  isClient, isAdmin, isOwnerOrAdmin, isLoanExist,
   checkIsLoanApproved, isLoanFullyRepaid,
 } = authentication;
 

@@ -4,7 +4,7 @@ import singleValidator from '../middleware/singleValidator';
 import signInDetails from '../validation/signInDetails';
 import signUpDetails from '../validation/signUpDetails';
 import emailDetails from '../validation/emailDetails';
-import passwordDetails from '../validation/passwordDetails';
+// import passwordDetails from '../validation/passwordDetails';
 import verifyDetails from '../validation/verifyDetails';
 import userController from '../controllers/usersController';
 import authentication from '../middleware/authentication';
@@ -14,7 +14,8 @@ const { verifyToken } = jwtTokenUtils;
 const {
   isUserExist,
   checkIsAccountVerified,
-  isAdmin, notAUser,
+  isAdmin,
+  notAUser,
 } = authentication;
 
 const router = express.Router();
@@ -29,10 +30,10 @@ router.post('/auth/signin',
   notAUser,
   userController.signIn);
 
-router.get('/users',
-  verifyToken,
-  isAdmin,
-  userController.getUsers);
+// router.get('/users',
+//   verifyToken,
+//   isAdmin,
+//   userController.getUsers);
 
 router.patch('/users/:email/verify',
   verifyToken,
@@ -43,29 +44,29 @@ router.patch('/users/:email/verify',
   validator(verifyDetails),
   userController.verifyUser);
 
-router.delete('/users/:email',
-  verifyToken,
-  isAdmin,
-  singleValidator(emailDetails),
-  authentication.notAUser,
-  userController.deleteUser);
+// router.delete('/users/:email',
+//   verifyToken,
+//   isAdmin,
+//   singleValidator(emailDetails),
+//   authentication.notAUser,
+//   userController.deleteUser);
 
-router.post('/reset-password',
-  validator(emailDetails),
-  notAUser,
-  userController.sendResetPasswordLink);
+// router.post('/reset-password',
+//   validator(emailDetails),
+//   notAUser,
+//   userController.sendResetPasswordLink);
 
-router.get('/users/:email/:token/reset-password',
-  verifyToken,
-  singleValidator(emailDetails),
-  notAUser,
-  userController.resetPasswordView);
+// router.get('/users/:email/:token/reset-password',
+//   verifyToken,
+//   singleValidator(emailDetails),
+//   notAUser,
+//   userController.resetPasswordView);
 
-router.patch('/users/:email/:token/reset-password',
-  verifyToken,
-  singleValidator(emailDetails),
-  notAUser,
-  validator(passwordDetails),
-  userController.resetUserPassword);
+// router.patch('/users/:email/:token/reset-password',
+//   verifyToken,
+//   singleValidator(emailDetails),
+//   notAUser,
+//   validator(passwordDetails),
+//   userController.resetUserPassword);
 
 export default router;

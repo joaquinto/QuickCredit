@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat');
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Montserrat';
+  font-family: 'Roboto', sans-serif;
 }
 
 body {
@@ -21,8 +21,9 @@ body {
   box-shadow: 1px 1px 2px 1px rgba(0,0,0, 0.4), 3px 3px 4px 2px rgba(0,0,0,0.2);
   justify-content: space-between;
   line-height: 1.2em;
-  background: blue;
+  background: rgb(24, 118, 211);
   padding: 0.6em;
+  z-index: 2;
 }
 
 .logo {
@@ -54,7 +55,7 @@ body {
   left: 0;
   top: 0;
   overflow: hidden;
-  background: blue;
+  background: rgb(24, 118, 211);
   align-items: center;
   flex-direction: column;
   position: absolute;
@@ -87,8 +88,12 @@ body {
 
 .intro {
   display: flex;
-  margin: 0.6em;
+  height: 100vh;
+  background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('../images/wallpaper.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
   flex-direction: column;
+  padding: 0.6em;
   line-height: 1.6em;
   justify-content: center;
   align-items: center;
@@ -97,41 +102,44 @@ body {
 
 .intro-heading {
   font-size: 1em;
-  color: blue;
-  text-align: center;
+  color: rgb(24, 118, 211);
+  text-align: start;
   text-transform: uppercase;
-  margin: 0.6em 0em;
+  margin: -4em 0em 0.6em 0em;
 }
 
 .intro-content {
   text-align: center;
-  margin-bottom: 1em;
+  margin-bottom: 0.7em;
+  color: #fff;
+  text-align: justify;
 }
 
 .intro-logo {
   margin: 1.2em auto;
-  width: 13em;
-  height: 13em;
+  width: 10em;
+  height: 10em;
 }
 
 .how-to {
   /* background: blue; */
   padding: 0.6em;
   display: flex;
+  margin-top: -7.6em;
   flex-direction: column;
   align-items: center;
 }
 
 .how-to-heading {
-  color: blue;
-  font-size: 1em;
+  color: rgb(24, 118, 211);
+  font-size: 0.7em;
   text-transform: uppercase;
   margin-bottom: 0.6em;
 }
 
 .step-one, .step-two, .step-three, .step-four, .step-five {
-  color: blue;
-  background: #0030D4;
+  color: rgb(24, 118, 211);
+  background: rgb(24, 118, 211);
   margin-bottom: 1em;
   padding: 0.6em;
   box-shadow: 1px 1px 2px 1px rgba(0,0,0, 0.4), 3px 3px 4px 2px rgba(0,0,0,0.2);
@@ -141,7 +149,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgb(118, 109, 240);
+  color: rgb(24, 118, 211);
   width: 2em;
   height: 2em;
   border-radius: 50%;
@@ -172,13 +180,14 @@ body {
   flex-direction: column;
   padding: 1.3em 0.6em 0.6em;
   text-align: center;
+  color: #272727;
   line-height: 1.6em;
 }
 
 .feature-heading {
   font-size: 1em;
   text-transform: uppercase;
-  color: blue;
+  color: rgb(24, 118, 211);
   margin-bottom: 1.5em; 
 }
 
@@ -200,7 +209,7 @@ h3 {
 }
 
 .footer {
-  background: blue;
+  background: rgb(24, 118, 211);
   display: flex;
   width: 100%;
   flex-direction: row;
@@ -242,11 +251,11 @@ h3 {
 
 @media only screen and (min-width: 400px) {
   .logo {
-    font-size: 1.2em;
+    font-size: 1em;
   }
 
   .menu-btn {
-    font-size: 1.5em;
+    font-size: 1.2em;
   }
 
   .intro-heading, .how-to-heading, .feature-heading {
@@ -254,7 +263,7 @@ h3 {
   }
 
   .intro-content, .steps-content, .content {
-    font-size: 1.2em;
+    font-size: 0.9em;
   }
 
   .app-icon {
@@ -271,23 +280,11 @@ h3 {
   }
 
   .footer, .info {
-    font-size: 1em;
+    font-size: 0.9em;
   }
 }
 
 @media only screen and (min-width: 600px) {
-
-  .logo {
-    font-size: 1.2em;
-  }
-
-  .menu-btn {
-    font-size: 1.5em;
-  }
-
-  .menu-btn {
-    font-size: 1.7em;
-  }
 
   .navigations-active {
     z-index: 2;
@@ -304,16 +301,23 @@ h3 {
 
   .intro {
     display: flex;
-    margin: 0.6em 1em;
     padding: 0.6em;
+    margin-top: -6em;
     flex-direction: row;
     line-height: 1.6em;
     justify-content: space-between;
   }
 
+  .intro-logo {
+    margin-top: -3em;
+    width: 12em;
+    height: 12em;
+  }
+
   .intro-content {
-    font-size: 1.5em;
+    font-size: 0.9em;
     line-height: 1.3em;
+    text-align: justify;
   }
 
   .main {
@@ -321,11 +325,11 @@ h3 {
   }
 
   .intro-heading {
-    text-align: center;
+    text-align: start;
   }
 
-  .intro-content {
-    text-align: justify;
+  .how-to {
+    margin-top: -12em;
   }
 
   .step-one, .step-two, .step-three, .step-four, .step-five {
@@ -340,15 +344,16 @@ h3 {
     z-index: 1;
     top: -2.5em;
     font-size: 1.7em;
-    left: calc(90%/2);
+    left: 50%;
+    transform: translateX(-50%);
     background: #fff;
-    color: blue;
+    color: rgb(24, 118, 211);
     width: 3em;
     height: 3em;
   }
 
   .steps-content {
-    font-size: 1.5em;
+    font-size: 1em;
     text-align: justify;  
   }
 
@@ -357,7 +362,7 @@ h3 {
   }
 
   .feature-heading, .how-to-heading {
-    font-size: 1.5em;
+    font-size: 1em;
   }
 
   .app-icon {
@@ -365,12 +370,12 @@ h3 {
   }
 
   h3, h5 {
-    font-size: 1.5em;
+    font-size: 1em;
     margin: 0.6em;
   }
 
   .content {
-    font-size: 1.8em;
+    font-size: 1em;
     line-height: 1.5em;
   }
 
@@ -381,18 +386,6 @@ h3 {
 }
 
 @media only screen and (min-width: 800px) {
-
-  .logo {
-    font-size: 1.2em;
-  }
-
-  .menu-btn {
-    font-size: 1.5em;
-  }
-
-  .menu-btn {
-    font-size: 2em;
-  }
 
   .navigations-active {
     z-index: 2;
@@ -408,18 +401,23 @@ h3 {
     font-size: 4.5em;
   }
 
+  .intro {
+    padding: 0em 2em;
+  }
+
   .intro-heading {
-    font-size: 1.6em
+    font-size: 1.5em;
+    margin-top: -3em;
   }
 
   .intro-content {
-    font-size: 2em;
+    font-size: 1em;
   }
   
   .intro-logo {
-    margin: 1.2em auto;
-    width: 19em;
-    height: 19em;
+    margin: -2em auto;
+    width: 15em;
+    height: 15em;
   }
 
   .how-to {
@@ -431,6 +429,7 @@ h3 {
     'how-to-one how-to-two'
     'how-to-three how-to-four'
     'how-to-five how-to-six';
+    margin-top: -17em;
   }
 
   .how-to-heading {
@@ -439,31 +438,37 @@ h3 {
   }
 
   .steps {
-    left: calc(80%/2);
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   .step-one {
     grid-area: how-to-one;
-    height: 30em;
+    height: 23em;
+    padding-top: 4em;
   }
 
   .step-two {
     grid-area: how-to-two;
-    height: 30em;
+    height: 23em;
+    padding-top: 4em;
   }
 
   .step-three {
     grid-area: how-to-three;
-    height: 31em;
+    height: 23em;
+    padding-top: 4em;
   }
 
   .step-four {
     grid-area: how-to-four;
-    height: 31em;
+    height: 23em;
+    padding-top: 4em;
   }
 
   .step-five {
     grid-area: how-to-five;
+    padding-top: 4em;
   }
 
   .features {
@@ -537,10 +542,12 @@ h3 {
     display: flex;
     padding: 1em;
     align-items: center;
+    z-index: 2;
   }
 
   .logo {
-    font-size: 1.5em;
+    /* font-size: 1.5em; */
+    margin-left: -0.05em;
   }
 
   .menu-btn {
@@ -555,7 +562,7 @@ h3 {
   .navigations .login-btn {
     padding: 0.4em 1em;
     background: #fff;
-    color: blue;
+    color: rgb(24, 118, 211);
     border: 0.1em solid #fff;
     border-radius: 0.2em;
     font-weight: 500;
@@ -595,18 +602,32 @@ h3 {
     display: none;
   }
 
+  .intro {
+    margin: 0em;
+    height: 100vh;
+    padding: 2em;
+  }
+
+  .main {
+    margin-top: -10em;
+  }
+
   .intro-heading {
-    font-size: 1.6em
+    font-size: 2em;
+    text-align: start;
   }
 
   .intro-content {
-    font-size: 2em;
+    font-size: 1em;
+    color: #fff;
   }
   
   .intro-logo {
-    margin: 1.2em auto;
+    /* margin: -5em auto; */
     width: 19em;
     height: 19em;
+    position: relative;
+    top: -4.5em;
   }
 
   .how-to {
@@ -617,6 +638,7 @@ h3 {
     'heading heading heading'
     'how-to-one how-to-two how-to-three'
     'how-to-four how-to-five how-to-six';
+    margin-top: -17em;
   }
 
   .how-to-heading {
@@ -625,32 +647,39 @@ h3 {
   }
 
   .steps {
-    left: calc(80%/2);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .steps-content {
+    margin-top: 1.2em;
+    padding: 0.5em;
+    font-size: 1em;
   }
 
   .step-one {
     grid-area: how-to-one;
-    height: 30em;
+    height: 24em;
   }
 
   .step-two {
     grid-area: how-to-two;
-    height: 30em;
+    height: 24em;
   }
 
   .step-three {
     grid-area: how-to-three;
-    height: 30em;
+    height: 24em;
   }
 
   .step-four {
     grid-area: how-to-four;
-    height: 31em;
+    height: 24em;
   }
 
   .step-five {
     grid-area: how-to-five;
-    height: 31em;
+    height: 24em;
   }
 
   .features {
@@ -684,6 +713,10 @@ h3 {
     grid-area: feature-five;
   }
 
+  .content {
+    font-size: 1em;
+  }
+
   .footer {
     display: flex;
     justify-content: space-between;
@@ -711,10 +744,7 @@ h3 {
   }
 
   h5 {
+    margin-left: 2em;
     font-size: 1em;
   }
-/* 
-  .footer-note {
-    grid-area: footer;
-  } */
 }

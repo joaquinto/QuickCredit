@@ -17,7 +17,7 @@ export default class Authentication {
       }
       next();
     } catch (error) {
-      console.log(error);
+      next(error);
     }
   }
 
@@ -26,12 +26,13 @@ export default class Authentication {
     const value = email || req.body.email;
     try {
       const { rows } = await query(findUserByEmail, [value]);
-      if (rows.length < 0) {
+      console.log(rows.length);
+      if (rows.length < 1) {
         res.status(404).json({ status: 404, error: 'User Not Found' });
       }
       next();
     } catch (error) {
-      console.log(error);
+      next(error);
     }
   }
 
@@ -95,6 +96,7 @@ export default class Authentication {
       if (rows.length < 1) {
         res.status(404).json({ status: 404, error: 'Loan does not exist' });
       }
+      req.singleLoan = rows;
       next();
     } catch (error) {
       next(error);

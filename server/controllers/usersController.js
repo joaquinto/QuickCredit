@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable max-len */
 import jwtTokenUtils from '../helpers/jwtTokenUtils';
 import passwordUtils from '../helpers/passwordUtils';
@@ -11,26 +12,30 @@ const { signToken } = jwtTokenUtils;
 export default class UserController {
   static async signUp(req, res, next) {
     const { firstname, lastname } = req.body;
-    const email = req.body.email.toLowerCase();
-    const password = await passwordUtils.hashPassword(req.body.password.toLowerCase(), next);
-    const address = req.body.address.toLowerCase();
-    const status = 'unverified';
+    const userEmail = req.body.email.toLowerCase();
+    const userPassword = await passwordUtils.hashPassword(req.body.password.toLowerCase(), next);
+    const userAddress = req.body.address.toLowerCase();
+    const userStatus = 'unverified';
     const isAdmin = false;
-    const values = [firstname, lastname, email, password, address, status, isAdmin];
+    const values = [firstname, lastname, userEmail, userPassword, userAddress, userStatus, isAdmin];
     try {
       const { rows } = await query(createUser, values);
-      const tokens = await signToken(rows[0].id, rows[0].email, rows[0].is_admin);
-      const response = {
+      const [{
+        id, first_name, last_name, email,
+        address, status, is_admin,
+      }] = rows;
+      const tokens = await signToken(id, email, is_admin);
+      const data = {
         token: tokens,
-        id: rows[0].id,
-        firstname: rows[0].first_name,
-        lastname: rows[0].last_name,
-        email: rows[0].email,
-        address: rows[0].address,
-        status: rows[0].status,
-        isAdmin: rows[0].is_admin,
+        id,
+        firstname: first_name,
+        lastname: last_name,
+        email,
+        address,
+        status,
+        isAdmin: is_admin,
       };
-      res.status(201).json({ status: 201, message: 'User created successfully', response });
+      res.status(201).json({ status: 201, message: 'User created successfully', data });
     } catch (error) {
       next(error);
     }
@@ -38,24 +43,28 @@ export default class UserController {
 
   static async signIn(req, res, next) {
     const message = 'User password does not match';
-    const email = req.body.email.toLowerCase();
-    const password = req.body.password.toLowerCase();
+    const userEmail = req.body.email.toLowerCase();
+    const userPassword = req.body.password.toLowerCase();
     try {
-      const { rows } = await query(findUserByEmail, [email]);
-      const isMatch = await passwordUtils.comparePassword(password, rows[0].password);
+      const { rows } = await query(findUserByEmail, [userEmail]);
+      const [{
+        id, first_name, last_name, email,
+        password, address, status, is_admin,
+      }] = rows;
+      const isMatch = await passwordUtils.comparePassword(userPassword, password);
       if (isMatch) {
-        const tokens = signToken(rows[0].id, rows[0].email, rows[0].is_admin);
-        const response = {
+        const tokens = signToken(id, email, is_admin);
+        const data = {
           token: tokens,
-          id: rows[0].id,
-          firstname: rows[0].first_name,
-          lastname: rows[0].last_name,
-          email: rows[0].email,
-          address: rows[0].address,
-          status: rows[0].status,
-          isAdmin: rows[0].is_admin,
+          id,
+          firstname: first_name,
+          lastname: last_name,
+          email,
+          address,
+          status,
+          isAdmin: is_admin,
         };
-        res.status(200).json({ status: 200, message: 'Logged in successfully', response });
+        res.status(200).json({ status: 200, message: 'Logged in successfully', data });
       } else {
         res.status(405).json({ status: 405, error: message });
       }

@@ -1,4 +1,11 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat');
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
 
 body {
   overflow: hidden;
@@ -37,7 +44,7 @@ body {
 .card-header {
   display: flex;
   justify-content: center;
-  color: blue;
+  color: rgb(24, 118, 211);
   margin-bottom: 1em;
   width: 100%;
   font-weight: 600;
@@ -47,7 +54,7 @@ body {
 input[type='text'], input[type='password'], input[type='email'] {
   outline: none;
   background: #fff;
-  border: 0.02em solid blue;
+  border: 0.02em solid rgb(24, 118, 211);
   height: 2em;
   padding: 0.7em;
   font-size: 0.9em;
@@ -56,19 +63,19 @@ input[type='text'], input[type='password'], input[type='email'] {
 
 .sub {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   margin-top: 0.6em;
 }
 
 .sub a {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   margin-top: 0.6em;
   text-decoration: none;
 }
 
 .btn {
-  background: blue;
+  background: rgb(24, 118, 211);
   color: #fff;
   outline: none;
   cursor: pointer;
@@ -115,7 +122,7 @@ input[type='text'], input[type='password'], input[type='email'] {
 .f-link {
   font-size: 1em;
   text-decoration: none;
-  color: blue;
+  color: rgb(24, 118, 211);
   outline: none;
   font-weight: 800; 
 }
@@ -123,7 +130,7 @@ input[type='text'], input[type='password'], input[type='email'] {
 .f-btn {
   font-size: 1em;
   text-decoration: none;
-  color: blue;
+  color: rgb(24, 118, 211);
   outline: none;
 }
 
@@ -163,7 +170,7 @@ input[type='text'], input[type='password'], input[type='email'] {
   input[type='text'], input[type='password'], input[type='email'] {
     outline: none;
     background: #fff;
-    border: 0.02em solid blue;
+    border: 0.02em solid rgb(24, 118, 211);
     height: 1.5em;
     padding: 0.4em;
     font-size: 0.9em;
@@ -180,13 +187,13 @@ input[type='text'], input[type='password'], input[type='email'] {
   
   .sub {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     margin-top: 0.6em;
   }
   
   .sub a {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     margin-top: 0.6em;
     text-decoration: none;
   }
@@ -220,7 +227,7 @@ input[type='text'], input[type='password'], input[type='email'] {
   input[type='text'], input[type='password'], input[type='email'] {
     outline: none;
     background: #fff;
-    border: 0.02em solid blue;
+    border: 0.02em solid rgb(24, 118, 211);
     height: 1.5em;
     padding: 0.6em;
     width: 100%;
@@ -238,13 +245,13 @@ input[type='text'], input[type='password'], input[type='email'] {
   
   .sub {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     margin-top: 0.6em;
   }
   
   .sub a {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     margin-top: 0.6em;
     text-decoration: none;
   }
@@ -278,7 +285,7 @@ input[type='text'], input[type='password'], input[type='email'] {
   input[type='text'], input[type='password'], input[type='email'] {
     outline: none;
     background: #fff;
-    border: 0.02em solid blue;
+    border: 0.02em solid rgb(24, 118, 211);
     height: 1.5em;
     padding: 0.7em;
     width: 100%;
@@ -296,13 +303,13 @@ input[type='text'], input[type='password'], input[type='email'] {
   
   .sub {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     margin-top: 0.6em;
   }
   
   .sub a {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     margin-top: 0.6em;
     text-decoration: none;
   }
