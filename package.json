@@ -7,7 +7,7 @@
     "build": "rimraf ./dist/ && babel server --out-dir dist",
     "start:dev": "nodemon --exec babel-node ./server/index.js",
     "start": "node dist/index.js",
-    "test": "npm run refresh && nyc mocha --timeout 5000 -r @babel/register server/test --exit",
+    "test": "npm run refresh && nyc mocha --timeout 50000 -r @babel/register server/test --exit",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "coveralls": "nyc --reporter=lcov --reporter=text-lcov npm test",
     "refresh": "babel-node ./server/db/migrations dropTables && babel-node ./server/db/migrations createTables && babel-node ./server/db/seed seedDatas",
