@@ -1,5 +1,5 @@
 {
   "presets": ["@babel/preset-env"],
   "ignore" : [],
-  "plugins": ["@babel/plugin-transform-runtime"]
+  "plugins": ["@babel/plugin-transform-runtime", "@babel/plugin-transform-async-to-generator", "@babel/plugin-proposal-optional-catch-binding"]
 }

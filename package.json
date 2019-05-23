@@ -14,10 +14,9 @@
     "heroku-postbuild": "npm run build"
   },
   "dependencies": {
-    "@babel/plugin-transform-runtime": "^7.4.4",
     "@babel/runtime": "^7.4.4",
+    "@babel/plugin-transform-runtime": "^7.4.4",
     "@hapi/joi": "^15.0.2",
-    "D": "^1.0.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "chai": "^4.2.0",
@@ -39,6 +38,7 @@
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.4",
     "@babel/node": "^7.2.2",
+    "@babel/plugin-proposal-optional-catch-binding": "^7.2.0",
     "@babel/plugin-transform-async-to-generator": "^7.4.4",
     "@babel/polyfill": "^7.4.4",
     "@babel/preset-env": "^7.4.4",
