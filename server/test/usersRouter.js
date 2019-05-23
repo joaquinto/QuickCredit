@@ -211,3 +211,17 @@ describe('verify user', () => {
     assert.property((res.body), 'data');
   });
 });
+
+describe('Reset password', () => {
+  it('it should have a status code of 200', async () => {
+    const res = await chai.request(app)
+      .post('/api/v1/users/johnsnow@gmail.com/reset_password');
+    assert.equal((res.status), 200);
+  });
+
+  it('it should have a status code of 204', async () => {
+    const res = await chai.request(app)
+      .post('/api/v1/users/johnsnow@gmail.com/reset_password');
+    assert.equal((res.body.status), 204);
+  });
+});

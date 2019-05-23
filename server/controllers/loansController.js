@@ -4,7 +4,7 @@ import db from '../db/index';
 
 const { query } = db;
 const {
-  createLoan, getAllLoans, getLoanById,
+  createLoanQuery, getAllLoans, getLoanById,
   getConditionalLoans, approveLoan,
 } = loans;
 
@@ -25,7 +25,7 @@ export default class LoanController {
       createdOn, status, tenor, amount, interest, paymentInstallment,
       balance];
     try {
-      const { rows } = await query(createLoan, values);
+      const { rows } = await query(createLoanQuery, values);
       const response = {
         id: rows[0].id,
         firstname: rows[0].first_name,

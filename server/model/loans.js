@@ -1,5 +1,5 @@
 const loanQueries = {
-  createLoan: `INSERT INTO 
+  createLoanQuery: `INSERT INTO 
   loans(user_id, first_name, last_name, email, 
     created_on, status, tenor, amount, interest, 
     payment_installment, balance) 

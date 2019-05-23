@@ -1,12 +1,18 @@
 /* eslint-disable camelcase */
 /* eslint-disable max-len */
+import generator from 'generate-password';
 import jwtTokenUtils from '../helpers/jwtTokenUtils';
 import passwordUtils from '../helpers/passwordUtils';
+import utilities from '../helpers/utilities';
 import db from '../db/index';
 import user from '../model/users';
 
 const { query } = db;
-const { createUser, findUserByEmail, verifyUser } = user;
+const {
+  createUser, findUserByEmail,
+  updatePassword, verifyUser,
+} = user;
+const { sendPasswordNotification } = utilities;
 const { signToken } = jwtTokenUtils;
 
 export default class UserController {
@@ -73,45 +79,48 @@ export default class UserController {
     }
   }
 
-  // static getUsers(req, res) {
-  //   userModule.getUsers()
-  //     .then((data) => {
-  //       res.status(200).json({ status: 200, data, message: 'The operation you performed was successful' });
-  //     });
-  // }
-
   static async verifyUser(req, res, next) {
     const { status } = req.body;
     try {
       const { rows } = await query(verifyUser, [status, req.params.email]);
-      res.status(200).json({ status: 200, message: 'User has been verified successfully', data: rows[0] });
+      const [{
+        id, first_name: firstname, last_name: lastname, email,
+        address, status: UserStatus, is_admin: isAdmin,
+      }] = rows;
+      const response = {
+        id,
+        firstname,
+        lastname,
+        email,
+        address,
+        UserStatus,
+        isAdmin,
+      };
+      res.status(200).json({ status: 200, message: 'User has been verified successfully', data: response });
     } catch (error) {
       next(error);
     }
   }
 
-  // static deleteUser(req, res) {
-  //   userModule.deleteUser(req)
-  //     .then((data) => {
-  //       res.status(200).json({ status: 200, data, message: 'User deleted successfully' });
-  //     });
-  // }
-
-  // static sendResetPasswordLink(req, res) {
-  //   userModule.sendResetPasswordLink(req)
-  //     .then((data) => {
-  //       res.status(200).json({ status: 200, data: { token: data.token, email: data.email }, message: 'check your email for a password reset link' });
-  //     });
-  // }
-
-  // static resetPasswordView(req, res) {
-  //   res.status(200).json({ status: 200, data: 'This is the reset password view', message: 'This operation was successful' });
-  // }
-
-  // static resetUserPassword(req, res) {
-  //   userModule.resetUserPassword(req)
-  //     .then((data) => {
-  //       res.status(200).json({ status: 200, data, message: 'Password reset successfully' });
-  //     });
-  // }
+  static async resetPassword(req, res, next) {
+    try {
+      if (req.body.password === undefined) {
+        const generatedPassword = generator.generate({
+          length: 12,
+          numbers: true,
+          symbols: false,
+        });
+        const hashedPassword = await passwordUtils.hashPassword(generatedPassword, next);
+        const { rows } = await query(updatePassword, [hashedPassword, req.params.email]);
+        const [{ first_name, email }] = rows;
+        sendPasswordNotification(first_name, email, generatedPassword);
+        res.status(200).json({ status: 204 });
+      } else {
+        await query(updatePassword, [req.body.password, req.params.email]);
+        res.status(200).json({ status: 204 });
+      }
+    } catch (error) {
+      next(error);
+    }
+  }
 }

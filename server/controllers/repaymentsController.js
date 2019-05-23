@@ -29,8 +29,9 @@ export default class RepaymentController {
         const value = [id, createdOn, amount, payment_installment,
           paidAmount, loanBalance];
         const result = await postRepayment(postRepayments, value, next);
-        sendRepaymentNotification(first_name, email, paidAmount, loanBalance);
-        await query(updateBalance, [loanBalance, req.params.id]);
+        const { rows } = await query(updateBalance, [loanBalance, req.params.id]);
+        const [{ balance: loanBalances }] = rows;
+        sendRepaymentNotification(first_name, email, payment_installment, loanBalances);
         await updateRepayment(req, next);
         res.status(201).json({ status: 201, message: 'Repayment created successfully', data: response(result) });
       } catch (error) {
