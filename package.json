@@ -7,7 +7,7 @@
     "build": "rimraf ./dist/ && babel server --out-dir dist",
     "start:dev": "nodemon --exec babel-node ./server/index.js",
     "start": "node dist/index.js",
-    "test": "npm run build && npm run refresh && nyc mocha --timeout 50000 dist/test --exit",
+    "test": "npm run refresh && nyc mocha --timeout 50000 -r @babel/register server/test --exit",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "coveralls": "nyc --reporter=lcov --reporter=text-lcov npm test",
     "refresh": "babel-node ./server/db/migrations dropTables && babel-node ./server/db/migrations createTables && babel-node ./server/db/seed seedDatas",
@@ -55,7 +55,6 @@
     "mocha-lcov-reporter": "^1.3.0",
     "nodemon": "^1.18.11",
     "nyc": "^14.0.0",
-    "regenerator-runtime": "^0.13.2",
     "rimraf": "^2.6.3"
   },
   "engines": {
