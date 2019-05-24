@@ -28,12 +28,11 @@ export default class Authentication {
       const { rows } = await query(findUserByEmail, [value]);
       console.log(rows.length);
       if (rows.length < 1) {
-        return res.status(404).json({ status: 404, error: 'User Not Found' });
+        res.status(404).json({ status: 404, error: 'User Not Found' });
       }
-      req.user = rows;
-      return next();
+      next();
     } catch (error) {
-      return next(error);
+      next(error);
     }
   }
 

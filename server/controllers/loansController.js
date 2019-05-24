@@ -1,12 +1,14 @@
 import utilities from '../helpers/utilities';
 import loans from '../model/loans';
 import db from '../db/index';
+import user from '../model/users';
 
 const { query } = db;
 const {
   createLoanQuery, getAllLoans, getLoanById,
   getConditionalLoans, approveLoan,
 } = loans;
+const { findUserByEmail } = user;
 
 export default class LoanController {
   static async createLoan(req, res, next) {
@@ -19,11 +21,12 @@ export default class LoanController {
     const paymentInstallment = utilities.paymentInstallment(amount, interest, tenor);
     amount += interest;
     const balance = amount;
-    const [{ first_name: firstname, last_name: lastname, email }] = req.user;
-    const values = [req.decoded.id, firstname, lastname, email,
-      createdOn, status, tenor, amount, interest, paymentInstallment,
-      balance];
     try {
+      const { rows: row } = await query(findUserByEmail, [req.decoded.email]);
+      const [{ first_name: firstname, last_name: lastname, email }] = row;
+      const values = [req.decoded.id, firstname, lastname, email,
+        createdOn, status, tenor, amount, interest, paymentInstallment,
+        balance];
       const { rows } = await query(createLoanQuery, values);
       const response = {
         id: rows[0].id,

@@ -31,7 +31,6 @@ const initiaalizeClickFunction = () => {
   for (let i = 1; i < 7; i++) {
     const card = document.querySelector(`.card-items-${i}`);
     card.addEventListener('click', () => {
-      window.scrollTo(0, 0);
       clients.style.display = 'flex';
       body.style.overflow = 'hidden';
     });
