@@ -11,7 +11,7 @@
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "coveralls": "nyc --reporter=lcov --reporter=text-lcov npm test",
     "refresh": "babel-node ./server/db/migrations dropTables && babel-node ./server/db/migrations createTables && babel-node ./server/db/seed seedDatas",
-    "heroku-postbuild": "npm run build"
+    "heroku-postbuild": "npm run refresh && npm run build"
   },
   "dependencies": {
     "@babel/runtime": "^7.4.4",
