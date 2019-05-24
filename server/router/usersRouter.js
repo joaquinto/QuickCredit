@@ -8,6 +8,9 @@ import verifyDetails from '../validation/verifyDetails';
 import userController from '../controllers/usersController';
 import authentication from '../middleware/authentication';
 import jwtTokenUtils from '../helpers/jwtTokenUtils';
+import resetValidator from '../middleware/resetValidator';
+import resetDetails from '../validation/resetDetails';
+import reset from '../middleware/resetPassword';
 
 const { verifyToken } = jwtTokenUtils;
 const {
@@ -16,6 +19,7 @@ const {
   isAdmin,
   notAUser,
 } = authentication;
+const { resetPassword, verifyResetToken } = reset;
 
 const router = express.Router();
 
@@ -37,5 +41,13 @@ router.patch('/users/:email/verify',
   checkIsAccountVerified,
   validator(verifyDetails),
   userController.verifyUser);
+
+router.post('/users/:email/reset_password',
+  verifyResetToken,
+  singleValidator(emailDetails),
+  notAUser,
+  resetValidator(resetDetails),
+  resetPassword,
+  userController.resetPassword);
 
 export default router;

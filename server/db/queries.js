@@ -14,7 +14,7 @@ const createTable = {
     user_id INTEGER NOT NULL,
     first_name VARCHAR(35) NOT NULL,
     last_name VARCHAR(35) NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL,
     created_on TIMESTAMP NOT NULL,
     status VARCHAR(35) NOT NULL,
     repaid BOOLEAN NOT NULL DEFAULT false,
