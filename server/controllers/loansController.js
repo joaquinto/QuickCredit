@@ -10,8 +10,6 @@ const {
 
 export default class LoanController {
   static async createLoan(req, res, next) {
-    const { firstname, lastname } = req.body;
-    const email = req.body.email.toLowerCase();
     const createdOn = new Date();
     const status = 'pending';
     let { tenor, amount } = req.body;
@@ -21,6 +19,7 @@ export default class LoanController {
     const paymentInstallment = utilities.paymentInstallment(amount, interest, tenor);
     amount += interest;
     const balance = amount;
+    const [{ first_name: firstname, last_name: lastname, email }] = req.user;
     const values = [req.decoded.id, firstname, lastname, email,
       createdOn, status, tenor, amount, interest, paymentInstallment,
       balance];
