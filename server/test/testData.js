@@ -87,21 +87,12 @@ const data = {
     amount: 5000,
   },
   loanMissingTenor: {
-    firstname: 'john',
-    lastname: 'gabriel',
-    email: 'johngabriel@gmail.com',
     amount: 5000,
   },
   loanMissingAmount: {
-    firstname: 'john',
-    lastname: 'gabriel',
-    email: 'johngabriel@gmail.com',
     tenor: 5,
   },
   loan: {
-    firstname: 'john',
-    lastname: 'gabriel',
-    email: 'johngabriel@gmail.com',
     tenor: 5,
     amount: 5000,
   },
