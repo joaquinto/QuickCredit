@@ -52,14 +52,14 @@ describe('Create Repayments', () => {
     assert.property((res.body), 'error');
   });
 
-  // it('should return a repaymant object', async () => {
-  //   const res = await chai.request(app)
-  //     .post('/api/v1/loans/1/repayment')
-  //     .set('Authorization', userToken)
-  //     .send(data.paidAmount);
-  //   assert.equal((res.body.status), 201);
-  //   assert.property((res.body), 'data');
-  // });
+  it('should return a repaymant object', async () => {
+    const res = await chai.request(app)
+      .post('/api/v1/loans/1/repayment')
+      .set('Authorization', userToken)
+      .send(data.paidAmount);
+    assert.equal((res.body.status), 201);
+    assert.property((res.body), 'data');
+  });
 });
 
 describe('Get Repayments history for a loan', () => {
@@ -99,13 +99,13 @@ describe('Get Repayments history for a loan', () => {
     assert.property((res.body), 'error');
   });
 
-  // it('should return a repeymant object', async () => {
-  //   const res = await chai.request(app)
-  //     .get('/api/v1/loans/1/repayments')
-  //     .set('Authorization', userToken);
-  //   assert.equal((res.body.status), 200);
-  //   assert.property((res.body), 'data');
-  // });
+  it('should return a repeymant object', async () => {
+    const res = await chai.request(app)
+      .get('/api/v1/loans/1/repayments')
+      .set('Authorization', userToken);
+    assert.equal((res.body.status), 200);
+    assert.property((res.body), 'data');
+  });
 });
 
 describe('Get all Repayments', () => {
