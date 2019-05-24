@@ -18,32 +18,32 @@ describe('Create a loan', () => {
     userToken = res.body.data.token;
   });
 
-  it('should throw an error for missing firstname', async () => {
-    const res = await chai.request(app)
-      .post('/api/v1/loans')
-      .set('Authorization', userToken)
-      .send(data.loanMissingFirstname);
-    assert.equal((res.body.status), 400);
-    assert.property((res.body), 'error');
-  });
+  // it('should throw an error for missing firstname', async () => {
+  //   const res = await chai.request(app)
+  //     .post('/api/v1/loans')
+  //     .set('Authorization', userToken)
+  //     .send(data.loanMissingFirstname);
+  //   assert.equal((res.body.status), 400);
+  //   assert.property((res.body), 'error');
+  // });
 
-  it('should throw an error for missing lastname', async () => {
-    const res = await chai.request(app)
-      .post('/api/v1/loans')
-      .set('Authorization', userToken)
-      .send(data.loanMissingLastname);
-    assert.equal((res.body.status), 400);
-    assert.property((res.body), 'error');
-  });
+  // it('should throw an error for missing lastname', async () => {
+  //   const res = await chai.request(app)
+  //     .post('/api/v1/loans')
+  //     .set('Authorization', userToken)
+  //     .send(data.loanMissingLastname);
+  //   assert.equal((res.body.status), 400);
+  //   assert.property((res.body), 'error');
+  // });
 
-  it('should throw an error for missing email', async () => {
-    const res = await chai.request(app)
-      .post('/api/v1/loans')
-      .set('Authorization', userToken)
-      .send(data.loanMissingEmail);
-    assert.equal((res.body.status), 400);
-    assert.property((res.body), 'error');
-  });
+  // it('should throw an error for missing email', async () => {
+  //   const res = await chai.request(app)
+  //     .post('/api/v1/loans')
+  //     .set('Authorization', userToken)
+  //     .send(data.loanMissingEmail);
+  //   assert.equal((res.body.status), 400);
+  //   assert.property((res.body), 'error');
+  // });
 
   it('should throw an error for missing tenor', async () => {
     const res = await chai.request(app)
