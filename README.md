@@ -20,7 +20,7 @@ address.
 ___
 
 ## Templates
-UI Templates for this application are live on [Github Pages](https://joaquinto.github.io/QuickCredit/UI/)
+UI Templates for this application are live on [Github Pages](https://joaquinto.github.io/QuickCredit/UI/index.html)
 
 ___
 
